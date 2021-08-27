@@ -1,9 +1,138 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>sales</ion-title>
+      <ion-buttons slot=start>
+          <ion-menu-toggle>
+            <ion-button>
+              <ion-icon name=menu></ion-icon>
+            </ion-button>
+          </ion-menu-toggle>
+      </ion-buttons>
+
+    <ion-title class="ion-text-center">Sales</ion-title>
+
+    <ion-buttons slot=end>
+        <ion-button routerLink="./cart">
+          <ion-icon name="cart-outline"></ion-icon>
+        </ion-button>
+  </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-toolbar>
+    <ion-searchbar placeholder="Search item..." animated="true"></ion-searchbar>
+  </ion-toolbar>
+  <ion-segment (ionChange)="segmentChanged($event)" value="allproduct" scrollable>
+    <ion-segment-button value="allproduct">
+      <ion-label>
+        All Product
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="petfoods">
+      <ion-label>
+        Pet Foods
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="pethouse">
+      <ion-label>
+        Pet House
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="petaccessories">
+      <ion-label>
+        Pet Accessories
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="petcare">
+      <ion-label>
+        Pet Care
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
 
+  <ion-list *ngIf="segment === 'allproduct'">
+    <ion-item *ngFor="let product of Products" >
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+                <ion-card>
+                  <img [src]="product.productImage" alt=""/>
+
+                  <ion-card-header>
+                    <ion-card-subtitle>
+                      {{product.productCategory}}
+                    </ion-card-subtitle>
+                    <ion-card-title>
+                      {{product.productName}}
+                    </ion-card-title>
+                    <ion-card-subtitle>
+                      $ {{product.productPrice}}
+                    </ion-card-subtitle>
+
+                  </ion-card-header>
+
+                  <ion-card-content>
+                        <ion-card-header>
+                          <ion-card-subtitle>Description</ion-card-subtitle>
+                        </ion-card-header>
+
+                        <ion-card-content>
+                          {{product.productDescription}}
+                        </ion-card-content>
+
+                        <ion-buttons class="ion-padding">
+
+                          <ion-grid size=6>
+                            <ion-row>
+                              <ion-col>
+                                  <ion-button expand=block fill="solid" >
+                                    <ion-icon name="cart-outline"></ion-icon>
+                                    <ion-label class="ion-padding" (click) = "addToCart(product)">Add to Cart</ion-label>
+                                  </ion-button>
+                                </ion-col>
+                              </ion-row>
+
+                              <ion-row>
+                                <ion-col>
+                                  <ion-button expand=block fill="solid" color="warning">
+                                    <ion-icon name="chatbubble-outline"></ion-icon>
+                                    <ion-label class="ion-padding">Contact Seller</ion-label>
+                                  </ion-button>
+                              </ion-col>
+                            </ion-row>
+                          </ion-grid>
+                          </ion-buttons>
+
+                  </ion-card-content>
+                </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+      </ion-list>
+
+  <ion-list *ngIf="segment === 'petfoods'">
+    <ion-item>
+      <ion-label>List 2</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="segment === 'pethouse'">
+    <ion-item>
+      <ion-label>List 3</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="segment === 'petaccessories'">
+    <ion-item>
+      <ion-label>List 4</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="segment === 'petcare'">
+    <ion-item>
+      <ion-label>List 5</ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
