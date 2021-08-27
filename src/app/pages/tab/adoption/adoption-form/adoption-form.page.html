@@ -1,9 +1,78 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>adoption-form</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/adoption"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="ion-text-center">Create Post</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button id="adopt-btn" fill="solid">
+        <ion-button (click)="savePost()">Post</ion-button>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+  <div [formGroup]="newAdoptionForm">
+    <ion-list>
 
+      <ion-list>
+        <ion-card>
+          <ion-card-content>
+            <ion-item>
+              <ion-label>Insert Pet Image</ion-label>
+              <ion-button (click)="takePicture()">Choose Image</ion-button>
+            </ion-item>
+
+            <img *ngIf="newAdoptionList.petImage" [src]="newAdoptionList.petImage"/>
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
+
+      <ion-item>
+        <ion-label position="floating">Pet Name</ion-label>
+          <ion-input type="text" formControlName="petName"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Category</ion-label>
+          <ion-input type="text" formControlName="petCategory"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Breed</ion-label>
+          <ion-input type="text" formControlName="petBreed"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Age (Month)</ion-label>
+          <ion-input type="number" formControlName="petAge"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Gender</ion-label>
+        <ion-select value="gender" interface="action-sheet" formControlName="petGender">
+          <ion-select-option value="male">Male</ion-select-option>
+          <ion-select-option value="female">Female</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Health Condition</ion-label>
+          <ion-input type="text" formControlName="petCondition"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Spay Status</ion-label>
+          <ion-input type="text" formControlName="petSpayStatus"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Description</ion-label>
+          <ion-textarea formControlName="petDescription" placeholder="Enter more information here..."></ion-textarea>
+        </ion-item>
+    </ion-list>
+  </div>
 </ion-content>
