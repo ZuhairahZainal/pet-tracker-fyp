@@ -1,9 +1,93 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>setting</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tab/user-profile"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="ion-text-center ion-margin-vertical">
+      Setting
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon id="logout" icon="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>
+        Personal Information
+      </ion-label>
+      <ion-buttons>
+        <ion-button [routerLink]="['../setting/personal-info']">
+          <ion-icon slot="end" name= "chevron-forward" ></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
 
+
+    <ion-item>
+      <ion-label>
+        Security
+      </ion-label>
+      <ion-buttons>
+        <ion-button [routerLink]="['../setting/security']">
+          <ion-icon slot="end" name= "chevron-forward" ></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label>
+        Liked Post
+      </ion-label>
+      <ion-buttons>
+        <ion-button [routerLink]="['../setting/liked-post']">
+          <ion-icon slot="end" name= "chevron-forward" ></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label>
+        Preferences
+      </ion-label>
+      <ion-buttons>
+        <ion-button [routerLink]="['../setting/preference']">
+          <ion-icon slot="end" name= "chevron-forward" ></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        About Us
+      </ion-label>
+      <ion-buttons>
+        <ion-button [routerLink]="['../setting/about-us']">
+          <ion-icon slot="end" name= "chevron-forward" ></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        Log Out
+      </ion-label>
+      <ion-buttons>
+        <ion-button (click)="logout()">
+          <ion-icon slot="end" name= "chevron-forward" ></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+
+
+  </ion-list>
 </ion-content>
+
