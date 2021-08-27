@@ -26,17 +26,17 @@ export class LoginPage implements OnInit {
 
   register()
   {
-    this.router.navigate(['/register']);
+    this.router.navigate(['/auth/register']);
   } //end of register
 
   forgot()
   {
-    this.router.navigate(['/forgot-password']);
+    this.router.navigate(['/auth/forgot-password']);
   } //end of forgot-password
 
   guideline()
   {
-    this.router.navigate(['/guideline']);
+    this.router.navigate(['/auth/guideline']);
   } //end of guideline
 
   async login()
@@ -54,7 +54,7 @@ export class LoginPage implements OnInit {
       this.auth.login(this.email, this.password)
       .then(()=> {
         loading.dismiss();
-        this.router.navigate(['/home']);
+        this.router.navigate(['/pages/tab/timeline']);
       })
       .catch((error)=> {
         loading.dismiss();
