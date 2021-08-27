@@ -16,6 +16,6 @@ export class GuidelinePage implements OnInit {
   }
   login()
   {
-      this.router.navigate(['/login']);
+      this.router.navigateByUrl('/auth/login');
   } //end of login
 }

@@ -50,7 +50,7 @@ export class ForgotPasswordPage implements OnInit
 
   login()
   {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/auth/login']);
   } //end of login
 
   async toast(message, status)
