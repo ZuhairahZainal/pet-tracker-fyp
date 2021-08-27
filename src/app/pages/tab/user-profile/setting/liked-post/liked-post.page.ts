@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LikedPostPage implements OnInit {
 
+  type: string;
+
   constructor() { }
 
   ngOnInit() {
+    this.type = 'first';
+  }
+
+  segmentChanged(ev: any) {
+    console.log('Segment changed', ev);
   }
 
 }
