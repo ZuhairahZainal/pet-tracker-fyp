@@ -1,9 +1,23 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>tab</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-tabs #tabs (ionTabsDidChange)="setCurrentTab($event)">
+  <ion-tab-bar>
+    <ion-tab-button tab="timeline">
+      <ion-icon [name]="selectTab === 'timeline' ? 'home' : 'home-outline'"></ion-icon>
+    </ion-tab-button>
 
-<ion-content>
+    <ion-tab-button tab="adoption">
+      <ion-icon [src]="selectTab === 'adoption' ? '../assets/tabs/adoption-selected.svg' : '../assets/tabs/adoption.svg'"></ion-icon>
+    </ion-tab-button>
 
-</ion-content>
+    <ion-tab-button tab="user-profile">
+      <ion-icon id="profile" [name]="selectTab === 'user-profile' ? 'person-circle' : 'person-circle-outline'"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="location-tracker">
+      <ion-icon [src]="selectTab === 'location-tracker' ? '../assets/tabs/location-selected.svg' : '../assets/tabs/location.svg'"></ion-icon>
+    </ion-tab-button>
+
+    <ion-tab-button tab="online-chat">
+      <ion-icon [name]="selectTab === 'online-chat' ? 'chatbubbles' : 'chatbubbles-outline'"></ion-icon>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
