@@ -1,6 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <ion-icon name="arrow-back-outline" class="ion-text-left" routerLink="/home"></ion-icon>
+    <ion-buttons slot="start">
+      <ion-button routerLink="../">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
     <ion-title>Payment Method</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -18,6 +23,6 @@
   <ion-item lines="inset"></ion-item>
 </div>
 
-<ion-button routerLink="/card-details" routerDirection="forward" type="submit">Continue</ion-button>
+<ion-button id="continue"routerLink="./../card-details" routerDirection="forward" type="submit">Continue</ion-button>
 
 </ion-content>

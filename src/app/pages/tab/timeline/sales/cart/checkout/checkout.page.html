@@ -1,6 +1,12 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
+    <ion-buttons slot="start">
+      <ion-button routerLink="../">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title class="ion-text-center">
       Summary
     </ion-title>
   </ion-toolbar>
@@ -58,7 +64,7 @@
       <p>{{countryName}}</p>
 
       <div id="butang">
-      <p><ion-button routerLink="/address" routerDirection="forward" class="ion-text-right">Change Address</ion-button></p>
+      <p><ion-button routerLink="./address" routerDirection="forward" class="ion-text-right">Change Address</ion-button></p>
     </div>
     </ion-label>
    </ion-item>
@@ -66,7 +72,7 @@
    <ion-item lines="inset">
     <ion-label>Your Last Step</ion-label>
       <div id="button">
-        <ion-button routerLink="/card" routerDirection="forward">Pay Now</ion-button>
+        <ion-button routerLink="./card" routerDirection="forward">Pay Now</ion-button>
        </div>
    </ion-item>
 </div>
