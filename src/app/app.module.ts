@@ -9,11 +9,6 @@ import { AppRoutingModule } from './app-routing.module';
 
 
 // Firebase
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from 'src/environments/environment';
 
 // forms
@@ -24,11 +19,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule,
-            AngularFireModule.initializeApp(environment.firebaseConfig),
-            AngularFireAuthModule,
-            AngularFireDatabaseModule,
-            AngularFireStorageModule,
-            AngularFirestoreModule,
+            // AngularFireModule.initializeApp(environment.firebaseConfig),
+            // AngularFireAuthModule,
+            // AngularFireDatabaseModule,
+            // AngularFireStorageModule,
+            // AngularFirestoreModule,
             FormsModule,
             ReactiveFormsModule,
             IonicModule.forRoot(),
