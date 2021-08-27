@@ -22,6 +22,9 @@ import { environment } from '../environments/environment';
 // forms
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { Ng2SearchPipeModule  } from 'ng2-search-filter';
+
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,6 +37,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
             AngularFirestoreModule,
             FormsModule,
             ReactiveFormsModule,
+            Ng2SearchPipeModule,
             IonicModule.forRoot(),
             AppRoutingModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
