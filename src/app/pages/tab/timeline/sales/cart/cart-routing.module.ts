@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: CartPage
+  },
+  {
+    path: 'checkout',
+    loadChildren: () => import('./checkout/checkout.module').then( m => m.CheckoutPageModule)
   }
 ];
 
