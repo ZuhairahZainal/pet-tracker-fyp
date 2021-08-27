@@ -11,7 +11,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'tab',
+    redirectTo: 'auth',
     pathMatch: 'full'
   },
   {
