@@ -1,9 +1,58 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>personal-info</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/setting"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Personal Information</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-margin">
+        <ion-avatar class="image-center">
+          <img src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg" alt="">
+        </ion-avatar>
+        <ion-button shape="outline" expand="block">Change Profile Picture</ion-button>
+      </ion-col>
+    </ion-row>
 
+    <ion-row>
+      <ion-col class="ion-margin">
+        <form>
+          <ion-item>
+            <ion-label position="floating">Username</ion-label>
+            <ion-input  type="text" required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">About Me</ion-label>
+            <ion-input  type="text" required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Email Address</ion-label>
+            <ion-input  type="text" required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Phone Number</ion-label>
+            <ion-input type="text" required>
+            </ion-input>
+          </ion-item>
+
+          <ion-row>
+            <ion-col>
+              <ion-button type="submit" color="primary" shape="full" expand="block">Update Information</ion-button>
+            </ion-col>
+          </ion-row>
+        </form>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
 </ion-content>
