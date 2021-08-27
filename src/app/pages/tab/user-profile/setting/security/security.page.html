@@ -1,9 +1,43 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>security</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/setting"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Security</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-margin">
+        <form>
+          <ion-item>
+            <ion-label position="floating">Current Password</ion-label>
+            <ion-input  type="text" required></ion-input>
+          </ion-item>
 
+          <ion-item>
+            <ion-label position="floating">New Password</ion-label>
+            <ion-input  type="text" required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Re-enter New Password</ion-label>
+            <ion-input  type="text" required>
+            </ion-input>
+          </ion-item>
+
+          <ion-row>
+            <ion-col>
+              <ion-button type="submit" color="primary" shape="full" expand="block">Change Password</ion-button>
+            </ion-col>
+          </ion-row>
+        </form>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
 </ion-content>
