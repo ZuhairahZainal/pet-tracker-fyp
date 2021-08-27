@@ -1,9 +1,74 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>sales-history</ion-title>
+    <ion-buttons slot=start>
+      <ion-menu-toggle>
+        <ion-button>
+          <ion-icon id="menu" name=menu></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+  </ion-buttons>
+
+    <ion-title>Your Product</ion-title>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <section>
+    <ion-buttons class="ion-padding">
+      <ion-button expand="block" fill="solid" routerLink="../sales-history/add-product">
+        <ion-icon name="add"></ion-icon>
+        <ion-label class="ion-padding">Add New Product</ion-label>
+      </ion-button>
+    </ion-buttons>
+  </section>
 
+  <ion-list>
+    <ion-item *ngFor="let product of Products" >
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+            <ion-card>
+              <img [src]="product.productImage" alt=""/>
+
+              <ion-card-header>
+                <ion-card-subtitle>
+                  {{product.productCategory}}
+                </ion-card-subtitle>
+                <ion-card-title>
+                  {{product.productName}}
+                </ion-card-title>
+                <ion-card-subtitle>
+                  $ {{product.productPrice}}
+                </ion-card-subtitle>
+
+              </ion-card-header>
+
+              <ion-card-content>
+                    <ion-card-header>
+                      <ion-card-subtitle>Description</ion-card-subtitle>
+                    </ion-card-header>
+
+                    <ion-card-content>
+                      {{product.productDescription}}
+                    </ion-card-content>
+
+                <ion-buttons class="ion-padding">
+                  <ion-button expand="block" fill="solid" [routerLink]="['./edit-product/', product.$key]">
+                    <ion-icon name="create-outline"></ion-icon>
+                    <ion-label class="ion-padding">Edit</ion-label>
+                  </ion-button>
+                  <ion-button expand="block" fill="solid" color="warning" (click)="deleteProduct(product.$key)">
+                    <ion-icon name="trash-outline"></ion-icon>
+                    <ion-label class="ion-padding">Delete</ion-label>
+                  </ion-button>
+                </ion-buttons>
+
+              </ion-card-content>
+            </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>
+</ion-list>
 </ion-content>
