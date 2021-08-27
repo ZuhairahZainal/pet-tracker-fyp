@@ -1,0 +1,29 @@
+ion-card {
+  text-align: center;
+  font-family: ABeeZee;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: black;
+  background-color: #9DDFCC;
+}
+
+#container strong {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+
+ion-button{
+  position: absolute;
+  bottom: 10%;
+  left: 40%;
+  font-family: ABeeZee;
+  color: #9DDFCC;
+
+}
+ion-title{
+  text-align: center;
+}

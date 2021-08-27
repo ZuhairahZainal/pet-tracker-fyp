@@ -1,9 +1,23 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>card</ion-title>
+    <ion-icon name="arrow-back-outline" class="ion-text-left" routerLink="/home"></ion-icon>
+    <ion-title>Payment Method</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
+<div id="word">
+  <p>Please select your payment method</p>
+ </div>
+
+<div id="opt">
+  <ion-item lines="inset"></ion-item>
+  <p><ion-checkbox checked="true" class="ion-text-right"></ion-checkbox>Paypal</p>
+  <ion-item lines="inset"></ion-item>
+  <p><ion-checkbox class="ion-text-right" checked="true"></ion-checkbox>Mastercard</p>
+  <ion-item lines="inset"></ion-item>
+</div>
+
+<ion-button routerLink="/card-details" routerDirection="forward" type="submit">Continue</ion-button>
 
 </ion-content>

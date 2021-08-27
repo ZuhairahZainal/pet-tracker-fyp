@@ -7,6 +7,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CheckoutPage implements OnInit {
 
+  sub: number;
+  tax: number;
+  total: number;
+  address: string;
+  card: number;
+  num: number;
+  simpang: number;
+  kampung: string;
+  postCode: string;
+  cityName: string;
+  countryName: string;
+  firstName: string;
+  lastName: string;
+  creditCardNumber: number;
+  cvv: number;
+  expiration: Date;
+
   constructor() { }
 
   ngOnInit() {

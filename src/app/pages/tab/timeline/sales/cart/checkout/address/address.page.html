@@ -1,9 +1,42 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>address</ion-title>
+    <ion-icon name="arrow-back-outline" class="ion-text-left" routerLink="/home"></ion-icon>
+    <ion-title>Address</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
+<form [formGroup]="changeAddressForm" (submit)="newAddress()">
 
+  <ion-item>
+    <ion-label stacked>Number</ion-label>
+    <ion-input formControlName="num" type="number" placeholder="House Number"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>Simpang</ion-label>
+    <ion-input formControlName="simpang" type="text" placeholder="Simpang Number"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>Kampung</ion-label>
+    <ion-input formControlName="kampung" type="text" placeholder="Kampung Name"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>Post Code</ion-label>
+    <ion-input formControlName="postCode" type="text" placeholder="Postcode"> </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>City</ion-label>
+    <ion-input formControlName="cityName" type="text" placeholder="City Name"> </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>Country</ion-label>
+    <ion-input formControlName="countryName" type="text" placeholder="Country Name"> </ion-input>
+  </ion-item>
+
+  <ion-button expand="block" type="submit" [disabled]="!changeAddressForm.valid"> Add New Address </ion-button>
+</form>
 </ion-content>

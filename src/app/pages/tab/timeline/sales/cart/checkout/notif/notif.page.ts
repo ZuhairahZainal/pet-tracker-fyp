@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotifPage implements OnInit {
 
+  creditCardNumber: number;
+
   constructor() { }
 
   ngOnInit() {
