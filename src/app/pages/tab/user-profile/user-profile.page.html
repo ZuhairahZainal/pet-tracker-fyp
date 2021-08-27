@@ -1,9 +1,111 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>user-profile</ion-title>
+    <ion-title class="ion-text-center">Profile</ion-title>
+    <ion-buttons slot="end">
+      <ion-button id="setting" routerLink="/setting">
+        <ion-icon name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="2" class="ion-margin">
+          <ion-avatar class="image-center">
+            <img name="profile_pic" src="../../../../../../assets/icon/favicon.png"/>
+          </ion-avatar>
+      </ion-col>
+      <ion-col size="9">
+        <ion-card class="ion-text-center">
+          <ion-card-header>
+            <ion-card-title>
+              Username
+            </ion-card-title>
+            <ion-card-subtitle>
+              About me
+            </ion-card-subtitle>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-toolbar>
+    <ion-segment (ionChange)="segmentChanged($event)" value="allpost" scrollable>
+      <ion-segment-button value="allpost">
+        <ion-label>
+          Shared Post
+        </ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="adoption">
+        <ion-label>
+          Adoptions
+        </ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <ion-list *ngIf="segment === 'allpost'">
+    <ion-item>
+      <ion-label>All post</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="segment === 'adoption'">
+    <ion-item *ngFor="let adoption of adoptionList">
+      <ion-grid>
+        <ion-row>
+        <ion-col>
+     <ion-card>
+      <img [src]="adoption.petImage"/>
+      <ion-card-header>
+        <ion-card-subtitle>{{ adoption.petCategory }}</ion-card-subtitle>
+        <ion-card-title>{{ adoption.petName }} ({{ adoption.petAge }} month)</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-header>
+        <ion-card-subtitle>Gender</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        {{ adoption.petGender }}
+      </ion-card-content>
+
+      <ion-card-header>
+        <ion-card-subtitle>Breed</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        {{ adoption.petBreed }}
+      </ion-card-content>
+
+      <ion-card-header>
+        <ion-card-subtitle>Health Condition</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        {{ adoption.petCondition }}
+      </ion-card-content>
+
+      <ion-card-header>
+        <ion-card-subtitle>Spay Status</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        {{ adoption.petSpayStatus }}
+      </ion-card-content>
+
+      <ion-card-header>
+        <ion-card-subtitle>Description</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        {{ adoption.petDescription }}
+      </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>
+</ion-list>
 
 </ion-content>
+
+
