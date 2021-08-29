@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center"> Create New Post</ion-title>
+    <ion-buttons slot="start">
+      <ion-button routerLink="../">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-avatar></ion-avatar>
+      <ion-label class="ion-padding-horizontal">Username</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="full" id="imagebutton">
+    <ion-icon lazy="true" slot="slot" name="image"></ion-icon>
+    <ion-label slot="end">Upload Image</ion-label>
+    <input type="file" (change)="loadImageFromDevice($event)" id="file-input"
+    accept="image/png, image/jpeg">
+  </ion-button>
+
+  <form [formGroup]="newpostForm" (submit)="onSubmit()">
+    <ion-item lines="full" id="Title">
+      <ion-label position ="floating">Title</ion-label>
+      <ion-input formControlName="title" type="text" required
+      [class.invalid]="!newpostForm.controls.title.valid && newpostForm.controls.title.touched"></ion-input>
+    </ion-item>
+
+    <ion-item class="error-message" *ngIf="!newpostForm.controls.title.valid && newpostForm.controls.title.touched">
+      <p>The title is required to be under 45 characters.</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label id="story">Description</ion-label>
+      <ion-textarea id= "Textfield" name="content" rows="5" cols="33"
+      formControlName="description" placeholder="More Information.."
+      [class.invalid]="!newpostForm.controls.description.valid && newpostForm.controls.description.touched">
+      </ion-textarea>
+    </ion-item>
+
+    <ion-item class="error-message" *ngIf="!newpostForm.controls.description.valid && newpostForm.controls.description.touched">
+      <p>The description has to be at least 2 characters long.</p>
+    </ion-item>
+
+    <ion-card-subtitle class="ion-text-center">
+      <ion-button expand="block" type="submit" [disabled]="!newpostForm.valid"> POST </ion-button>
+
+    </ion-card-subtitle>
+  </form>
+
+</ion-content>

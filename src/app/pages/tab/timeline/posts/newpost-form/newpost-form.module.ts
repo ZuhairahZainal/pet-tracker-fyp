@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { LostpetFormPageRoutingModule } from './lostpet-form-routing.module';
+import { NewpostFormPageRoutingModule } from './newpost-form-routing.module';
 
-import { LostpetFormPage } from './lostpet-form.page';
+import { NewpostFormPage } from './newpost-form.page';
 
 @NgModule({
   imports: [
@@ -14,8 +14,8 @@ import { LostpetFormPage } from './lostpet-form.page';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    LostpetFormPageRoutingModule
+    NewpostFormPageRoutingModule
   ],
-  declarations: [LostpetFormPage]
+  declarations: [NewpostFormPage]
 })
-export class LostpetFormPageModule {}
+export class NewpostFormPageModule {}
