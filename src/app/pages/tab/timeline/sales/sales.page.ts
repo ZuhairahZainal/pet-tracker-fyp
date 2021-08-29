@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { CartService } from './cart/shared/cart.service';
 import { ProductService } from './shared/product.service';
 import { NewProduct } from './shared/sales';
@@ -16,7 +17,27 @@ export class SalesPage implements OnInit {
 
   @ViewChild('cart', {static: false, read: ElementRef})fab: ElementRef;
 
-  constructor(private productService: ProductService, private cartService: CartService) {}
+  newProductLists;
+  productId: string;
+  filter: string;
+
+  newProductList = {
+    productName: '',
+    productCategory: '',
+    productPrice: '',
+    productDescription: '',
+    productImage: null
+  }
+
+  constructor(private firestore: AngularFirestore, private cartService: CartService) {
+
+    this.firestore.collection('productList').valueChanges({idField: 'productId'}).subscribe(
+      adoptions => {
+        this.newProductLists = adoptions;
+        console.log(this.newProductLists);
+      }
+    )
+  }
 
   //filter segment (incomplete)
   segmentChanged(ev: any) {
@@ -24,27 +45,14 @@ export class SalesPage implements OnInit {
   }
 
 
-  // ambil from firebase realtime database for display
+  // ambil from firestore database for display
   ngOnInit() {
-    this.fetchProducts();
-    let productRes = this.productService.getProductList();
-    productRes.snapshotChanges().subscribe(res => {
-      this.Products = [];
-      this.Products = this.cartService.getProducts();
-      res.forEach(item => {
-        let a = item.payload.toJSON();
-        a['$key'] = item.key;
-        this.Products.push(a as NewProduct);
-      })
-    })
+    this.firestore.doc(`productList/${this.productId}`)
+    .valueChanges()
+    .subscribe((product: any) => (this.newProductList = product));
+
   }
 
-  //fetch data function to use in ng on initialise
-  fetchProducts() {
-    this.productService.getProductList().valueChanges().subscribe(res => {
-      console.log(res)
-    })
-  }
 
   // function add to cart (incomplete)
   addToCart(product) {

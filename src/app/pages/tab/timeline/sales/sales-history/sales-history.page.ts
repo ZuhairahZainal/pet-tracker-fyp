@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NewProduct } from '../shared/sales';
-import { ProductService } from './../shared/product.service';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-sales-history',
@@ -9,36 +8,40 @@ import { ProductService } from './../shared/product.service';
 })
 export class SalesHistoryPage implements OnInit {
 
-  Products: NewProduct[] = [];
+  newProductLists;
+  productId: string;
 
-  constructor(
-    private productService: ProductService
-  ) { }
+  newProductList = {
+    productName: '',
+    productCategory: '',
+    productPrice: '',
+    productDescription: '',
+    productImage: null
+  }
+
+  constructor(private firestore: AngularFirestore) {
+    this.firestore.collection('productList').valueChanges({idField: 'productId'}).subscribe(
+      adoptions => {
+        this.newProductLists = adoptions;
+        console.log(this.newProductLists);
+      }
+    )
+  }
 
   ngOnInit() {
-    this.fetchProducts();
-    let productRes = this.productService.getProductList();
-    productRes.snapshotChanges().subscribe(res => {
-      this.Products = [];
-      res.forEach(item => {
-        let a = item.payload.toJSON();
-        a['$key'] = item.key;
-        this.Products.push(a as NewProduct);
-      })
-    })
+    this.firestore.doc(`productList/${this.productId}`)
+    .valueChanges()
+    .subscribe((product: any) => (this.newProductList = product));
   }
 
-  fetchProducts() {
-    this.productService.getProductList().valueChanges().subscribe(res => {
-      console.log(res)
-    })
-  }
-
+  // delete function not yet
   deleteProduct(productId) {
-    console.log(productId)
-    if (window.confirm('Do you really want to delete?')) {
-      this.productService.deleteProduct(productId)
-    }
+    // console.log(productId)
+    // if (window.confirm('Do you really want to delete?')) {
+    //   if(this.productId !== 'new'){
+    //     this.firestore.doc(`productList/${this.productId}`).delete();
+    //   }
+    // }
   }
 
 }

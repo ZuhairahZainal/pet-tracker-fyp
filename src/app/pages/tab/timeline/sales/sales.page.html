@@ -21,7 +21,7 @@
 
 <ion-content>
   <ion-toolbar>
-    <ion-searchbar placeholder="Search item..." animated="true"></ion-searchbar>
+    <ion-searchbar placeholder="Search item..." [(ngModel)]="filter" animated="true"></ion-searchbar>
   </ion-toolbar>
   <ion-segment (ionChange)="segmentChanged($event)" value="allproduct" scrollable>
     <ion-segment-button value="allproduct">
@@ -49,10 +49,15 @@
         Pet Care
       </ion-label>
     </ion-segment-button>
+    <ion-segment-button value="others">
+      <ion-label>
+        Others
+      </ion-label>
+    </ion-segment-button>
   </ion-segment>
 
   <ion-list *ngIf="segment === 'allproduct'">
-    <ion-item *ngFor="let product of Products" >
+    <ion-item *ngFor="let product of newProductLists | filter:filter " >
       <ion-grid>
         <ion-row>
           <ion-col>
@@ -114,25 +119,31 @@
 
   <ion-list *ngIf="segment === 'petfoods'">
     <ion-item>
-      <ion-label>List 2</ion-label>
+      <ion-label>Pet Foods</ion-label>
     </ion-item>
   </ion-list>
 
   <ion-list *ngIf="segment === 'pethouse'">
-    <ion-item>
-      <ion-label>List 3</ion-label>
-    </ion-item>
+   <ion-item>
+    <ion-label>Pet House</ion-label>
+   </ion-item>
   </ion-list>
 
   <ion-list *ngIf="segment === 'petaccessories'">
     <ion-item>
-      <ion-label>List 4</ion-label>
+      <ion-label>Pet Accessories</ion-label>
     </ion-item>
   </ion-list>
 
   <ion-list *ngIf="segment === 'petcare'">
     <ion-item>
-      <ion-label>List 5</ion-label>
+      <ion-label>Pet Care</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="segment === 'others'">
+    <ion-item>
+      <ion-label>Others</ion-label>
     </ion-item>
   </ion-list>
 </ion-content>
