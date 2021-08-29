@@ -11,6 +11,14 @@ const routes: Routes = [
   {
     path: 'setting',
     loadChildren: () => import('./setting/setting.module').then( m => m.SettingPageModule)
+  },
+  {
+    path: 'pending-list',
+    loadChildren: () => import('./pending-list/pending-list.module').then( m => m.PendingListPageModule)
+  },
+  {
+    path: 'request-user-profile',
+    loadChildren: () => import('./request-user-profile/request-user-profile.module').then( m => m.RequestUserProfilePageModule)
   }
 ];
 

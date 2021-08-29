@@ -1,7 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/setting"></ion-back-button>
+      <ion-button routerLink="../">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
 
     <ion-title>Personal Information</ion-title>
@@ -24,30 +26,30 @@
         <form>
           <ion-item>
             <ion-label position="floating">Username</ion-label>
-            <ion-input  type="text" required></ion-input>
+            <ion-input type="text"></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label position="floating">About Me</ion-label>
-            <ion-input  type="text" required>
+            <ion-input  type="text">
             </ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label position="floating">Email Address</ion-label>
-            <ion-input  type="text" required>
+            <ion-input  type="text">
             </ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label position="floating">Phone Number</ion-label>
-            <ion-input type="text" required>
+            <ion-input type="text">
             </ion-input>
           </ion-item>
 
           <ion-row>
             <ion-col>
-              <ion-button type="submit" color="primary" shape="full" expand="block">Update Information</ion-button>
+              <ion-button (click)="saveEdit()" type="submit" color="primary" shape="full" expand="block">Update Information</ion-button>
             </ion-col>
           </ion-row>
         </form>
