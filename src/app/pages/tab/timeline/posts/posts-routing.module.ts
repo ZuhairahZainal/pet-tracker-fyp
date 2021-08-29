@@ -15,6 +15,10 @@ const routes: Routes = [
   {
     path: 'lostpet-form',
     loadChildren: () => import('./lostpet-form/lostpet-form.module').then( m => m.LostpetFormPageModule)
+  },
+  {
+    path: 'newpost-form',
+    loadChildren: () => import('./newpost-form/newpost-form.module').then( m => m.NewpostFormPageModule)
   }
 ];
 
