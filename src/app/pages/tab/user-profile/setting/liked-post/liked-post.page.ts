@@ -16,7 +16,7 @@ export class LikedPostPage implements OnInit {
   }
 
   segmentChanged(ev: any) {
-    console.log('Segment changed', ev);
+    // console.log('Segment changed', ev);
   }
 
 }
