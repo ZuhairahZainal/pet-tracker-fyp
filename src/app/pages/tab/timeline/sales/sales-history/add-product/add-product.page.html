@@ -6,7 +6,13 @@
       </ion-button>
     </ion-buttons>
 
-    <ion-title class="ion-text-center"></ion-title>
+    <ion-title class="ion-text-center">Add New Product</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button id="adopt-btn" fill="solid">
+        <ion-button (click)="formSubmit()">Add</ion-button>
+      </ion-button>
+    </ion-buttons>
 
   </ion-toolbar>
 </ion-header>
@@ -15,7 +21,21 @@
 
 <ion-content>
   <ion-list lines="full">
-    <form [formGroup]="productForm" (ngSubmit)="formSubmit()">
+    <form [formGroup]="productForm">
+
+      <ion-list>
+        <ion-card>
+          <ion-card-content>
+            <ion-item>
+              <ion-label>Insert Product Image</ion-label>
+              <ion-button (click)="takePicture()">Choose Image</ion-button>
+            </ion-item>
+
+            <img *ngIf="newProductList.productImage" [src]="newProductList.productImage"/>
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
+
       <ion-item>
         <ion-label position="floating">Product Name</ion-label>
         <ion-input formControlName="productName" type="text" required></ion-input>
@@ -24,11 +44,11 @@
       <ion-item>
         <ion-label position="floating">Product Category</ion-label>
         <ion-select value="gender" interface="action-sheet" formControlName="productCategory">
-          <ion-select-option value="petfood">Pet Food</ion-select-option>
-          <ion-select-option value="pethouse">Pet House</ion-select-option>
-          <ion-select-option value="petcare">Pet Care</ion-select-option>
-          <ion-select-option value="petaccessories">Pet Accessories</ion-select-option>
-          <ion-select-option value="others">Others</ion-select-option>
+          <ion-select-option value="Pet Food">Pet Food</ion-select-option>
+          <ion-select-option value="Pet House">Pet House</ion-select-option>
+          <ion-select-option value="Pet Care">Pet Care</ion-select-option>
+          <ion-select-option value="Pet Accessories">Pet Accessories</ion-select-option>
+          <ion-select-option value="Others">Others</ion-select-option>
         </ion-select>
       </ion-item>
 
@@ -42,16 +62,6 @@
         <ion-input formControlName="productPrice" type="number" required></ion-input>
       </ion-item>
 
-      <ion-item>
-        <ion-label position="floating">Product Image</ion-label>
-        <ion-input formControlName="productImage" type="text" required></ion-input>
-      </ion-item>
-
-      <ion-row>
-        <ion-col>
-          <ion-button type="submit" color="primary" shape="full" expand="block">Add Product</ion-button>
-        </ion-col>
-      </ion-row>
     </form>
   </ion-list>
 </ion-content>

@@ -8,11 +8,14 @@ import { SalesPageRoutingModule } from './sales-routing.module';
 
 import { SalesPage } from './sales.page';
 
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    Ng2SearchPipeModule,
     SalesPageRoutingModule
   ],
   declarations: [SalesPage]

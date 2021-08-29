@@ -16,7 +16,7 @@
 <ion-content>
   <section>
     <ion-buttons class="ion-padding">
-      <ion-button expand="block" fill="solid" routerLink="../sales-history/add-product">
+      <ion-button color="primary" expand="block" fill="solid" routerLink="../sales-history/add-product">
         <ion-icon name="add"></ion-icon>
         <ion-label class="ion-padding">Add New Product</ion-label>
       </ion-button>
@@ -24,7 +24,7 @@
   </section>
 
   <ion-list>
-    <ion-item *ngFor="let product of Products" >
+    <ion-item *ngFor="let product of newProductLists" >
   <ion-grid>
     <ion-row>
       <ion-col>
@@ -58,7 +58,7 @@
                     <ion-icon name="create-outline"></ion-icon>
                     <ion-label class="ion-padding">Edit</ion-label>
                   </ion-button>
-                  <ion-button expand="block" fill="solid" color="warning" (click)="deleteProduct(product.$key)">
+                  <ion-button expand="block" fill="solid" color="danger" (click)="deleteProduct(product.$key)">
                     <ion-icon name="trash-outline"></ion-icon>
                     <ion-label class="ion-padding">Delete</ion-label>
                   </ion-button>

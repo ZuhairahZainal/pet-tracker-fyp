@@ -54,6 +54,15 @@
   </ion-list>
 
   <ion-list *ngIf="segment === 'adoption'">
+    <ion-item>
+      <ion-label class="ion-padding-horizontal">Pending Request</ion-label>
+      <ion-buttons>
+        <ion-button slot="end" routerLink="./pending-list">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+
+    </ion-item>
     <ion-item *ngFor="let adoption of adoptionList">
       <ion-grid>
         <ion-row>

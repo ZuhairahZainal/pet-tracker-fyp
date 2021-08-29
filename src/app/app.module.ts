@@ -7,7 +7,6 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-
 //firebase
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -15,14 +14,19 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 
-
 //env
 import { environment } from '../environments/environment';
 
-// forms
+//forms
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { Ng2SearchPipeModule  } from 'ng2-search-filter';
+
+//services
+import { AuthService } from './auth/services/auth.service';
+
+//guards
+import { AuthGuard } from './auth/guards/auth.guard';
 
 
 
@@ -40,7 +44,7 @@ import { Ng2SearchPipeModule  } from 'ng2-search-filter';
             Ng2SearchPipeModule,
             IonicModule.forRoot(),
             AppRoutingModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [AuthService,AuthGuard, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

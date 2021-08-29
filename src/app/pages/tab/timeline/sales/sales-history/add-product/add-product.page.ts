@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
-
-import { ProductService } from './../../shared/product.service';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Camera, CameraResultType } from '@capacitor/camera';
 
 @Component({
   selector: 'app-add-product',
@@ -12,34 +12,85 @@ import { ProductService } from './../../shared/product.service';
 })
 export class AddProductPage implements OnInit {
 
-  productForm: FormGroup;
+  newProductList = {
+    productName: '',
+    productCategory: '',
+    productPrice: '',
+    productDescription: '',
+    productImage: null
+  }
 
-  constructor(private productService: ProductService,
+  productForm: FormGroup;
+  productId: string;
+
+  constructor(private storage: AngularFireStorage,
+              private firestore: AngularFirestore,
               private router: Router,
-              private loadCtrl: LoadingController,
+              private route: ActivatedRoute,
               public fb: FormBuilder) { }
 
   ngOnInit() {
-    this.productForm = this.fb.group({
-      productName: ['', Validators.required],
-      productCategory: ['', Validators.required],
-      productPrice: ['', Validators.required],
-      productDescription: ['', Validators.required],
-      productImage: [null]
-    })
+    this.productForm = new FormGroup({
+      productName: new FormControl(this.newProductList.productName,[
+        Validators.required,
+        Validators.minLength(2),
+      ]),
+      productCategory: new FormControl(this.newProductList.productCategory,[
+        Validators.required,
+      ]),
+      productPrice: new FormControl(this.newProductList.productPrice,[
+        Validators.required,
+      ]),
+      productDescription: new FormControl(this.newProductList.productDescription,[
+        Validators.required,
+      ])
+    });
+
+    this.productId = this.route.snapshot.params.productId || 'new';
+
   }
 
   //submit form, send data to database
-  formSubmit() {
-    if (!this.productForm.valid) {
-      return false;
-    } else {
-      this.productService.createProduct(this.productForm.value).then(res => {
-        console.log(res)
-        this.productForm.reset();
-        this.router.navigate(['./sales/sales-history']);
+  formSubmit(): void{
+    this.newProductList.productName = this.productForm.get('productName').value;
+    this.newProductList.productCategory = this.productForm.get('productCategory').value;
+    this.newProductList.productPrice = this.productForm.get('productPrice').value;
+    this.newProductList.productDescription = this.productForm.get('productDescription').value;
+
+    this.firestore.collection('productList')
+    .add(this.newProductList).then(() => {
+      this.takePicture;
+      this.productForm = null;
+      this.router.navigateByUrl('tab/timeline/sales/sales-history');
+    });
+  }
+
+  async takePicture(): Promise<void>{
+    try{
+      const productImage = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.Base64
+      });
+
+      const productImageRef = this.storage.ref(
+        `productList/${new Date().getTime()}/productImage.png`
+      );
+
+      productImageRef.putString(productImage.base64String, 'base64', {
+        contentType: 'image/png',
       })
-        .catch(error => console.log(error));
+      .then(() =>{
+        productImageRef.getDownloadURL().subscribe(downloadURL => {
+          this.newProductList.productImage = downloadURL;
+          console.log(this.newProductList);
+        })
+
+        this.newProductList.productImage.unsubsribe();
+
+      })
+    }catch(error){
+      console.warn(error);
     }
   }
 

@@ -1,0 +1,35 @@
+.logo{
+  align-items: center;
+  width: 55%;
+  display: block;
+  margin: auto;
+}
+
+.infoBtn{
+  width: 10%;
+  position: absolute;
+  right: 6%;
+}
+
+ion-button{
+  font-family: "AbeeZee";
+}
+
+.ion-padding{
+  --ion-background-color: #9DDFCC;
+  font-family: "AbeeZee";
+}
+
+ion-input{
+  --background: white;
+  border-radius: 10px;
+  font-family: "AbeeZee";
+}
+
+ion-label{
+  font-family: 'AbeeZee' !important;
+}
+
+a{
+  color: white;
+}

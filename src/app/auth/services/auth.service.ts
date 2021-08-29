@@ -53,7 +53,7 @@ export class AuthService
         this.logout();
       } else {
         loading.dismiss();
-        this.router.navigate(['/home']);
+        this.router.navigate(['/tab/timeline']);
       }
     });
   } //end of login
@@ -61,7 +61,7 @@ export class AuthService
   logout()
   {
     this.afauth.signOut().then(()=> {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/auth/login']);
     });
   }
 

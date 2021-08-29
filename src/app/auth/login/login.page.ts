@@ -54,7 +54,7 @@ export class LoginPage implements OnInit {
       this.auth.login(this.email, this.password)
       .then(()=> {
         loading.dismiss();
-        this.router.navigate(['/pages/tab/timeline']);
+        this.router.navigate(['/tab/timeline']);
       })
       .catch((error)=> {
         loading.dismiss();

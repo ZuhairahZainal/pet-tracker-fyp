@@ -5,24 +5,28 @@
   </ion-card-header>
   <ion-card-content>
     <ion-list>
-      <ion-item>
-        <ion-label position="stacked">Email</ion-label>
+      <ion-item lines=none>
+        <ion-label position="unset">Email Address</ion-label>
+      </ion-item>
+      <ion-item lines=none>
         <ion-input type="text" [(ngModel)]="email" placeholder="Enter your email"></ion-input><br>
       </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Password</ion-label>
+      <ion-item lines=none>
+        <ion-label position="unset">Password</ion-label>
+      </ion-item>
+      <ion-item lines=none>
         <ion-input type="password" [(ngModel)]="password" placeholder="Enter your password"></ion-input><br><br>
       </ion-item>
     </ion-list>
   </ion-card-content>
 
-  <ion-button expand="block" shape="round" (click)="login()">Login</ion-button>
+  <ion-button color="light" expand="block" shape="round" (click)="login()">Login</ion-button>
 
 
 <div style="padding: 20px; text-align: center;">
   <a (click)="forgot()">Forgot Password?</a><br>
   <br>
-  <a (click)="register()">New? Create an account</a>
+  New? <a (click)="register()">Create an account</a>
 </div>
 
 <ion-img class="infoBtn" src="assets/information-circle.svg" (click)="guideline()"></ion-img>

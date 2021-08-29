@@ -1,0 +1,110 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="../">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title class="ion-text-center"> Create New Post</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-avatar></ion-avatar>
+      <ion-label class="ion-padding-horizontal">Username</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="full" id="imagebutton">
+    <ion-icon lazy="true" slot="slot" name="image"></ion-icon>
+    <ion-label slot="end">Upload Image</ion-label>
+    <input type="file" (change)="loadImageFromDevice($event)" id="file-input"
+    accept="image/png, image/jpeg">
+  </ion-button>
+
+  <form [formGroup]="lostpetForm" (submit)="onSubmit()">
+    <ion-item lines="full" id="petname">
+      <ion-label position ="floating">Pet Name</ion-label>
+      <ion-input formControlName="petname" type="text" required
+      [class.invalid]="!lostpetForm.controls.petname.valid && lostpetForm.controls.petname.touched"></ion-input>
+    </ion-item>
+
+    <ion-item class="error-message" *ngIf="!lostpetForm.controls.petname.valid && lostpetForm.controls.petname.touched">
+      <p>The Pet Name is required to be under 45 characters.</p>
+    </ion-item>
+
+      <ion-item lines="full" id="petgender">
+        <ion-label position ="floating">Pet Gender</ion-label>
+        <ion-select value="gender" interface="action-sheet" formControlName="petgender" required
+        [class.invalid]="!lostpetForm.controls.petgender.valid && lostpetForm.controls.petgender.touched">
+          <ion-select-option value="Male">Male</ion-select-option>
+          <ion-select-option value="Female">Female</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="error-message" *ngIf="!lostpetForm.controls.petgender.valid && lostpetForm.controls.petgender.touched">
+        <p>The pet gender is required.</p>
+      </ion-item>
+
+        <ion-item lines="full" id="petage">
+          <ion-label position ="floating">Pet Age (Months)</ion-label>
+          <ion-input formControlName="petage" type="number" required
+          [class.invalid]="!lostpetForm.controls.petage.valid && lostpetForm.controls.petage.touched"></ion-input>
+        </ion-item>
+
+        <ion-item class="error-message" *ngIf="!lostpetForm.controls.petage.valid && lostpetForm.controls.petage.touched">
+          <p>The pet age is required.</p>
+        </ion-item>
+
+          <ion-item lines="full" id="petcolor">
+            <ion-label position ="floating">Pet Color</ion-label>
+            <ion-input formControlName="petcolor" type="text" required
+            [class.invalid]="!lostpetForm.controls.petcolor.valid && lostpetForm.controls.petcolor.touched"></ion-input>
+          </ion-item>
+
+          <ion-item class="error-message" *ngIf="!lostpetForm.controls.petcolor.valid && lostpetForm.controls.petcolor.touched">
+            <p>State the colour of your lost pet.</p>
+          </ion-item>
+
+          <ion-item lines="full" id="location">
+            <ion-label position ="floating">Location</ion-label>
+            <ion-input formControlName="location" type="text" required
+            [class.invalid]="!lostpetForm.controls.location.valid && lostpetForm.controls.location.touched"></ion-input>
+          </ion-item>
+
+          <ion-item class="error-message" *ngIf="!lostpetForm.controls.location.valid && lostpetForm.controls.location.touched">
+            <p>The last location is required.</p>
+          </ion-item>
+
+          <ion-item lines="full" id="reward">
+            <ion-label position ="floating">Reward</ion-label>
+            <ion-select value="reward" interface="action-sheet" formControlName="reward" required
+            [class.invalid]="!lostpetForm.controls.reward.valid && lostpetForm.controls.reward.touched">
+              <ion-select-option value="no">No</ion-select-option>
+              <ion-select-option value="yes">Yes</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label id="story">Description</ion-label>
+            <ion-textarea id= "Textfield" name="content" rows="5" cols="33"
+            formControlName="description" placeholder="More Information.."
+            [class.invalid]="!lostpetForm.controls.description.valid && lostpetForm.controls.description.touched">
+            </ion-textarea>
+          </ion-item>
+
+          <ion-item class="error-message" *ngIf="!lostpetForm.controls.description.valid && lostpetForm.controls.description.touched">
+            <p>The description has to be at least 2 characters long.</p>
+          </ion-item>
+
+          <ion-card-subtitle class="ion-text-center">
+            <ion-button expand="block" type="submit" [disabled]="!lostpetForm.valid"> POST </ion-button>
+
+          </ion-card-subtitle>
+  </form>
+
+</ion-content>

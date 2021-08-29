@@ -13,21 +13,6 @@ import { Camera, CameraResultType} from '@capacitor/camera';
 // form validation
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-class adoptionList{
-  constructor(
-    public petAge: string,
-    public petBreed: string,
-    public petCategory: string,
-    public petCondition: string,
-    public petDescription: string,
-    public petGender: string,
-    public petId: string,
-    public petName: string,
-    public petSpayStatus: string,
-    public petImage: null
-  ){}
-}
-
 @Component({
   selector: 'app-adoption-form',
   templateUrl: './adoption-form.page.html',
@@ -85,7 +70,7 @@ export class AdoptionFormPage implements OnInit {
       ])
     });
 
-    this.petId = this.route.snapshot.params.petId;
+    this.petId = this.route.snapshot.params.petId || 'new';
 
     if (this.petId !== 'new'){
       this.firestore.doc(`adoptionList/${this.petId}`)
@@ -94,9 +79,9 @@ export class AdoptionFormPage implements OnInit {
     }
   }
 
+
   savePost(): void{
     if(this.petId === 'new'){
-
       this.newAdoptionList.petAge = this.newAdoptionForm.get('petAge').value;
       this.newAdoptionList.petBreed = this.newAdoptionForm.get('petBreed').value;
       this.newAdoptionList.petCategory = this.newAdoptionForm.get('petCategory').value;
@@ -110,14 +95,14 @@ export class AdoptionFormPage implements OnInit {
       .add(this.newAdoptionList).then(() => {
         this.takePicture;
         this.newAdoptionForm = null;
-        this.router.navigateByUrl('/tab/adoption');
+        this.router.navigateByUrl('tab/adoption');
       });
     }else{
       this.firestore.doc(`adoptionList/${this.petId}`)
       .update(this.newAdoptionList)
       .then(() => {
         this.newAdoptionForm = null;
-        this.router.navigateByUrl('/adoption');
+        this.router.navigateByUrl('tab/adoption');
       })
     }
   }
@@ -131,7 +116,7 @@ export class AdoptionFormPage implements OnInit {
       });
 
       const petImageRef = this.storage.ref(
-        `adoptionList/${this.petId}/petImage.png`
+        `adoptionList/${new Date().getTime()}/petImage.png`
       );
 
       petImageRef.putString(petImage.base64String, 'base64', {
@@ -142,6 +127,9 @@ export class AdoptionFormPage implements OnInit {
           this.newAdoptionList.petImage = downloadURL;
           console.log(this.newAdoptionList);
         })
+
+        this.newAdoptionList.petImage.unsubsribe();
+
       })
     }catch(error){
       console.warn(error);
