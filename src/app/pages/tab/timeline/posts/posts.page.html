@@ -1,9 +1,36 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>posts</ion-title>
+    <ion-title>Create a Post</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label class="ion-padding-horizontal">New Post</ion-label>
+      <ion-buttons>
+        <ion-button slot="end" routerLink="./newpost-form">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
 
+    <ion-item>
+      <ion-label class="ion-padding-horizontal">Donation Post</ion-label>
+      <ion-buttons>
+        <ion-button slot="end" routerLink="./donate-form">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+
+    <ion-item>
+      <ion-label class="ion-padding-horizontal">Lost Pet Post</ion-label>
+      <ion-buttons>
+        <ion-button slot="end" routerLink="./lostpet-form">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
 </ion-content>
