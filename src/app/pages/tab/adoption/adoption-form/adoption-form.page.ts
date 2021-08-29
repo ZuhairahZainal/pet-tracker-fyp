@@ -116,7 +116,7 @@ export class AdoptionFormPage implements OnInit {
       });
 
       const petImageRef = this.storage.ref(
-        `adoptionList/${new Date().getTime()}/${this.petId}`
+        `adoptionList/${new Date().getTime()}/petImage.png`
       );
 
       petImageRef.putString(petImage.base64String, 'base64', {
