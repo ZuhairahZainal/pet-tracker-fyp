@@ -10,7 +10,7 @@
 
     <ion-buttons slot="end">
       <ion-button id="adopt-btn" fill="solid">
-        <ion-button (click)="savePost()">Post</ion-button>
+        <ion-button (click)="savePost()" [disabled]="!newAdoptionForm.valid">Post</ion-button>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -56,8 +56,8 @@
       <ion-item>
         <ion-label>Gender</ion-label>
         <ion-select value="gender" interface="action-sheet" formControlName="petGender">
-          <ion-select-option value="male">Male</ion-select-option>
-          <ion-select-option value="female">Female</ion-select-option>
+          <ion-select-option value="Male">Male</ion-select-option>
+          <ion-select-option value="Female">Female</ion-select-option>
         </ion-select>
       </ion-item>
 
@@ -67,14 +67,31 @@
       </ion-item>
 
       <ion-item>
-        <ion-label position="floating">Spay Status</ion-label>
-          <ion-input type="text" formControlName="petSpayStatus"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="stacked">Description</ion-label>
+        <ion-label position="floating">Description</ion-label>
           <ion-textarea formControlName="petDescription" placeholder="Enter more information here..."></ion-textarea>
         </ion-item>
+
+        <!-- <ion-label position="floating">Spay Status</ion-label> -->
+          <!-- <ion-input type="text" formControlName="petSpayStatus"></ion-input> -->
+          <ion-radio-group formControlName="petSpayStatus" required>
+            <ion-list-header>
+              <ion-label>Spay Status</ion-label>
+            </ion-list-header>
+            <ion-item>
+              <ion-label>N/A</ion-label>
+              <ion-radio slot="end" color="primary" value="N/A"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>Done</ion-label>
+              <ion-radio slot="end" color="secondary" value="Done"></ion-radio>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Not Done</ion-label>
+              <ion-radio slot="end" color="tertiary" value="Not Done"></ion-radio>
+            </ion-item>
+
+          </ion-radio-group>
     </ion-list>
   </div>
 </ion-content>
