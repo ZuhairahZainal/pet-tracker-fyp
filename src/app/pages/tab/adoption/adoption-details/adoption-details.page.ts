@@ -38,8 +38,4 @@ export class AdoptionDetailsPage implements OnInit {
   adoptPet(){
     this.adopt++;
   }
-
-  back(){
-    this.router.navigateByUrl('/tab/adoption');
-  }
 }
