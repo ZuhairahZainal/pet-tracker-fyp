@@ -6,6 +6,7 @@ import { AdoptionPage } from './adoption.page';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'adoption-post',
     component: AdoptionPage
   },
   {
