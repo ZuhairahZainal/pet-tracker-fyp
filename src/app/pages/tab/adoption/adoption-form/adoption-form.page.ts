@@ -28,7 +28,8 @@ export class AdoptionFormPage implements OnInit {
     petGender: '',
     petName: '',
     petSpayStatus: '',
-    petImage: null
+    petImage: null,
+    petMedicalRecord: null
   }
 
   newAdoptionForm: FormGroup;
@@ -94,6 +95,7 @@ export class AdoptionFormPage implements OnInit {
       this.firestore.collection('adoptionList')
       .add(this.newAdoptionList).then(() => {
         this.takePicture;
+        this.addMedicalRecord;
         this.newAdoptionForm = null;
         this.router.navigateByUrl('tab/adoption');
       });
@@ -116,7 +118,7 @@ export class AdoptionFormPage implements OnInit {
       });
 
       const petImageRef = this.storage.ref(
-        `adoptionList/${new Date().getTime()}/petImage.png`
+        `adoptionList/petImage/${new Date().getTime()}/petImage.png`
       );
 
       petImageRef.putString(petImage.base64String, 'base64', {
@@ -128,7 +130,32 @@ export class AdoptionFormPage implements OnInit {
           console.log(this.newAdoptionList);
         })
 
-        this.newAdoptionList.petImage.unsubsribe();
+      })
+    }catch(error){
+      console.warn(error);
+    }
+  }
+
+  async addMedicalRecord(): Promise<void>{
+    try{
+      const petMedicalRecord = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.Base64
+      });
+
+      const petMedicalRecordRef = this.storage.ref(
+        `adoptionList/petMedicalRecord/${new Date().getTime()}/petMedicalRecord.png`
+      );
+
+      petMedicalRecordRef.putString(petMedicalRecord.base64String, 'base64', {
+        contentType: 'image/png',
+      })
+      .then(() =>{
+        petMedicalRecordRef.getDownloadURL().subscribe(downloadURL => {
+          this.newAdoptionList.petMedicalRecord = downloadURL;
+          console.log(this.newAdoptionList);
+        })
 
       })
     }catch(error){
