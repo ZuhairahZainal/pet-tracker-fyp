@@ -14,14 +14,13 @@ export class AdoptionDetailsPage implements OnInit {
   petId: any;
   adopt: number = 0;
 
-  // alum siap 7/9
   constructor(private firestore: AngularFirestore,
               private router: Router,
               private activatedRoute: ActivatedRoute) {
 
       this.petId = this.activatedRoute.snapshot.paramMap.get('petId');
 
-      this.getTask(this.petId).subscribe( (data) => {
+      this.getData(this.petId).subscribe( (data) => {
         this.adoptionList = data;
         console.log(this.adoptionList);
       }
@@ -31,11 +30,13 @@ export class AdoptionDetailsPage implements OnInit {
   ngOnInit() {
   }
 
-  getTask(petId) {
+  getData(petId) {
     return this.firestore.collection('adoptionList').doc(petId).valueChanges({idField: 'petId'});
   }
 
+  // alum siap
   adoptPet(){
     this.adopt++;
   }
+
 }
