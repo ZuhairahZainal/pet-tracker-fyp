@@ -6,12 +6,14 @@
       </ion-button>
     </ion-buttons>
 
-    <ion-title> {{ adoptionList.petName }} </ion-title>
+    <ion-title class="ion-text-center">{{ adoptionList.petName }}'s Profile </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <img [src]="adoptionList.petImage" id="img">
+
+
   <ion-card>
     <ion-card-header>
       <ion-list>
@@ -24,40 +26,60 @@
     </ion-card-header>
 
     <div id="details">
-      <ion-card-header>
-        <ion-card-title color="primary">Category</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        {{ adoptionList.petCategory }}
-      </ion-card-content>
+      <ion-grid size=2>
+        <ion-row>
+          <ion-col>
+            <ion-card-header>
+              <ion-card-title color="primary">Age</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ adoptionList.petAge }} Month
+            </ion-card-content>
+          </ion-col>
 
-      <ion-card-header>
-        <ion-card-title color="primary">Age</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        {{ adoptionList.petAge }} Month
-      </ion-card-content>
+          <ion-col>
+            <ion-card-header>
+              <ion-card-title color="primary">Breed</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ adoptionList.petBreed }}
+            </ion-card-content>
+          </ion-col>
 
-      <ion-card-header>
-        <ion-card-title color="primary">Breed</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        {{ adoptionList.petBreed }}
-      </ion-card-content>
+          <ion-col>
+            <ion-card-header>
+              <ion-card-title color="primary">Category</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ adoptionList.petCategory }}
+            </ion-card-content>
+          </ion-col>
+        </ion-row>
 
-      <ion-card-header>
-        <ion-card-title color="primary">Gender</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        {{ adoptionList.petGender }}
-      </ion-card-content>
+        <ion-row>
+          <ion-col size="4">
+            <ion-card-header>
+              <ion-card-title color="primary">Gender</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ adoptionList.petGender }}
+            </ion-card-content>
+          </ion-col>
 
-      <ion-card-header>
-        <ion-card-title color="primary">Health Condition</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        {{ adoptionList.petCondition }}
-      </ion-card-content>
+          <ion-col size="8">
+            <ion-card-header>
+              <ion-card-title color="primary">Health Condition</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ adoptionList.petCondition }}
+            </ion-card-content>
+          </ion-col>
+        </ion-row>
+
+
+
+
+      </ion-grid>
 
       <ion-card-header>
         <ion-card-title color="primary">Spay Status</ion-card-title>
@@ -66,6 +88,12 @@
         {{ adoptionList.petSpayStatus }}
       </ion-card-content>
 
+      <ion-card-header>
+        <ion-card-title color="primary">Medical Record</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <img [src]="adoptionList.petMedicalRecord" id="img">
+      </ion-card-content>
     </div>
   </ion-card>
 
