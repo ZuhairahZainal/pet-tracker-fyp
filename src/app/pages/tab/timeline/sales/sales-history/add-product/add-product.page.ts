@@ -17,6 +17,7 @@ export class AddProductPage implements OnInit {
     productCategory: '',
     productPrice: '',
     productDescription: '',
+    productAgreement: '',
     productImage: null
   }
 
@@ -43,6 +44,10 @@ export class AddProductPage implements OnInit {
       ]),
       productDescription: new FormControl(this.newProductList.productDescription,[
         Validators.required,
+        Validators.minLength(2)
+      ]),
+      productAgreement: new FormControl(this.newProductList.productAgreement,[
+        Validators.required,
       ])
     });
 
@@ -56,6 +61,7 @@ export class AddProductPage implements OnInit {
     this.newProductList.productCategory = this.productForm.get('productCategory').value;
     this.newProductList.productPrice = this.productForm.get('productPrice').value;
     this.newProductList.productDescription = this.productForm.get('productDescription').value;
+    this.newProductList.productAgreement = this.productForm.get('productAgreement').value;
 
     this.firestore.collection('productList')
     .add(this.newProductList).then(() => {
