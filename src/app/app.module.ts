@@ -26,9 +26,7 @@ import { Ng2SearchPipeModule  } from 'ng2-search-filter';
 import { AuthService } from './auth/services/auth.service';
 
 //guards
-import { AuthGuard } from './auth/guards/auth.guard';
-
-
+import { AuthenticationGuard } from './auth/guards/authentication.guard';
 
 @NgModule({
   declarations: [AppComponent],
@@ -44,7 +42,7 @@ import { AuthGuard } from './auth/guards/auth.guard';
             Ng2SearchPipeModule,
             IonicModule.forRoot(),
             AppRoutingModule],
-  providers: [AuthService,AuthGuard, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [AuthService,AuthenticationGuard, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
