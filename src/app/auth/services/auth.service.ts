@@ -11,6 +11,7 @@ import { switchMap } from 'rxjs/operators';
 
 export class AuthService
 {
+  [x: string]: any;
   user$: Observable<User>;
   user: User;
 
@@ -79,3 +80,4 @@ export class AuthService
   } // end of toast
 
 }
+
