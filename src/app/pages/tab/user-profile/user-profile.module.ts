@@ -8,6 +8,8 @@ import { UserProfilePageRoutingModule } from './user-profile-routing.module';
 
 import { UserProfilePage } from './user-profile.page';
 
+import { AdoptionDetailsComponent } from './components/adoption-Details/adoption-Details.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +17,6 @@ import { UserProfilePage } from './user-profile.page';
     IonicModule,
     UserProfilePageRoutingModule
   ],
-  declarations: [UserProfilePage]
+  declarations: [UserProfilePage, AdoptionDetailsComponent]
 })
 export class UserProfilePageModule {}

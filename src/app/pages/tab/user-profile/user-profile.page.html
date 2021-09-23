@@ -63,11 +63,19 @@
       </ion-buttons>
 
     </ion-item>
-    <ion-item *ngFor="let adoption of adoptionList">
+
       <ion-grid>
         <ion-row>
-        <ion-col>
+          <ion-col id="adopt" size="4" *ngFor="let adoption of adoptionList">
+              <img [src]="adoption.petImage" (click)="displayAdoptionDetails()"/>
+          </ion-col>
+        </ion-row>
+     </ion-grid>
 
+
+
+        <!-- <ion-row>
+        <ion-col>
         <ion-card>
           <img [src]="adoption.petImage"/>
           <ion-card-header>
@@ -129,9 +137,9 @@
           </ion-button>
         </ion-buttons>
       </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-item>
+    </ion-row> -->
+  <!-- </ion-grid>
+</ion-item> -->
 </ion-list>
 
 </ion-content>
