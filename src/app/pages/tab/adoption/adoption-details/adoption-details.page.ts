@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-adoption-details',
@@ -15,16 +15,14 @@ export class AdoptionDetailsPage implements OnInit {
   adopt: number = 0;
 
   constructor(private firestore: AngularFirestore,
-              private router: Router,
               private activatedRoute: ActivatedRoute) {
 
       this.petId = this.activatedRoute.snapshot.paramMap.get('petId');
 
-      this.getData(this.petId).subscribe( (data) => {
-        this.adoptionList = data;
-        console.log(this.adoptionList);
-      }
-    );
+      this.getData(this.petId).subscribe( adoptionList => {
+        this.adoptionList = adoptionList;
+        console.log(adoptionList);
+      });
   }
 
   ngOnInit() {

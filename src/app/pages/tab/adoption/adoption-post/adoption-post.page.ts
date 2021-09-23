@@ -13,9 +13,9 @@ export class AdoptionPostPage implements OnInit {
 
   constructor( private firestore: AngularFirestore) {
     this.firestore.collection('adoptionList').valueChanges({idField: 'petId'}).subscribe(
-      adoptions => {
-        this.adoptionList = adoptions;
-        console.log(this.adoptionList);
+      adoptionList => {
+        this.adoptionList = adoptionList;
+        console.log(adoptionList);
       }
     )
   }
