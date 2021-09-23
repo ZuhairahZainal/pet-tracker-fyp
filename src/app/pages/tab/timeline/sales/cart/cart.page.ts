@@ -1,58 +1,99 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { BehaviorSubject } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { ActivatedRoute } from '@angular/router';
+import { AlertController, ModalController } from '@ionic/angular';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ProductService } from '../shared/product.service';
-import { NewProduct } from '../shared/sales';
+import { CartItem } from '../shared/sales.interface';
 import { CartService } from './shared/cart.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.page.html',
   styleUrls: ['./cart.page.scss'],
 })
+
 export class CartPage implements OnInit {
 
-  cart = [];
-  Products: NewProduct[] = [];
-  cartItemCount: BehaviorSubject<number>;
+  cartItems$: Observable<any[]>;
+  totalAmount$: Observable<number>;
+  cartLists;
+  productDetail;
+  totalCart;
+  cartId;
 
-  @ViewChild('cart', {static: false, read: ElementRef})fab: ElementRef;
+  newCartList = new BehaviorSubject<any[]>([
+    {
+    productId: '',
+    productName: '',
+    productCategory: '',
+    productPrice: null,
+    productDescription: '',
+    productImage: null
+  }
+]);
 
   constructor(private cartService: CartService,
-              private modalCtrl: ModalController,
-              private productService: ProductService) {}
+              private actRoute: ActivatedRoute,
+              private alertCtrl: AlertController,
+              private firestore: AngularFirestore,
+              private productService: ProductService) {
+
+
+                this.firestore.collection('cartList').valueChanges({idField: 'cartId'}).subscribe(
+                  (products: any) => {
+                    this.newCartList = products;
+                    console.log(this.newCartList);
+                  }
+                );
+
+                this.firestore.collection('cartList').valueChanges({idField: 'cartId'}).subscribe(
+                  (products: any) => {
+                    this.cartLists = products;
+                    console.log(this.cartLists);
+                  }
+                );
+              }
 
   ngOnInit() {
-    this.cart = this.cartService.getCart();
-    this.cartItemCount = this.cartService.getCartItemCount();
+    this.totalAmount$ = this.getTotalAmount();
+  }
 
-    this.fetchProducts();
-    let productRes = this.productService.getProductList();
-    productRes.snapshotChanges().subscribe(res => {
-      this.Products = [];
-      this.Products = this.cartService.getProducts();
-      res.forEach(item => {
-        let a = item.payload.toJSON();
-        a['$key'] = item.key;
-        this.Products.push(a as NewProduct);
+  getTotalAmount() {
+    return this.newCartList.pipe(
+      map((items) => {
+        let total = 0;
+        items.forEach((item) => {
+          total += item.productPrice;
+        });
+        return total;
       })
-    })
-
-    this.cart = this.cartService.getCart();
-    this.cartItemCount = this.cartService.getCartItemCount();
+    );
   }
 
-  fetchProducts() {
-    this.productService.getProductList().valueChanges().subscribe(res => {
-      console.log(res)
-    })
+  async removeProduct(cartId: string) {
+    const alert = await this.alertCtrl.create({
+      header: 'Remove',
+      message: 'Are you sure you want to remove?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => this.deleteProduct(cartId),
+        },
+        {
+          text: 'No',
+        },
+      ],
+    });
+
+    alert.present();
+
   }
 
-  removeCartItem(product) {
-    this.cartService.removeProduct(product);
+  deleteProduct(cartId: string) {
+    this.firestore.doc('cartList/' + cartId).delete();
   }
 
-  getTotal() {
-    return this.cart.reduce((i, j) => i + j.productPrice, 0);
-  }
 }
+

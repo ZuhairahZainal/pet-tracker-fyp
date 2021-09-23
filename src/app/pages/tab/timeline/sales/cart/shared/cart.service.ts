@@ -1,71 +1,64 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { ProductService } from '../../shared/product.service';
-import { NewProduct } from '../../shared/sales';
+import { NewProduct } from '../../shared/sales.interface';
+
+export interface CartItem {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  image: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class CartService {
 
-  data: NewProduct[] = [];
-
-  private cart = [];
-  private cartItemCount = new BehaviorSubject(0);
-
-  constructor(private productService: ProductService) {
-    this.fetchProducts();
-    let productRes = this.productService.getProductList();
-    productRes.snapshotChanges().subscribe(res => {
-      this.data = [];
-      res.forEach(item => {
-        let a = item.payload.toJSON();
-        a['$key'] = item.key;
-        this.data.push(a as NewProduct);
-      })
-    })
-  }
-
-  fetchProducts() {
-    this.productService.getProductList().valueChanges().subscribe(res => {
-      console.log(res);
-    })
-  }
-
-  getProducts() {
-    return this.data;
-  }
+  private items$ = new BehaviorSubject<CartItem[]>([
+    {
+      id: 1,
+      name: 'Sea Food',
+      price: 12,
+      image: 'assets/images/foods/seafood-dishes.png',
+      quantity: 1,
+    },
+  ]);
 
   getCart() {
-    return this.cart;
+    return this.items$.asObservable();
   }
 
-  getCartItemCount() {
-    return this.cartItemCount;
+  addToCart(newItem: CartItem) {
+    this.items$.next([...this.items$.getValue(), newItem]);
   }
 
-  addProduct(product) {
-    let added = false;
-    for (let p of this.cart) {
-      if (p.id === product.id) {
-        p.amount += 1;
-        added = true;
-        break;
-      }
-    }
-    if (!added) {
-      product.amount = 1;
-      this.cart.push(product);
-    }
-    this.cartItemCount.next(this.cartItemCount.value + 1);
+  removeItem(id: number) {
+    this.items$.next(this.items$.getValue().filter((item) => item.id !== id));
   }
 
-  removeProduct(product) {
-    for (let [index, p] of this.cart.entries()) {
-      if (p.id === product.id) {
-        this.cartItemCount.next(this.cartItemCount.value - p.amount);
-        this.cart.splice(index, 1);
-      }
-    }
+  changeQty(quantity: number, id: number) {
+    const items = this.items$.getValue();
+    const index = items.findIndex((item) => item.id === id);
+    items[index].quantity += quantity;
+    this.items$.next(items);
   }
+
+  getTotalAmount() {
+    return this.items$.pipe(
+      map((items) => {
+        let total = 0;
+        items.forEach((item) => {
+          total += item.quantity * item.price;
+        });
+
+        return total;
+      })
+    );
+  }
+
 }

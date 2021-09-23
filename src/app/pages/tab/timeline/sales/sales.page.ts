@@ -1,67 +1,85 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { CartService } from './cart/shared/cart.service';
-import { ProductService } from './shared/product.service';
-import { NewProduct } from './shared/sales';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-sales',
   templateUrl: './sales.page.html',
   styleUrls: ['./sales.page.scss'],
 })
-export class SalesPage implements OnInit {
 
-  Products: NewProduct[] = [];
+export class SalesPage implements OnInit {
 
   public segment: string = "allproduct";
 
   @ViewChild('cart', {static: false, read: ElementRef})fab: ElementRef;
 
-  newProductLists;
-  productId: string;
+  newCartList = {
+    cartId: '',
+    cartProductId: '',
+    cartProductName: '',
+    cartProductCategory: '',
+    cartProductPrice: '',
+    cartProductDescription: '',
+    cartProductAgreement: '',
+    cartProductImage: null
+  }
+
+  selectedProductDetail;
+  productLists;
+  product: any;
+  cartId: string;
   filter: string;
+  productId: string;
+  productCategory;
 
-  newProductList = {
-    productName: '',
-    productCategory: '',
-    productPrice: '',
-    productDescription: '',
-    productImage: null
-  }
+  constructor(private firestore: AngularFirestore,
+              private activatedRoute: ActivatedRoute,
+              private router: Router,
+              public loadingCtrl: LoadingController,
+              ) {
 
-  constructor(private firestore: AngularFirestore, private cartService: CartService) {
-
-    this.firestore.collection('productList').valueChanges({idField: 'productId'}).subscribe(
-      adoptions => {
-        this.newProductLists = adoptions;
-        console.log(this.newProductLists);
-      }
-    )
-  }
+                this.firestore.collection('productList').valueChanges({idField: 'productId'}).subscribe(
+                  (products: any) => {
+                    this.productLists = products;
+                    console.log(this.productLists);
+                  }
+                );
+              }
 
   //filter segment (incomplete)
   segmentChanged(ev: any) {
     this.segment = ev.detail.value;
   }
 
-
-  // ambil from firestore database for display
   ngOnInit() {
-    this.firestore.doc(`productList/${this.productId}`)
-    .valueChanges()
-    .subscribe((product: any) => (this.newProductList = product));
-
   }
 
+  // masuk ke firebase
+  async addToCartDB(productId: string){
+    this.firestore.doc(`productList/${productId}`).valueChanges().subscribe(
+      ( productDetail: any ) => {
+        this.selectedProductDetail = productDetail;
+        console.log(this.selectedProductDetail);
+      }
+    );
 
-  // function add to cart (incomplete)
-  addToCart(product) {
-    this.cartService.addProduct(product);
-  }
+    const loading = await this.loadingCtrl.create();
 
-  // (incomplete)
-  getProducts() {
-    return this.Products;
+      this.newCartList.cartId = this.firestore.createId();
+      this.newCartList = this.selectedProductDetail;
+
+      this.firestore.collection('cartList').add(this.newCartList).then(() => {
+        loading.dismiss().then(() => {
+          this.router.navigateByUrl('tab/timeline/sales/cart');
+        });
+      },
+       error => {
+        loading.dismiss().then(() => {
+          console.error(error);
+        });
+      });
   }
 
 }
