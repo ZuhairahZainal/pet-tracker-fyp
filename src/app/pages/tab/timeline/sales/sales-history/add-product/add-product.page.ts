@@ -4,6 +4,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Camera, CameraResultType } from '@capacitor/camera';
+import { AlertController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-add-product',
@@ -13,6 +14,7 @@ import { Camera, CameraResultType } from '@capacitor/camera';
 export class AddProductPage implements OnInit {
 
   newProductList = {
+    productId: '',
     productName: '',
     productCategory: '',
     productPrice: '',
@@ -26,6 +28,8 @@ export class AddProductPage implements OnInit {
 
   constructor(private storage: AngularFireStorage,
               private firestore: AngularFirestore,
+              public loadingCtrl: LoadingController,
+              public alertCtrl: AlertController,
               private router: Router,
               private route: ActivatedRoute,
               public fb: FormBuilder) { }
@@ -56,19 +60,36 @@ export class AddProductPage implements OnInit {
   }
 
   //submit form, send data to database
-  formSubmit(): void{
+  async formSubmit(){
+    const loading = await this.loadingCtrl.create();
+
+    this.newProductList.productId = this.firestore.createId();
     this.newProductList.productName = this.productForm.get('productName').value;
     this.newProductList.productCategory = this.productForm.get('productCategory').value;
     this.newProductList.productPrice = this.productForm.get('productPrice').value;
     this.newProductList.productDescription = this.productForm.get('productDescription').value;
     this.newProductList.productAgreement = this.productForm.get('productAgreement').value;
 
-    this.firestore.collection('productList')
-    .add(this.newProductList).then(() => {
-      this.takePicture;
-      this.productForm = null;
-      this.router.navigateByUrl('tab/timeline/sales/sales-history');
+    this.firestore.collection('productList').doc(this.newProductList.productId).set({
+      productId: this.newProductList.productId,
+      productName: this.newProductList.productName,
+      productCategory: this.newProductList.productCategory,
+      productPrice: this.newProductList.productPrice,
+      productDescription: this.newProductList.productDescription,
+      productAgreement: this.newProductList.productAgreement,
+      productImage: this.newProductList.productImage
+    }).then(() => {
+      loading.dismiss().then(() => {
+        this.productForm = null;
+        this.router.navigateByUrl('tab/timeline/sales/sales-history');
+      });
+    },
+    error => {
+      loading.dismiss().then(() => {
+        console.error(error);
+      });
     });
+
   }
 
   async takePicture(): Promise<void>{

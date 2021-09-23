@@ -1,60 +1,50 @@
 import { Injectable } from '@angular/core';
-import { NewProduct } from '../shared/sales';
-import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
+import { NewProduct } from '../shared/sales.interface';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  productListRef: AngularFireList<any>;
-  productRef: AngularFireObject<any>;
+  newProductList = {
+    productName: '',
+    productCategory: '',
+    productPrice: '',
+    productDescription: '',
+    productAgreement: '',
+    productImage: null
+  }
 
-  createproduct: NewProduct = new NewProduct();
+  productId: any;
 
-  constructor(private db: AngularFireDatabase) { }
-
-    // Create
-    createProduct(npdt: NewProduct) {
-
-      this.productListRef = this.db.list('/newProduct');
-
-      return this.productListRef.push({
-
-        productName: npdt.productName,
-        productCategory: npdt.productCategory,
-        productPrice: npdt.productPrice,
-        productDescription: npdt.productDescription,
-        productImage: npdt.productImage
-      })
-    }
+  constructor(private firestore: AngularFirestore,
+              private route: ActivatedRoute,
+              private router: Router) {
+                this.productId = this.route.snapshot.params.productId;
+               }
 
     // Get Single
-    getProduct(productId: string) {
-      this.productRef = this.db.object('/newProduct/' + productId);
-      return this.productRef;
+    getProduct(productId) {
+      return this.firestore.collection('productList').doc(productId).valueChanges({idField: 'productId'});
     }
 
     // Get List
     getProductList() {
-      this.productListRef = this.db.list('/newProduct');
-      return this.productListRef;
+      return this.firestore.collection('productList').snapshotChanges();
     }
 
     // Update
-    updateProduct(productId, npdt: NewProduct) {
-      return this.productRef.update({
-        productName: npdt.productName,
-        productCategory: npdt.productCategory,
-        productPrice: npdt.productPrice,
-        productDescription: npdt.productDescription,
-        productImage: npdt.productImage
-      })
+    updateProduct(productId, productList) {
+      this.firestore.collection('productList').doc(productId).update(productList)
+      .then(() => {
+        this.router.navigate(['tab/timeline/sales/sales-history']);
+      }).catch(error => console.log(error));
     }
 
     // Delete
     deleteProduct(productId: string) {
-      this.productRef = this.db.object('/newProduct/' + productId);
-      this.productRef.remove();
+      this.firestore.doc('productList/' + productId).delete();
     }
 }
