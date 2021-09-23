@@ -12,38 +12,48 @@ import { Camera, CameraResultType } from '@capacitor/camera';
 })
 export class PersonalInfoPage implements OnInit {
 
-  userList = {
-    dob: '',
-    email: '',
-    firstname: '',
-    lastname: '',
+  newUserDetail = {
     name: '',
+    email: '',
     phone: '',
-    userdp: null,
-    aboutme: null,
+    userImage: null,
+    userBio: null
   }
 
-  updateUserInfoForm: FormGroup;
-  userId: string;
+  updateUserDetail: FormGroup;
+  userId: any;
 
   constructor(private firestore: AngularFirestore,
     private storage: AngularFireStorage,
+    public fb: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute) {
+      this.userId = this.route.snapshot.paramMap.get('userId');
+
+      this.firestore.doc(`users/${this.userId}`)
+      .valueChanges()
+      .subscribe((userDetail: any) => (this.newUserDetail = userDetail));
+     }
 
   ngOnInit(){
-    this.firestore.doc(`users/${this.userId}`)
-      .valueChanges()
-      .subscribe((userDetail: any) => (this.userList = userDetail));
+    this.updateUserDetail = this.fb.group({
+      name: [''],
+      email: [''],
+      phone: [''],
+      userBio: ['']
+    })
   }
 
-  saveEdit(): void{
-    this.firestore.doc(`users/${this.userId}`)
-      .update(this.userList)
-      .then(() => {
-        this.updateUserInfoForm = null;
-        this.router.navigateByUrl('tab/user-profile');
-    })
+  updateForm() {
+    this.updateProduct(this.userId, this.updateUserDetail.value)
+  }
+
+  updateProduct(userId, users) {
+    this.firestore.collection('users').doc(userId).update(users)
+    .then(() => {
+      this.takePicture;
+      // this.router.navigate(['tab/user-profile']);
+    }).catch(error => console.log(error));
   }
 
   async takePicture(): Promise<void>{
@@ -63,11 +73,11 @@ export class PersonalInfoPage implements OnInit {
       })
       .then(() =>{
         userdpRef.getDownloadURL().subscribe(downloadURL => {
-          this.userList.userdp = downloadURL;
-          console.log(this.userList);
+          this.newUserDetail.userImage = downloadURL;
+          console.log(this.newUserDetail.userImage);
         })
 
-        this.userList.userdp.unsubsribe();
+        this.newUserDetail.userImage.unsubsribe();
 
       })
     }catch(error){

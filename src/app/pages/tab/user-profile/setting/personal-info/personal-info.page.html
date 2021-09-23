@@ -27,29 +27,34 @@
           <ion-item>
             <ion-label position="floating">Username</ion-label>
             <ion-input type="text"></ion-input>
+
+            <!-- <ion-input type="text" [placeholder]="newUserDetail.name"></ion-input> -->
           </ion-item>
 
           <ion-item>
             <ion-label position="floating">About Me</ion-label>
-            <ion-input  type="text">
-            </ion-input>
+            <ion-input type="text"></ion-input>
+
+            <!-- <ion-input  type="text" *ngIf="newUserDetail.userBio" [placeholder]="newUserDetail.userBio"></ion-input> -->
           </ion-item>
 
           <ion-item>
             <ion-label position="floating">Email Address</ion-label>
-            <ion-input  type="text">
-            </ion-input>
+            <ion-input type="text"></ion-input>
+
+            <!-- <ion-input  type="text" [placeholder]="newUserDetail.email"></ion-input> -->
           </ion-item>
 
           <ion-item>
             <ion-label position="floating">Phone Number</ion-label>
-            <ion-input type="text">
-            </ion-input>
+            <ion-input type="text"></ion-input>
+
+            <!-- <ion-input type="text" [placeholder]="newUserDetail.phone"></ion-input> -->
           </ion-item>
 
           <ion-row>
             <ion-col>
-              <ion-button (click)="saveEdit()" type="submit" color="primary" shape="full" expand="block">Update Information</ion-button>
+              <ion-button (click)="updateForm()" type="submit" color="primary" shape="full" expand="block">Update Information</ion-button>
             </ion-col>
           </ion-row>
         </form>
