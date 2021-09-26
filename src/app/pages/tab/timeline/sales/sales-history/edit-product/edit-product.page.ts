@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder } from "@angular/forms";
-import { ProductService } from './../../shared/product.service';
+import { ProductService } from '../../../../../../services/sales/product.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({

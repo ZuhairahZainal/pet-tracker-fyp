@@ -21,10 +21,10 @@
         <ion-card class="ion-text-center">
           <ion-card-header>
             <ion-card-title>
-              Username
+              {{ userUsername }}
             </ion-card-title>
             <ion-card-subtitle>
-              About me
+              Display about me
             </ion-card-subtitle>
           </ion-card-header>
         </ion-card>
@@ -67,12 +67,10 @@
       <ion-grid>
         <ion-row>
           <ion-col id="adopt" size="4" *ngFor="let adoption of adoptionList">
-              <img [src]="adoption.petImage" (click)="displayAdoptionDetails()"/>
+              <img [src]="adoption.petImage" [routerLink]="['/adoption-details/', adoption.petId]" />
           </ion-col>
         </ion-row>
      </ion-grid>
-
-
 
         <!-- <ion-row>
         <ion-col>

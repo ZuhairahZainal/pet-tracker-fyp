@@ -4,8 +4,6 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { LoadingController, ToastController } from '@ionic/angular';
 
-
-
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',

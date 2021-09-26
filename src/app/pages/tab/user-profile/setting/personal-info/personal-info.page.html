@@ -22,44 +22,55 @@
     </ion-row>
 
     <ion-row>
-      <ion-col class="ion-margin">
+      <ion-col>
         <form>
-          <ion-item>
-            <ion-label position="floating">Username</ion-label>
-            <ion-input type="text"></ion-input>
+          <ion-list>
+            <ion-card>
+              <ion-card-content class="ion-no-padding">
+                <ion-item>
+                  <ion-label lines=none>Username</ion-label>
+                </ion-item>
 
-            <!-- <ion-input type="text" [placeholder]="newUserDetail.name"></ion-input> -->
-          </ion-item>
+                <ion-item lines=none>
+                  <ion-input type="text" [placeholder]="userUsername"></ion-input>
+                </ion-item>
+              </ion-card-content>
 
-          <ion-item>
-            <ion-label position="floating">About Me</ion-label>
-            <ion-input type="text"></ion-input>
+              <ion-card-content class="ion-no-padding">
+                  <ion-item>
+                    <ion-label lines=none>About Me</ion-label>
+                  </ion-item>
 
-            <!-- <ion-input  type="text" *ngIf="newUserDetail.userBio" [placeholder]="newUserDetail.userBio"></ion-input> -->
-          </ion-item>
+                  <ion-item lines=none>
+                    <ion-textarea  type="text" placeholder="Tell everyone more about you.."></ion-textarea>
+                  </ion-item>
+              </ion-card-content>
 
-          <ion-item>
-            <ion-label position="floating">Email Address</ion-label>
-            <ion-input type="text"></ion-input>
+              <ion-card-content class="ion-no-padding">
+                  <ion-item>
+                    <ion-label lines=none>Email Address</ion-label>
+                  </ion-item>
 
-            <!-- <ion-input  type="text" [placeholder]="newUserDetail.email"></ion-input> -->
-          </ion-item>
+                  <ion-item lines=none>
+                    <ion-input type="text" [placeholder]="userEmail"></ion-input>
+                  </ion-item>
+              </ion-card-content>
 
-          <ion-item>
-            <ion-label position="floating">Phone Number</ion-label>
-            <ion-input type="text"></ion-input>
+              <ion-card-content class="ion-no-padding">
+                  <ion-item>
+                    <ion-label lines=none>Phone Number</ion-label>
+                  </ion-item>
 
-            <!-- <ion-input type="text" [placeholder]="newUserDetail.phone"></ion-input> -->
-          </ion-item>
+                  <ion-item lines=none>
+                    <ion-input type="number" [placeholder]="userPhone"></ion-input>
+                  </ion-item>
+              </ion-card-content>
+            </ion-card>
 
-          <ion-row>
-            <ion-col>
-              <ion-button (click)="updateForm()" type="submit" color="primary" shape="full" expand="block">Update Information</ion-button>
-            </ion-col>
-          </ion-row>
+            <ion-button (click)="updateForm()" type="submit" color="primary" shape="clear">Update Information</ion-button>
+          </ion-list>
         </form>
       </ion-col>
     </ion-row>
-
   </ion-grid>
 </ion-content>

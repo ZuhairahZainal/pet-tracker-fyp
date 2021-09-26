@@ -1,11 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { ActivatedRoute } from '@angular/router';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ProductService } from '../shared/product.service';
-import { CartItem } from '../shared/sales.interface';
-import { CartService } from './shared/cart.service';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -34,11 +30,9 @@ export class CartPage implements OnInit {
   }
 ]);
 
-  constructor(private cartService: CartService,
-              private actRoute: ActivatedRoute,
+  constructor(
               private alertCtrl: AlertController,
-              private firestore: AngularFirestore,
-              private productService: ProductService) {
+              private firestore: AngularFirestore) {
 
 
                 this.firestore.collection('cartList').valueChanges({idField: 'cartId'}).subscribe(

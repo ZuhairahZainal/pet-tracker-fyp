@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 // firebase
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
+import firebase from 'firebase/app';
 
 // routing
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,6 +21,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class AdoptionFormPage implements OnInit {
   newAdoptionList = {
+    userId: '',
     petAge: '',
     petBreed: '',
     petCategory: '',
@@ -34,6 +36,7 @@ export class AdoptionFormPage implements OnInit {
 
   newAdoptionForm: FormGroup;
   petId: string;
+  userId: string;
 
   constructor(private firestore: AngularFirestore,
               private storage: AngularFireStorage,
@@ -41,6 +44,7 @@ export class AdoptionFormPage implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.getUserId();
     this.newAdoptionForm = new FormGroup({
       petAge: new FormControl(this.newAdoptionList.petAge,[
         Validators.required,
@@ -80,6 +84,11 @@ export class AdoptionFormPage implements OnInit {
     }
   }
 
+  getUserId(){
+    let user = firebase.auth().currentUser;
+
+    this.newAdoptionList.userId = `${user.uid}`;
+  }
 
   savePost(): void{
     if(this.petId === 'new'){
@@ -94,8 +103,6 @@ export class AdoptionFormPage implements OnInit {
 
       this.firestore.collection('adoptionList')
       .add(this.newAdoptionList).then(() => {
-        this.takePicture;
-        this.addMedicalRecord;
         this.newAdoptionForm = null;
         this.router.navigateByUrl('tab/adoption');
       });
@@ -127,7 +134,7 @@ export class AdoptionFormPage implements OnInit {
       .then(() =>{
         petImageRef.getDownloadURL().subscribe(downloadURL => {
           this.newAdoptionList.petImage = downloadURL;
-          console.log(this.newAdoptionList);
+          console.log(this.newAdoptionList.petImage);
         })
 
       })

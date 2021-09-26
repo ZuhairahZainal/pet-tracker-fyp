@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AuthenticationGuard } from './auth/guards/authentication.guard';
+import { AuthGuard } from '../app/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: 'tab',
     loadChildren: () => import('./pages/tab/tab.module').then( m => m.TabPageModule),
-    canActivate: [AuthenticationGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: '',

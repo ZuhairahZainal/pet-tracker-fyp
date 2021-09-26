@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { NewProduct } from '../shared/sales.interface';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 

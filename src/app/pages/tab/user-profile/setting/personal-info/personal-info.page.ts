@@ -4,6 +4,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Camera, CameraResultType } from '@capacitor/camera';
+import firebase from 'firebase/app';
 
 @Component({
   selector: 'app-personal-info',
@@ -22,18 +23,37 @@ export class PersonalInfoPage implements OnInit {
 
   updateUserDetail: FormGroup;
   userId: any;
+  userInfo: any;
+  userDetails;
+
+  userUsername: any;
+  userFirstName: any;
+  userLastName: any;
+  userDOB: any;
+  userPhone: any;
+  userEmail: any;
 
   constructor(private firestore: AngularFirestore,
     private storage: AngularFireStorage,
     public fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute) {
-      this.userId = this.route.snapshot.paramMap.get('userId');
 
-      this.firestore.doc(`users/${this.userId}`)
-      .valueChanges()
-      .subscribe((userDetail: any) => (this.newUserDetail = userDetail));
-     }
+      this.setUserId();
+
+      this.firestore.doc(`/users/${this.userId}`).valueChanges().subscribe(
+        profile => {
+          console.log('Profile:', profile);
+          this.userUsername = profile['name'];
+          this.userFirstName = profile['firstname'];
+          this.userLastName = profile['lastname'];
+          this.userDOB = profile['dob'];
+          this.userPhone = profile['phone'];
+          this.userEmail = profile['email'];
+        }
+      )
+
+    }
 
   ngOnInit(){
     this.updateUserDetail = this.fb.group({
@@ -44,8 +64,15 @@ export class PersonalInfoPage implements OnInit {
     })
   }
 
+  setUserId(){
+    let user = firebase.auth().currentUser;
+    this.userId = user.uid;
+    console.log(user.uid);
+  }
+
+
   updateForm() {
-    this.updateProduct(this.userId, this.updateUserDetail.value)
+    this.updateProduct(this.userId, this.updateUserDetail.value);
   }
 
   updateProduct(userId, users) {

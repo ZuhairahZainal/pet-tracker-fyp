@@ -19,6 +19,10 @@ const routes: Routes = [
   {
     path: 'request-user-profile',
     loadChildren: () => import('./request-user-profile/request-user-profile.module').then( m => m.RequestUserProfilePageModule)
+  },
+  {
+    path: 'adoption-details/:petId',
+    loadChildren: () => import('./adoption-details/adoption-details.module').then( m => m.AdoptionDetailsPageModule)
   }
 ];
 

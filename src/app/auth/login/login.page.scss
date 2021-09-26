@@ -5,19 +5,49 @@
   margin: auto;
 }
 
+ion-header{
+  position: absolute;
+}
+
+ion-toolbar{
+  --ion-background-color: transparent;
+  --opacity: 0;
+}
+
+ion-content{
+  --ion-background-color: #9DDFCC !important;
+  // E1EAF9
+  font-family: "AbeeZee";
+}
+
+ion-card{
+  --ion-background-color: transparent;
+  box-shadow: none !important;
+}
+
+ion-label{
+  font-family: 'AbeeZee' !important;
+}
+
 .infoBtn{
   width: 10%;
   position: absolute;
   right: 6%;
+  bottom: 3%;
 }
 
 ion-button{
   font-family: "AbeeZee";
+  color: white;
+  --background: #9DD2DF;
+  padding-left: 33%;
+  margin-top: 30px !important;
+  width: 270px !important;
 }
 
 .ion-padding{
   --ion-background-color: #9DDFCC;
-  font-family: "AbeeZee";
+  font-family: 'AbeeZee' !important;
 }
 
 ion-input{
@@ -26,10 +56,17 @@ ion-input{
   font-family: "AbeeZee";
 }
 
-ion-label{
-  font-family: 'AbeeZee' !important;
+div{
+  padding: 20px auto;
+  text-align: center;
+  font-family: "AbeeZee" !important;
 }
 
 a{
   color: white;
+}
+
+#text{
+  font-family: "AbeeZee";
+  padding-top: 45px !important;
 }
