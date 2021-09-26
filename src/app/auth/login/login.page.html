@@ -2,7 +2,7 @@
 
 <ion-content>
   <ion-card class="ion-no-margin">
-    <ion-img src="./assets/image/loginHeader.png"></ion-img>
+    <ion-img src="./assets/loginHeader.png"></ion-img>
 
     <ion-card-content>
       <ion-list>
@@ -40,7 +40,9 @@
          </ng-container> -->
     </div>
 
-      <ion-button shape="round" (click)="login()">Login</ion-button>
+    <div class="ion-text-center">
+      <ion-button class="ion-margin" shape="round" (click)="login()">Login</ion-button>
+    </div>
     </ion-card-content>
 
     <div>
@@ -50,6 +52,8 @@
     </div>
   </ion-card>
 
-  <ion-img  class="info-btn" src="./assets/icon/information-circle.svg" (click)="guideline()"></ion-img>
+  <ion-button (click)="guideline()">
+    <ion-icon class="info-btn" src="./assets/information-circle.svg"></ion-icon>
+  </ion-button>
 </ion-content>
 

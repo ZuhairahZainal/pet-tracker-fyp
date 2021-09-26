@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AlertController } from '@ionic/angular';
-import { ProductService } from '../shared/product.service';
 
 @Component({
   selector: 'app-sales-history',
@@ -22,8 +21,7 @@ export class SalesHistoryPage implements OnInit {
   }
 
   constructor(private firestore: AngularFirestore,
-              private alertCtrl: AlertController,
-              private productService: ProductService) {
+              private alertCtrl: AlertController) {
     this.firestore.collection('productList').valueChanges({idField: 'productId'}).subscribe(
       adoptions => {
         this.newProductLists = adoptions;

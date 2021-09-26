@@ -29,20 +29,17 @@ ion-label{
   font-family: 'AbeeZee' !important;
 }
 
-.infoBtn{
-  width: 10%;
-  position: absolute;
-  right: 6%;
-  bottom: 3%;
-}
-
 ion-button{
   font-family: "AbeeZee";
   color: white;
   --background: #9DD2DF;
-  padding-left: 33%;
-  margin-top: 30px !important;
-  width: 270px !important;
+}
+
+.infoBtn{
+  font-size: 2rem;
+  position: absolute !important;
+  right: 6% !important;
+  bottom: 3% !important;
 }
 
 .ion-padding{
