@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 // firebase
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
+import firebase from 'firebase/app';
 
 // routing
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,6 +21,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class AdoptionFormPage implements OnInit {
   newAdoptionList = {
+    userId: '',
+    userName: '',
+    userEmail: '',
     petAge: '',
     petBreed: '',
     petCategory: '',
@@ -28,11 +32,15 @@ export class AdoptionFormPage implements OnInit {
     petGender: '',
     petName: '',
     petSpayStatus: '',
-    petImage: null
+    petImage: null,
+    petMedicalRecord: null
   }
 
   newAdoptionForm: FormGroup;
   petId: string;
+  userId: string;
+  userName: string;
+  userEmail: string;
 
   constructor(private firestore: AngularFirestore,
               private storage: AngularFireStorage,
@@ -40,6 +48,8 @@ export class AdoptionFormPage implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.getUserId();
+    this.getUserName();
     this.newAdoptionForm = new FormGroup({
       petAge: new FormControl(this.newAdoptionList.petAge,[
         Validators.required,
@@ -79,6 +89,21 @@ export class AdoptionFormPage implements OnInit {
     }
   }
 
+  getUserId(){
+    let user = firebase.auth().currentUser;
+
+    this.newAdoptionList.userId = `${user.uid}`;
+    this.userId = user.uid;
+  }
+
+  getUserName(){
+    this.firestore.doc(`/users/${this.userId}`).valueChanges().subscribe(
+      profile => {
+        this.newAdoptionList.userName = profile['name'];
+        this.newAdoptionList.userEmail = profile['email'];
+      }
+    )
+  }
 
   savePost(): void{
     if(this.petId === 'new'){
@@ -93,7 +118,6 @@ export class AdoptionFormPage implements OnInit {
 
       this.firestore.collection('adoptionList')
       .add(this.newAdoptionList).then(() => {
-        this.takePicture;
         this.newAdoptionForm = null;
         this.router.navigateByUrl('tab/adoption');
       });
@@ -116,7 +140,7 @@ export class AdoptionFormPage implements OnInit {
       });
 
       const petImageRef = this.storage.ref(
-        `adoptionList/${new Date().getTime()}/petImage.png`
+        `adoptionList/petImage/${new Date().getTime()}/petImage.png`
       );
 
       petImageRef.putString(petImage.base64String, 'base64', {
@@ -125,10 +149,35 @@ export class AdoptionFormPage implements OnInit {
       .then(() =>{
         petImageRef.getDownloadURL().subscribe(downloadURL => {
           this.newAdoptionList.petImage = downloadURL;
-          console.log(this.newAdoptionList);
+          console.log(this.newAdoptionList.petImage);
         })
 
-        this.newAdoptionList.petImage.unsubsribe();
+      })
+    }catch(error){
+      console.warn(error);
+    }
+  }
+
+  async addMedicalRecord(): Promise<void>{
+    try{
+      const petMedicalRecord = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.Base64
+      });
+
+      const petMedicalRecordRef = this.storage.ref(
+        `adoptionList/petMedicalRecord/${new Date().getTime()}/petMedicalRecord.png`
+      );
+
+      petMedicalRecordRef.putString(petMedicalRecord.base64String, 'base64', {
+        contentType: 'image/png',
+      })
+      .then(() =>{
+        petMedicalRecordRef.getDownloadURL().subscribe(downloadURL => {
+          this.newAdoptionList.petMedicalRecord = downloadURL;
+          console.log(this.newAdoptionList);
+        })
 
       })
     }catch(error){

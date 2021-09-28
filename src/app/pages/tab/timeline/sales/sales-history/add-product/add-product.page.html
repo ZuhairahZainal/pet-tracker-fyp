@@ -10,7 +10,7 @@
 
     <ion-buttons slot="end">
       <ion-button id="adopt-btn" fill="solid">
-        <ion-button (click)="formSubmit()">Add</ion-button>
+        <ion-button (click)="formSubmit()" [disabled]="!productForm.valid">Add</ion-button>
       </ion-button>
     </ion-buttons>
 
@@ -23,25 +23,24 @@
   <ion-list lines="full">
     <form [formGroup]="productForm">
 
-      <ion-list>
         <ion-card>
           <ion-card-content>
-            <ion-item>
-              <ion-label>Insert Product Image</ion-label>
-              <ion-button (click)="takePicture()">Choose Image</ion-button>
-            </ion-item>
+            <ion-card-content>
+              <ion-button (click)="takePicture()">Insert Product Image</ion-button>
+            </ion-card-content>
 
             <img *ngIf="newProductList.productImage" [src]="newProductList.productImage"/>
           </ion-card-content>
         </ion-card>
-      </ion-list>
 
-      <ion-item>
+        <ion-card>
+
+      <ion-card-content>
         <ion-label position="floating">Product Name</ion-label>
         <ion-input formControlName="productName" type="text" required></ion-input>
-      </ion-item>
+      </ion-card-content>
 
-      <ion-item>
+      <ion-card-content>
         <ion-label position="floating">Product Category</ion-label>
         <ion-select value="gender" interface="action-sheet" formControlName="productCategory">
           <ion-select-option value="Pet Food">Pet Food</ion-select-option>
@@ -50,18 +49,25 @@
           <ion-select-option value="Pet Accessories">Pet Accessories</ion-select-option>
           <ion-select-option value="Others">Others</ion-select-option>
         </ion-select>
-      </ion-item>
+      </ion-card-content>
 
-      <ion-item>
+      <ion-card-content>
         <ion-label position="floating">Product Description</ion-label>
         <ion-textarea formControlName="productDescription" type="text" required></ion-textarea>
-      </ion-item>
+      </ion-card-content>
 
-      <ion-item>
+      <ion-card-content>
         <ion-label position="floating">Product Price</ion-label>
         <ion-input formControlName="productPrice" type="number" required></ion-input>
-      </ion-item>
+      </ion-card-content>
+      </ion-card>
 
+      <ion-radio-group formControlName="productAgreement" required>
+        <ion-item>
+          <ion-label class="ion-text-wrap">By this, you agreed that commission fee will be applied when the user made a successful sale.</ion-label>
+          <ion-radio slot="start" color="primary" value="Agree"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
     </form>
   </ion-list>
 </ion-content>

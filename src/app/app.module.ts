@@ -23,12 +23,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule  } from 'ng2-search-filter';
 
 //services
-import { AuthService } from './auth/services/auth.service';
+import { AuthService } from './services/auth/auth.service';
 
 //guards
-import { AuthGuard } from './auth/guards/auth.guard';
-
-
+import { AuthGuard } from '../app/guards/auth.guard';
 
 @NgModule({
   declarations: [AppComponent],
@@ -44,7 +42,7 @@ import { AuthGuard } from './auth/guards/auth.guard';
             Ng2SearchPipeModule,
             IonicModule.forRoot(),
             AppRoutingModule],
-  providers: [AuthService,AuthGuard, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [AuthService, AuthGuard, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -23,6 +23,10 @@
     </ion-buttons>
   </section>
 
+  <!-- <div class="empty-cart" *ngIf="!(newProductLists|async)">
+    <p>Your cart is empty</p>
+  </div> -->
+
   <ion-list>
     <ion-item *ngFor="let product of newProductLists" >
   <ion-grid>
@@ -52,13 +56,12 @@
                     <ion-card-content>
                       {{product.productDescription}}
                     </ion-card-content>
-
                 <ion-buttons class="ion-padding">
-                  <ion-button expand="block" fill="solid" [routerLink]="['./edit-product/', product.$key]">
+                  <ion-button expand="block" fill="solid" [routerLink]="['./edit-product/', product.productId]">
                     <ion-icon name="create-outline"></ion-icon>
                     <ion-label class="ion-padding">Edit</ion-label>
                   </ion-button>
-                  <ion-button expand="block" fill="solid" color="danger" (click)="deleteProduct(product.$key)">
+                  <ion-button expand="block" fill="solid" color="danger" (click)="removeProduct(product.productId)">
                     <ion-icon name="trash-outline"></ion-icon>
                     <ion-label class="ion-padding">Delete</ion-label>
                   </ion-button>

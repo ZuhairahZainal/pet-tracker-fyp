@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center ion-margin-vertical">
+      Adoption
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button id="adopt-btn" routerLink="../adoption-form">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-toolbar>
+    <ion-searchbar placeholder="Search by keyword..." [(ngModel)]="filter" animated="true"></ion-searchbar>
+  </ion-toolbar>
+
+      <ion-list>
+        <ion-item *ngFor="let adoption of adoptionList | filter:filter" >
+          <ion-grid>
+            <ion-row>
+            <ion-col>
+            <!-- <ion-card> -->
+              <ion-grid>
+                <ion-row>
+                  <ion-col size=4>
+                    <img [src]="adoption.petImage"/>
+                  </ion-col>
+
+                  <ion-col size=6>
+                    <ion-card-header>
+                      <ion-card-subtitle>{{ adoption.petCategory }}</ion-card-subtitle>
+                      <ion-card-title>{{ adoption.petName }}</ion-card-title>
+                      <ion-card-subtitle>({{ adoption.petAge }} month)</ion-card-subtitle>
+                    </ion-card-header>
+                  </ion-col>
+
+                  <ion-col size=2 id="info">
+                    <ion-button fill=solid color="primary" [routerLink]="['/tab/adoption/adoption-details/', adoption.petId]" >
+                      <!-- <ion-label class=ion-padding>More</ion-label> -->
+                      <ion-icon name="chevron-forward-outline"></ion-icon>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+
+              <!-- <ion-card-content>
+                <ion-buttons>
+                    <ion-grid size=3>
+                      <ion-row>
+                        <ion-col>
+                          <ion-button fill=solid color="primary" [routerLink]="['/tab/adoption/adoption-details/', adoption.petId]" >
+                            <ion-label class=ion-padding>More</ion-label>
+                          </ion-button>
+                        </ion-col>
+
+                        <ion-col>
+                          <ion-button fill=solid color="primary" [routerLink]="['/tab/adoption/adoption-details/', adoption.petId]" >
+                            <ion-label class=ion-padding>Request</ion-label>
+                          </ion-button>
+                        </ion-col>
+
+                        <ion-col>
+                          <ion-button>
+                            <ion-icon name="chatbubble-outline"></ion-icon>
+                          </ion-button>
+                        </ion-col>
+                      </ion-row>
+                  </ion-grid>
+                </ion-buttons>
+              </ion-card-content> -->
+            <!-- </ion-card> -->
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

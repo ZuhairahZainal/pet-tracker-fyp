@@ -1,5 +1,5 @@
-export class NewProduct {
-  $key: string;
+export interface Cart {
+  productId: string;
   productName: string;
   productCategory: string;
   productPrice: number;

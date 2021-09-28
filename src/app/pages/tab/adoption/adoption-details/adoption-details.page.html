@@ -1,0 +1,135 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="../adoption">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title class="ion-text-center">{{ adoptionList.petName }}'s Profile </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <img [src]="adoptionList.petImage" id="img">
+
+
+  <ion-card>
+    <ion-card-header>
+      <ion-list>
+        <ion-item>
+          <ion-card-title>{{ adoptionList.petName }}</ion-card-title>
+          <ion-icon slot="end" name="heart-circle-outline"></ion-icon>
+          <ion-badge slot="end">{{adopt}}</ion-badge>
+        </ion-item>
+      </ion-list>
+    </ion-card-header>
+
+    <div id="details">
+      <ion-grid size=2>
+        <ion-row>
+          <ion-col>
+            <ion-card-header>
+              <ion-card-title color="primary">Age</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ adoptionList.petAge }} Month
+            </ion-card-content>
+          </ion-col>
+
+          <ion-col>
+            <ion-card-header>
+              <ion-card-title color="primary">Breed</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ adoptionList.petBreed }}
+            </ion-card-content>
+          </ion-col>
+
+          <ion-col>
+            <ion-card-header>
+              <ion-card-title color="primary">Category</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ adoptionList.petCategory }}
+            </ion-card-content>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="4">
+            <ion-card-header>
+              <ion-card-title color="primary">Gender</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ adoptionList.petGender }}
+            </ion-card-content>
+          </ion-col>
+
+          <ion-col size="8">
+            <ion-card-header>
+              <ion-card-title color="primary">Health Condition</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ adoptionList.petCondition }}
+            </ion-card-content>
+          </ion-col>
+        </ion-row>
+
+
+
+
+      </ion-grid>
+
+      <ion-card-header>
+        <ion-card-title color="primary">Spay Status</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        {{ adoptionList.petSpayStatus }}
+      </ion-card-content>
+
+      <ion-card-header>
+        <ion-card-title color="primary">Medical Record</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <img [src]="adoptionList.petMedicalRecord" id="img">
+      </ion-card-content>
+    </div>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title color="primary">Description</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{ adoptionList.petDescription }}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card >
+    <ion-card-header>
+      <ion-card-title color="primary">More Information</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-buttons>
+        <ion-grid size=3>
+          <ion-row>
+            <ion-col>
+              <ion-button fill=solid color="primary" >
+                <ion-label class=ion-padding>Contact Owner</ion-label>
+              </ion-button>
+            </ion-col>
+
+            <ion-col>
+              <ion-button fill=solid color="primary" (click)="adoptPet()">
+                <ion-label class=ion-padding>Request to Adopt</ion-label>
+              </ion-button>
+            </ion-col>
+
+          </ion-row>
+      </ion-grid>
+    </ion-buttons>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

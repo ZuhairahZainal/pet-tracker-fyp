@@ -6,6 +6,7 @@ import { AdoptionPage } from './adoption.page';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'adoption-post',
     component: AdoptionPage
   },
   {
@@ -15,6 +16,14 @@ const routes: Routes = [
   {
     path: 'adoption-request',
     loadChildren: () => import('./adoption-request/adoption-request.module').then( m => m.AdoptionRequestPageModule)
+  },
+  {
+    path: 'adoption-details/:petId',
+    loadChildren: () => import('./adoption-details/adoption-details.module').then( m => m.AdoptionDetailsPageModule)
+  },
+  {
+    path: 'adoption-post',
+    loadChildren: () => import('./adoption-post/adoption-post.module').then( m => m.AdoptionPostPageModule)
   }
 ];
 

@@ -8,6 +8,7 @@ import { UserProfilePageRoutingModule } from './user-profile-routing.module';
 
 import { UserProfilePage } from './user-profile.page';
 
+
 @NgModule({
   imports: [
     CommonModule,

@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { LoadingController, ToastController } from '@ionic/angular';
-import { User } from '../models/user';
+import { User } from '../../models/auth/user';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
@@ -11,6 +11,7 @@ import { switchMap } from 'rxjs/operators';
 
 export class AuthService
 {
+  [x: string]: any;
   user$: Observable<User>;
   user: User;
 
@@ -22,7 +23,7 @@ export class AuthService
     private toastr: ToastController
   )
   {
-    this.user$ = this.afauth.authState.pipe(
+    this.userId = this.afauth.authState.pipe(
       switchMap(user=>
         {
           if(user)
@@ -79,3 +80,4 @@ export class AuthService
   } // end of toast
 
 }
+

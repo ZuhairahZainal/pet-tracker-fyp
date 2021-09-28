@@ -22,39 +22,55 @@
     </ion-row>
 
     <ion-row>
-      <ion-col class="ion-margin">
+      <ion-col>
         <form>
-          <ion-item>
-            <ion-label position="floating">Username</ion-label>
-            <ion-input type="text"></ion-input>
-          </ion-item>
+          <ion-list>
+            <ion-card>
+              <ion-card-content class="ion-no-padding">
+                <ion-item>
+                  <ion-label lines=none>Username</ion-label>
+                </ion-item>
 
-          <ion-item>
-            <ion-label position="floating">About Me</ion-label>
-            <ion-input  type="text">
-            </ion-input>
-          </ion-item>
+                <ion-item lines=none>
+                  <ion-input type="text" [placeholder]="userUsername"></ion-input>
+                </ion-item>
+              </ion-card-content>
 
-          <ion-item>
-            <ion-label position="floating">Email Address</ion-label>
-            <ion-input  type="text">
-            </ion-input>
-          </ion-item>
+              <ion-card-content class="ion-no-padding">
+                  <ion-item>
+                    <ion-label lines=none>About Me</ion-label>
+                  </ion-item>
 
-          <ion-item>
-            <ion-label position="floating">Phone Number</ion-label>
-            <ion-input type="text">
-            </ion-input>
-          </ion-item>
+                  <ion-item lines=none>
+                    <ion-textarea  type="text" placeholder="Tell everyone more about you.."></ion-textarea>
+                  </ion-item>
+              </ion-card-content>
 
-          <ion-row>
-            <ion-col>
-              <ion-button (click)="saveEdit()" type="submit" color="primary" shape="full" expand="block">Update Information</ion-button>
-            </ion-col>
-          </ion-row>
+              <ion-card-content class="ion-no-padding">
+                  <ion-item>
+                    <ion-label lines=none>Email Address</ion-label>
+                  </ion-item>
+
+                  <ion-item lines=none>
+                    <ion-input type="text" [placeholder]="userEmail"></ion-input>
+                  </ion-item>
+              </ion-card-content>
+
+              <ion-card-content class="ion-no-padding">
+                  <ion-item>
+                    <ion-label lines=none>Phone Number</ion-label>
+                  </ion-item>
+
+                  <ion-item lines=none>
+                    <ion-input type="number" [placeholder]="userPhone"></ion-input>
+                  </ion-item>
+              </ion-card-content>
+            </ion-card>
+
+            <ion-button (click)="updateForm()" type="submit" color="primary" shape="clear">Update Information</ion-button>
+          </ion-list>
         </form>
       </ion-col>
     </ion-row>
-
   </ion-grid>
 </ion-content>

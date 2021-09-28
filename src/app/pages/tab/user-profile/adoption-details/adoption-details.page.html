@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> {{ adoptionList.petName }} </ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="../adoption">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+<ion-list>
+  <ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+        <ion-card>
+          <img [src]="adoptionList.petImage"/>
+          <ion-card-header>
+            <ion-card-subtitle>Pet Name</ion-card-subtitle>
+            <ion-card-title>{{ adoptionList.petName }}</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-header>
+            <ion-card-title color="primary">Category</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            {{ adoptionList.petCategory }}
+          </ion-card-content>
+
+          <ion-card-header>
+            <ion-card-title color="primary">Age</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            {{ adoptionList.petAge }} Month
+          </ion-card-content>
+
+          <ion-card-header>
+            <ion-card-title color="primary">Breed</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            {{ adoptionList.petBreed }}
+          </ion-card-content>
+
+          <ion-card-header>
+            <ion-card-title color="primary">Gender</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            {{ adoptionList.petGender }}
+          </ion-card-content>
+
+          <ion-card-header>
+            <ion-card-title color="primary">Health Condition</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            {{ adoptionList.petCondition }}
+          </ion-card-content>
+
+          <ion-card-header>
+            <ion-card-title color="primary">Spay Status</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            {{ adoptionList.petSpayStatus }}
+          </ion-card-content>
+          </ion-card>
+
+        <ion-buttons class="ion-padding">
+          <ion-button expand="block" fill="solid" (click)="updateAdoptionDetail()">
+            <ion-icon name="create-outline"></ion-icon>
+            <ion-label class="ion-padding">Edit</ion-label>
+          </ion-button>
+          <ion-button expand="block" fill="solid" color="danger" (click)="deleteAdoptionPost()">
+            <ion-icon name="trash-outline"></ion-icon>
+            <ion-label class="ion-padding">Delete</ion-label>
+          </ion-button>
+        </ion-buttons>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>
+</ion-list>
+</ion-content>

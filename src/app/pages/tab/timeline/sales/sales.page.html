@@ -57,93 +57,345 @@
   </ion-segment>
 
   <ion-list *ngIf="segment === 'allproduct'">
-    <ion-item *ngFor="let product of newProductLists | filter:filter " >
+    <ion-item *ngFor="let product of productLists | filter:filter" >
       <ion-grid>
         <ion-row>
           <ion-col>
-                <ion-card>
-                  <img [src]="product.productImage" alt=""/>
+            <ion-card>
+              <img [src]="product.productImage" alt=""/>
 
-                  <ion-card-header>
-                    <ion-card-subtitle>
-                      {{product.productCategory}}
-                    </ion-card-subtitle>
-                    <ion-card-title>
-                      {{product.productName}}
-                    </ion-card-title>
-                    <ion-card-subtitle>
-                      $ {{product.productPrice}}
-                    </ion-card-subtitle>
+              <ion-card-header>
+                <ion-card-subtitle>
+                  {{product.productCategory}}
+                </ion-card-subtitle>
+                <ion-card-title>
+                  {{product.productName}}
+                </ion-card-title>
+                <ion-card-subtitle>
+                  $ {{product.productPrice}}
+                </ion-card-subtitle>
+                <ion-card-subtitle>
+                  Description
+                </ion-card-subtitle>
+                <ion-card-subtitle>
+                  {{product.productDescription}}
+                </ion-card-subtitle>
+              </ion-card-header>
 
-                  </ion-card-header>
+              <ion-card-content>
+                <ion-buttons class="ion-padding">
 
-                  <ion-card-content>
-                        <ion-card-header>
-                          <ion-card-subtitle>Description</ion-card-subtitle>
-                        </ion-card-header>
+                  <ion-grid size=6>
+                    <ion-row>
+                      <ion-col>
+                          <ion-button expand=block fill="solid" >
+                            <ion-icon name="cart-outline"></ion-icon>
+                            <ion-label class="ion-padding" (click)="addToCartDB(product.productId)">Add to Cart</ion-label>
+                          </ion-button>
+                        </ion-col>
+                      </ion-row>
 
-                        <ion-card-content>
-                          {{product.productDescription}}
-                        </ion-card-content>
-
-                        <ion-buttons class="ion-padding">
-
-                          <ion-grid size=6>
-                            <ion-row>
-                              <ion-col>
-                                  <ion-button expand=block fill="solid" >
-                                    <ion-icon name="cart-outline"></ion-icon>
-                                    <ion-label class="ion-padding" (click) = "addToCart(product)">Add to Cart</ion-label>
-                                  </ion-button>
-                                </ion-col>
-                              </ion-row>
-
-                              <ion-row>
-                                <ion-col>
-                                  <ion-button expand=block fill="solid" color="tertiary">
-                                    <ion-icon name="chatbubble-outline"></ion-icon>
-                                    <ion-label class="ion-padding">Contact Seller</ion-label>
-                                  </ion-button>
-                              </ion-col>
-                            </ion-row>
-                          </ion-grid>
-                          </ion-buttons>
-
-                  </ion-card-content>
-                </ion-card>
+                      <ion-row>
+                        <ion-col>
+                          <ion-button expand=block fill="solid" color="tertiary">
+                            <ion-icon name="chatbubble-outline"></ion-icon>
+                            <ion-label class="ion-padding">Contact Seller</ion-label>
+                          </ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-buttons>
+              </ion-card-content>
+            </ion-card>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-item>
-      </ion-list>
+  </ion-list>
 
   <ion-list *ngIf="segment === 'petfoods'">
-    <ion-item>
-      <ion-label>Pet Foods</ion-label>
+    <ion-item *ngFor="let product of productLists | filter:filter" >
+      <ion-grid *ngIf="product.productCategory === 'Pet Food'">
+        <ion-row>
+          <ion-col>
+            <ion-card>
+              <img [src]="product.productImage" alt=""/>
+
+              <ion-card-header>
+                <ion-card-subtitle>
+                  {{product.productCategory}}
+                </ion-card-subtitle>
+                <ion-card-title>
+                  {{product.productName}}
+                </ion-card-title>
+                <ion-card-subtitle>
+                  $ {{product.productPrice}}
+                </ion-card-subtitle>
+                <ion-card-subtitle>
+                  Description
+                </ion-card-subtitle>
+                <ion-card-subtitle>
+                  {{product.productDescription}}
+                </ion-card-subtitle>
+              </ion-card-header>
+
+              <ion-card-content>
+                <ion-buttons class="ion-padding">
+
+                  <ion-grid size=6>
+                    <ion-row>
+                      <ion-col>
+                          <ion-button expand=block fill="solid" >
+                            <ion-icon name="cart-outline"></ion-icon>
+                            <ion-label class="ion-padding" (click)="addToCartDB(product.productId)">Add to Cart</ion-label>
+                          </ion-button>
+                        </ion-col>
+                      </ion-row>
+
+                      <ion-row>
+                        <ion-col>
+                          <ion-button expand=block fill="solid" color="tertiary">
+                            <ion-icon name="chatbubble-outline"></ion-icon>
+                            <ion-label class="ion-padding">Contact Seller</ion-label>
+                          </ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-buttons>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-item>
   </ion-list>
 
   <ion-list *ngIf="segment === 'pethouse'">
-   <ion-item>
-    <ion-label>Pet House</ion-label>
-   </ion-item>
+    <ion-item *ngFor="let product of productLists | filter:filter" >
+      <ion-grid *ngIf="product.productCategory === 'Pet House'">
+        <ion-row>
+          <ion-col>
+            <ion-card>
+              <img [src]="product.productImage" alt=""/>
+
+              <ion-card-header>
+                <ion-card-subtitle>
+                  {{product.productCategory}}
+                </ion-card-subtitle>
+                <ion-card-title>
+                  {{product.productName}}
+                </ion-card-title>
+                <ion-card-subtitle>
+                  $ {{product.productPrice}}
+                </ion-card-subtitle>
+                <ion-card-subtitle>
+                  Description
+                </ion-card-subtitle>
+                <ion-card-subtitle>
+                  {{product.productDescription}}
+                </ion-card-subtitle>
+              </ion-card-header>
+
+              <ion-card-content>
+                <ion-buttons class="ion-padding">
+
+                  <ion-grid size=6>
+                    <ion-row>
+                      <ion-col>
+                          <ion-button expand=block fill="solid" >
+                            <ion-icon name="cart-outline"></ion-icon>
+                            <ion-label class="ion-padding" (click)="addToCartDB(product.productId)">Add to Cart</ion-label>
+                          </ion-button>
+                        </ion-col>
+                      </ion-row>
+
+                      <ion-row>
+                        <ion-col>
+                          <ion-button expand=block fill="solid" color="tertiary">
+                            <ion-icon name="chatbubble-outline"></ion-icon>
+                            <ion-label class="ion-padding">Contact Seller</ion-label>
+                          </ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-buttons>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
   </ion-list>
 
   <ion-list *ngIf="segment === 'petaccessories'">
-    <ion-item>
-      <ion-label>Pet Accessories</ion-label>
+    <ion-item *ngFor="let product of productLists | filter:filter" >
+      <ion-grid *ngIf="product.productCategory === 'Pet Accessories'">
+        <ion-row>
+          <ion-col>
+            <ion-card>
+              <img [src]="product.productImage" alt=""/>
+
+              <ion-card-header>
+                <ion-card-subtitle>
+                  {{product.productCategory}}
+                </ion-card-subtitle>
+                <ion-card-title>
+                  {{product.productName}}
+                </ion-card-title>
+                <ion-card-subtitle>
+                  $ {{product.productPrice}}
+                </ion-card-subtitle>
+                <ion-card-subtitle>
+                  Description
+                </ion-card-subtitle>
+                <ion-card-subtitle>
+                  {{product.productDescription}}
+                </ion-card-subtitle>
+              </ion-card-header>
+
+              <ion-card-content>
+                <ion-buttons class="ion-padding">
+
+                  <ion-grid size=6>
+                    <ion-row>
+                      <ion-col>
+                          <ion-button expand=block fill="solid" >
+                            <ion-icon name="cart-outline"></ion-icon>
+                            <ion-label class="ion-padding" (click)="addToCartDB(product.productId)">Add to Cart</ion-label>
+                          </ion-button>
+                        </ion-col>
+                      </ion-row>
+
+                      <ion-row>
+                        <ion-col>
+                          <ion-button expand=block fill="solid" color="tertiary">
+                            <ion-icon name="chatbubble-outline"></ion-icon>
+                            <ion-label class="ion-padding">Contact Seller</ion-label>
+                          </ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-buttons>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-item>
   </ion-list>
 
   <ion-list *ngIf="segment === 'petcare'">
-    <ion-item>
-      <ion-label>Pet Care</ion-label>
+    <ion-item *ngFor="let product of productLists | filter:filter" >
+      <ion-grid *ngIf="product.productCategory === 'Pet Care'">
+        <ion-row>
+          <ion-col>
+            <ion-card>
+              <img [src]="product.productImage" alt=""/>
+
+              <ion-card-header>
+                <ion-card-subtitle>
+                  {{product.productCategory}}
+                </ion-card-subtitle>
+                <ion-card-title>
+                  {{product.productName}}
+                </ion-card-title>
+                <ion-card-subtitle>
+                  $ {{product.productPrice}}
+                </ion-card-subtitle>
+                <ion-card-subtitle>
+                  Description
+                </ion-card-subtitle>
+                <ion-card-subtitle>
+                  {{product.productDescription}}
+                </ion-card-subtitle>
+              </ion-card-header>
+
+              <ion-card-content>
+                <ion-buttons class="ion-padding">
+
+                  <ion-grid size=6>
+                    <ion-row>
+                      <ion-col>
+                          <ion-button expand=block fill="solid" >
+                            <ion-icon name="cart-outline"></ion-icon>
+                            <ion-label class="ion-padding" (click)="addToCartDB(product.productId)">Add to Cart</ion-label>
+                          </ion-button>
+                        </ion-col>
+                      </ion-row>
+
+                      <ion-row>
+                        <ion-col>
+                          <ion-button expand=block fill="solid" color="tertiary">
+                            <ion-icon name="chatbubble-outline"></ion-icon>
+                            <ion-label class="ion-padding">Contact Seller</ion-label>
+                          </ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-buttons>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-item>
   </ion-list>
 
   <ion-list *ngIf="segment === 'others'">
-    <ion-item>
-      <ion-label>Others</ion-label>
+    <ion-item *ngFor="let product of productLists | filter:filter" >
+      <ion-grid *ngIf="product.productCategory === 'Others'">
+        <ion-row>
+          <ion-col>
+            <ion-card>
+              <img [src]="product.productImage" alt=""/>
+
+              <ion-card-header>
+                <ion-card-subtitle>
+                  {{product.productCategory}}
+                </ion-card-subtitle>
+                <ion-card-title>
+                  {{product.productName}}
+                </ion-card-title>
+                <ion-card-subtitle>
+                  $ {{product.productPrice}}
+                </ion-card-subtitle>
+                <ion-card-subtitle>
+                  Description
+                </ion-card-subtitle>
+                <ion-card-subtitle>
+                  {{product.productDescription}}
+                </ion-card-subtitle>
+              </ion-card-header>
+
+              <ion-card-content>
+                <ion-buttons class="ion-padding">
+
+                  <ion-grid size=6>
+                    <ion-row>
+                      <ion-col>
+                          <ion-button expand=block fill="solid" >
+                            <ion-icon name="cart-outline"></ion-icon>
+                            <ion-label class="ion-padding" (click)="addToCartDB(product.productId)">Add to Cart</ion-label>
+                          </ion-button>
+                        </ion-col>
+                      </ion-row>
+
+                      <ion-row>
+                        <ion-col>
+                          <ion-button expand=block fill="solid" color="tertiary">
+                            <ion-icon name="chatbubble-outline"></ion-icon>
+                            <ion-label class="ion-padding">Contact Seller</ion-label>
+                          </ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-buttons>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-item>
   </ion-list>
+
 </ion-content>

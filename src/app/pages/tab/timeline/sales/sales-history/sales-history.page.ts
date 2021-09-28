@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-sales-history',
@@ -19,7 +20,8 @@ export class SalesHistoryPage implements OnInit {
     productImage: null
   }
 
-  constructor(private firestore: AngularFirestore) {
+  constructor(private firestore: AngularFirestore,
+              private alertCtrl: AlertController) {
     this.firestore.collection('productList').valueChanges({idField: 'productId'}).subscribe(
       adoptions => {
         this.newProductLists = adoptions;
@@ -29,19 +31,28 @@ export class SalesHistoryPage implements OnInit {
   }
 
   ngOnInit() {
-    this.firestore.doc(`productList/${this.productId}`)
-    .valueChanges()
-    .subscribe((product: any) => (this.newProductList = product));
   }
 
-  // delete function not yet
-  deleteProduct(productId) {
-    // console.log(productId)
-    // if (window.confirm('Do you really want to delete?')) {
-    //   if(this.productId !== 'new'){
-    //     this.firestore.doc(`productList/${this.productId}`).delete();
-    //   }
-    // }
+  deleteProduct(productId: string){
+    this.firestore.doc('productList/' + productId).delete();
+  }
+
+  async removeProduct(productId: string) {
+    const alert = await this.alertCtrl.create({
+      header: 'Remove',
+      message: 'Are you sure you want to remove?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => this.deleteProduct(productId),
+        },
+        {
+          text: 'No',
+        },
+      ],
+    });
+
+    alert.present();
   }
 
 }
