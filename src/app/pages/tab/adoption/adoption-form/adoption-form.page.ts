@@ -22,6 +22,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class AdoptionFormPage implements OnInit {
   newAdoptionList = {
     userId: '',
+    userName: '',
+    userEmail: '',
     petAge: '',
     petBreed: '',
     petCategory: '',
@@ -37,6 +39,8 @@ export class AdoptionFormPage implements OnInit {
   newAdoptionForm: FormGroup;
   petId: string;
   userId: string;
+  userName: string;
+  userEmail: string;
 
   constructor(private firestore: AngularFirestore,
               private storage: AngularFireStorage,
@@ -45,6 +49,7 @@ export class AdoptionFormPage implements OnInit {
 
   ngOnInit() {
     this.getUserId();
+    this.getUserName();
     this.newAdoptionForm = new FormGroup({
       petAge: new FormControl(this.newAdoptionList.petAge,[
         Validators.required,
@@ -88,6 +93,16 @@ export class AdoptionFormPage implements OnInit {
     let user = firebase.auth().currentUser;
 
     this.newAdoptionList.userId = `${user.uid}`;
+    this.userId = user.uid;
+  }
+
+  getUserName(){
+    this.firestore.doc(`/users/${this.userId}`).valueChanges().subscribe(
+      profile => {
+        this.newAdoptionList.userName = profile['name'];
+        this.newAdoptionList.userEmail = profile['email'];
+      }
+    )
   }
 
   savePost(): void{
