@@ -1,8 +1,10 @@
 export interface Cart {
-  productId: string;
-  productName: string;
-  productCategory: string;
-  productPrice: number;
-  productDescription: string;
-  productImage: null;
+  cartId: string;
+  cartProductId: string;
+  cartProductName: string;
+  cartProductCategory: string;
+  cartProductPrice: number;
+  cartProductDescription: string;
+  cartProductImage: null;
+  userId: string;
 }

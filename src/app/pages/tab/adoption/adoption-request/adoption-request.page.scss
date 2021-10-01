@@ -1,3 +1,32 @@
 ion-title{
   font-family: 'ABeeZee' !important;
 }
+
+ion-header{
+  position: absolute;
+}
+
+ion-toolbar{
+  padding-left: 10px;
+
+  ion-icon{
+    font-size: 2rem;
+  }
+}
+
+ion-content{
+  // --ion-background-color: #9DDFCC !important;
+  // E1EAF9
+  font-family: "AbeeZee";
+  --ion-background-color: white !important;
+}
+
+ion-card{
+  --ion-background-color: transparent;
+  box-shadow: none !important;
+}
+
+ion-label{
+  font-family: 'AbeeZee' !important;
+}
+

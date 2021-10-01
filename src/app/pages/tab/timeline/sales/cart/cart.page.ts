@@ -1,8 +1,12 @@
 import { Component, OnInit} from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import firebase from 'firebase/app'
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Cart } from 'src/app/models/sales/cart';
+import { CartService } from 'src/app/services/sales/cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -12,82 +16,55 @@ import { map } from 'rxjs/operators';
 
 export class CartPage implements OnInit {
 
-  cartItems$: Observable<any[]>;
-  totalAmount$: Observable<number>;
-  cartLists;
-  productDetail;
-  totalCart;
-  cartId;
-
-  newCartList = new BehaviorSubject<any[]>([
-    {
-    productId: '',
-    productName: '',
-    productCategory: '',
-    productPrice: null,
-    productDescription: '',
-    productImage: null
-  }
-]);
-
-  constructor(
-              private alertCtrl: AlertController,
-              private firestore: AngularFirestore) {
+  public cartList: Observable<Cart[]>;
+  userId: string;
 
 
-                this.firestore.collection('cartList').valueChanges({idField: 'cartId'}).subscribe(
-                  (products: any) => {
-                    this.newCartList = products;
-                    console.log(this.newCartList);
-                  }
-                );
-
-                this.firestore.collection('cartList').valueChanges({idField: 'cartId'}).subscribe(
-                  (products: any) => {
-                    this.cartLists = products;
-                    console.log(this.cartLists);
-                  }
-                );
-              }
+  constructor(private alertCtrl: AlertController,
+              private cartService: CartService,
+              private router: Router,
+              private firestore: AngularFirestore) {}
 
   ngOnInit() {
-    this.totalAmount$ = this.getTotalAmount();
+    this.getUserId();
+    this.cartList = this.cartService.getCartList(this.userId);
+  }
+
+  getUserId(){
+    let user = firebase.auth().currentUser;
+    this.userId = user.uid;
   }
 
   getTotalAmount() {
-    return this.newCartList.pipe(
-      map((items) => {
-        let total = 0;
-        items.forEach((item) => {
-          total += item.productPrice;
-        });
-        return total;
-      })
-    );
   }
 
-  async removeProduct(cartId: string) {
+
+
+  async removeProduct(cartId: string, cartProductName: string): Promise<void> {
     const alert = await this.alertCtrl.create({
       header: 'Remove',
-      message: 'Are you sure you want to remove?',
+      message: `Are you sure you want to remove ${cartProductName}?`,
       buttons: [
         {
           text: 'Yes',
-          handler: () => this.deleteProduct(cartId),
+          handler: () => {
+            // this.cartService.deleteProduct(this.cartId, this.userId).then(() => {
+            // this.router.navigateByUrl('/tab/timeline/sales/cart');
+            // })
+          }
         },
         {
           text: 'No',
+          role: 'cancel',
+          handler: blah => {
+            console.log('Confirm Cancel: blah');
+          },
         },
       ],
     });
 
-    alert.present();
+    await alert.present();
 
   }
-
-  deleteProduct(cartId: string) {
-    this.firestore.doc('cartList/' + cartId).delete();
-  }
-
 }
 

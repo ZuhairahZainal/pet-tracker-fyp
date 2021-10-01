@@ -1,7 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+import firebase from 'firebase/app';
+
 
 @Component({
   selector: 'app-sales',
@@ -17,6 +19,7 @@ export class SalesPage implements OnInit {
 
   newCartList = {
     cartId: '',
+    userId: '',
     cartProductId: '',
     cartProductName: '',
     cartProductCategory: '',
@@ -28,49 +31,69 @@ export class SalesPage implements OnInit {
 
   selectedProductDetail;
   productLists;
-  product: any;
-  cartId: string;
   filter: string;
-  productId: string;
-  productCategory;
+
+  // individual data
+  productName: any;
+  productCategory: any;
+  productPrice: any;
+  productDescription: any;
+  productImage: any;
+
+  userId: any;
 
   constructor(private firestore: AngularFirestore,
-              private activatedRoute: ActivatedRoute,
               private router: Router,
               public loadingCtrl: LoadingController,
               ) {
 
+                let user = firebase.auth().currentUser;
+                this.userId = user.uid;
+
+                this.newCartList.userId = `${user.uid}`;
+
                 this.firestore.collection('productList').valueChanges({idField: 'productId'}).subscribe(
                   (products: any) => {
                     this.productLists = products;
-                    console.log(this.productLists);
                   }
                 );
               }
 
-  //filter segment (incomplete)
   segmentChanged(ev: any) {
     this.segment = ev.detail.value;
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   // masuk ke firebase
-  async addToCartDB(productId: string){
+  async addToCartDB(productId: string): Promise<void>{
     this.firestore.doc(`productList/${productId}`).valueChanges().subscribe(
       ( productDetail: any ) => {
         this.selectedProductDetail = productDetail;
-        console.log(this.selectedProductDetail);
+        this.newCartList.cartProductName = productDetail['productName'];
+        this.newCartList.cartProductCategory = productDetail['productCategory'];
+        this.newCartList.cartProductPrice = productDetail['productPrice'];
+        this.newCartList.cartProductDescription = productDetail['productDescription'];
+        this.newCartList.cartProductImage = productDetail['productImage'];
       }
     );
 
     const loading = await this.loadingCtrl.create();
+    loading.present();
 
       this.newCartList.cartId = this.firestore.createId();
-      this.newCartList = this.selectedProductDetail;
+      this.newCartList.cartProductId = productId;
 
-      this.firestore.collection('cartList').add(this.newCartList).then(() => {
+      this.firestore.collection('sale').doc(this.newCartList.userId).collection('cartList').doc(this.newCartList.cartId).set({
+        cartId: this.newCartList.cartId,
+        userId: this.newCartList.userId,
+        cartProductId: this.newCartList.cartProductId,
+        cartProductName: this.newCartList.cartProductName,
+        cartProductCategory: this.newCartList.cartProductCategory,
+        cartProductPrice: this.newCartList.cartProductPrice,
+        cartProductDescription: this.newCartList.cartProductDescription,
+        cartProductImage: this.newCartList.cartProductImage
+      }).then(() => {
         loading.dismiss().then(() => {
           this.router.navigateByUrl('tab/timeline/sales/cart');
         });

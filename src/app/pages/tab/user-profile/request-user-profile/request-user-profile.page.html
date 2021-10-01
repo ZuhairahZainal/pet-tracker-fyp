@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button routerLink="../pending-list">
+      <ion-button routerLink="/tab/user-profile/pending-list">
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -11,5 +11,85 @@
 </ion-header>
 
 <ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="5" class="ion-margin">
+        <img class="pic" [src]="petRequestedDetails?.petImage"/>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item lines="none" class="ion-text-center">
+          {{ petRequestedDetails?.petName }}
+
+        </ion-item>
+
+        <ion-item lines="none" class="ion-text-center">
+          {{ petRequestedDetails?.petCategory }}
+        </ion-item>
+
+        <ion-item lines="none" class="ion-text-center">
+          {{ petRequestedDetails?.petBreed }}
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <ion-button expand="block" color="success" (click)="acceptUser(adoptionRequest?.requestId, adoptionRequest?.userId)">Accept</ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button expand="block" color="danger" (click)="rejectUser(adoptionRequest?.requestId, adoptionRequest?.userId)">Reject</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="2" class="ion-margin">
+          <ion-avatar class="image-center">
+            <img name="profile_pic" [src]="userDetails?.userImage "/>
+          </ion-avatar>
+      </ion-col>
+      <ion-col size="9">
+        <ion-card class="ion-text-center">
+          <ion-card-header>
+            <ion-card-title>
+              {{ adoptionRequest?.userName }}
+            </ion-card-title>
+            <ion-card-subtitle>
+              {{ adoptionRequest?.requestDescription }}
+            </ion-card-subtitle>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-toolbar>
+    <ion-segment (ionChange)="segmentChanged($event)" value="allpost" scrollable>
+      <ion-segment-button value="allpost">
+        <ion-label>
+          Shared Post
+        </ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="adoption">
+        <ion-label>
+          Adoptions
+        </ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <ion-list *ngIf="segment === 'allpost'">
+    <ion-item>
+      <ion-label>All post</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="segment === 'adoption'">
+      <ion-grid>
+        <ion-row>
+          <ion-col id="adopt" size="4" *ngFor="let adoption of adoptionPosts">
+              <img [src]="adoption.petImage"/>
+          </ion-col>
+        </ion-row>
+     </ion-grid>
+</ion-list>
+
 
 </ion-content>

@@ -9,7 +9,7 @@
     <ion-title class="ion-text-center">Edit</ion-title>
 
     <ion-buttons slot="end">
-      <ion-button (click)="updateForm()" [disabled]="!updateProductForm.valid">
+      <ion-button (click)="updateForm()">
         <ion-label>Done</ion-label>
       </ion-button>
     </ion-buttons>
@@ -23,7 +23,7 @@
 
       <ion-card>
         <ion-card-header>
-          <img *ngIf="newProductList.productImage" [src]="newProductList.productImage"/>
+          <img [src]="productDetail?.productImage"/>
         </ion-card-header>
         <ion-card-content>
           <ion-card-subtitle>
@@ -39,12 +39,12 @@
 
     <ion-card-content>
       <ion-label position="floating">Product Name</ion-label>
-      <ion-input formControlName="productName" type="text" required [placeholder]="newProductList.productName"></ion-input>
+      <ion-input formControlName="productName" type="text" [placeholder]="productDetail?.productName"></ion-input>
     </ion-card-content>
 
     <ion-card-content>
       <ion-label position="floating">Product Category</ion-label>
-      <ion-select value="gender" [placeholder]="newProductList.productCategory" interface="action-sheet" formControlName="productCategory">
+      <ion-select value="gender" [placeholder]="productDetail?.productCategory" interface="action-sheet" formControlName="productCategory">
         <ion-select-option value="Pet Food">Pet Food</ion-select-option>
         <ion-select-option value="Pet House">Pet House</ion-select-option>
         <ion-select-option value="Pet Care">Pet Care</ion-select-option>
@@ -55,12 +55,12 @@
 
     <ion-card-content>
       <ion-label position="floating">Product Description</ion-label>
-      <ion-textarea formControlName="productDescription" type="text" required [placeholder]="newProductList.productDescription"></ion-textarea>
+      <ion-textarea formControlName="productDescription" type="text" [placeholder]="productDetail?.productDescription"></ion-textarea>
     </ion-card-content>
 
     <ion-card-content>
       <ion-label position="floating">Product Price</ion-label>
-      <ion-input formControlName="productPrice" type="number" required [placeholder]="newProductList.productPrice"></ion-input>
+      <ion-input formControlName="productPrice" type="number" [placeholder]="productDetail?.productPrice"></ion-input>
     </ion-card-content>
     </ion-card>
 

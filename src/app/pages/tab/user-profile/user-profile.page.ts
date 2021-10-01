@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { UserService } from './shared/user.service';
+import { UserService } from '../../../services/user/user.service';
+import firebase from 'firebase/app';
 
 @Component({
   selector: 'app-user-profile',
@@ -11,12 +12,16 @@ export class UserProfilePage implements OnInit {
 
   adoptionList;
   public segment: string = "allpost";
+  currentUser: string;
 
   // for user profile detail
   userId: any;
   userUsername: any;
+  userBio: any;
+  userImage: any;
 
   //for adoption post
+  adoptionId: any;
   postOwnerId: any;
   petAdoptName: any;
   petAdoptAge: any;
@@ -35,38 +40,31 @@ export class UserProfilePage implements OnInit {
                 this.userService.getUserDetails().subscribe(
                   profile => {
                     this.userUsername = profile['name'];
+                    this.userImage = profile['userImage'];
+                    this.userBio = profile['userBio'];
                     this.userId = profile['userId'];
                   }
                 )
 
-                this.firestore.collection('adoptionList').valueChanges({idField: 'petId'}).subscribe(
+                this.getUserId()
+
+                this.firestore.collection('adoption').doc(this.currentUser).collection('adoptionDetail').valueChanges({idField: 'petId'}).subscribe(
                   adoptions => {
                     this.adoptionList = adoptions;
-                    this.postOwnerId = adoptions['userId'];
-                    this.petAdoptName = adoptions['petName'];
-                    this.petAdoptAge = adoptions['petAge'];
-                    this.petAdoptBreed = adoptions['petBreed'];
-                    this.petAdoptCategory = adoptions['petCategory'];
-                    this.petAdoptCondition = adoptions['petCondition'];
-                    this.petAdoptDescription = adoptions['petDescription'];
-                    this.petAdoptGender = adoptions['petGender'];
-                    this.petAdoptSpayStatus = adoptions['petSpayStatus'];
-                    this.petAdoptImage = adoptions['petImage'];
-                    this.petAdoptMedicalRecord = adoptions['petMedicalRecord'];
-                  }
-                )
-
+                  })
   }
+
 
   ngOnInit() {
+
   }
 
-  displayAdoptionPost(){
-    if(this.postOwnerId = this.userId){
-      this.firestore.collection('adoptionList')
+  getUserId(){
+    let user = firebase.auth().currentUser;
+    this.currentUser = user.uid;
 
-    }
   }
+
 
   segmentChanged(ev: any) {
     this.segment = ev.detail.value;

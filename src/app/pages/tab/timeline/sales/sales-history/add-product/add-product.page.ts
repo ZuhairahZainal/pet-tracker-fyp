@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { AlertController, LoadingController } from '@ionic/angular';
+import firebase from 'firebase/app'
 
 @Component({
   selector: 'app-add-product',
@@ -15,6 +16,7 @@ export class AddProductPage implements OnInit {
 
   newProductList = {
     productId: '',
+    userId: '',
     productName: '',
     productCategory: '',
     productPrice: '',
@@ -25,16 +27,17 @@ export class AddProductPage implements OnInit {
 
   productForm: FormGroup;
   productId: string;
+  userId: string;
 
   constructor(private storage: AngularFireStorage,
               private firestore: AngularFirestore,
               public loadingCtrl: LoadingController,
               public alertCtrl: AlertController,
               private router: Router,
-              private route: ActivatedRoute,
-              public fb: FormBuilder) { }
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.getUserId();
     this.productForm = new FormGroup({
       productName: new FormControl(this.newProductList.productName,[
         Validators.required,
@@ -56,12 +59,19 @@ export class AddProductPage implements OnInit {
     });
 
     this.productId = this.route.snapshot.params.productId || 'new';
+  }
 
+  getUserId(){
+    let user = firebase.auth().currentUser;
+
+    this.userId = user.uid;
+    this.newProductList.userId = `${user.uid}`;
   }
 
   //submit form, send data to database
-  async formSubmit(){
+  async formSubmit(): Promise<void>{
     const loading = await this.loadingCtrl.create();
+    loading.present();
 
     this.newProductList.productId = this.firestore.createId();
     this.newProductList.productName = this.productForm.get('productName').value;
@@ -70,15 +80,12 @@ export class AddProductPage implements OnInit {
     this.newProductList.productDescription = this.productForm.get('productDescription').value;
     this.newProductList.productAgreement = this.productForm.get('productAgreement').value;
 
-    this.firestore.collection('productList').doc(this.newProductList.productId).set({
-      productId: this.newProductList.productId,
-      productName: this.newProductList.productName,
-      productCategory: this.newProductList.productCategory,
-      productPrice: this.newProductList.productPrice,
-      productDescription: this.newProductList.productDescription,
-      productAgreement: this.newProductList.productAgreement,
-      productImage: this.newProductList.productImage
-    }).then(() => {
+    this.firestore.collection('sale').doc(this.newProductList.userId)
+    .collection('newProduct').doc(this.newProductList.productId)
+    .set(this.newProductList);
+
+    this.firestore.collection('productList').doc(this.newProductList.productId)
+    .set(this.newProductList).then(() => {
       loading.dismiss().then(() => {
         this.productForm = null;
         this.router.navigateByUrl('tab/timeline/sales/sales-history');
@@ -110,11 +117,7 @@ export class AddProductPage implements OnInit {
       .then(() =>{
         productImageRef.getDownloadURL().subscribe(downloadURL => {
           this.newProductList.productImage = downloadURL;
-          console.log(this.newProductList);
         })
-
-        this.newProductList.productImage.unsubsribe();
-
       })
     }catch(error){
       console.warn(error);

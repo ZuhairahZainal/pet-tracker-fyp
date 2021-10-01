@@ -17,11 +17,11 @@ const routes: Routes = [
     loadChildren: () => import('./pending-list/pending-list.module').then( m => m.PendingListPageModule)
   },
   {
-    path: 'request-user-profile',
+    path: 'request-user-profile/:requestId',
     loadChildren: () => import('./request-user-profile/request-user-profile.module').then( m => m.RequestUserProfilePageModule)
   },
   {
-    path: 'adoption-details/:petId',
+    path: 'adoption-details/:id',
     loadChildren: () => import('./adoption-details/adoption-details.module').then( m => m.AdoptionDetailsPageModule)
   }
 ];

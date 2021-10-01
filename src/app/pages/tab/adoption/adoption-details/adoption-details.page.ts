@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
+import { AdoptionsDetail } from 'src/app/models/adoption/adoptions-detail';
+import { AdoptionService } from 'src/app/services/adoption/adoption.service';
 
 @Component({
   selector: 'app-adoption-details',
@@ -9,27 +11,21 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AdoptionDetailsPage implements OnInit {
 
-  adoptionList;
+  public adoptionsDetail: AdoptionsDetail;
   filter: string;
   petId: any;
   adopt: number = 0;
 
   constructor(private firestore: AngularFirestore,
-              private activatedRoute: ActivatedRoute) {
-
-      this.petId = this.activatedRoute.snapshot.paramMap.get('petId');
-
-      this.getData(this.petId).subscribe( adoptionList => {
-        this.adoptionList = adoptionList;
-        console.log(adoptionList);
-      });
-  }
+              private adoptionService: AdoptionService,
+              private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
-  }
+    const adoptionId: string = this.activatedRoute.snapshot.paramMap.get('id');
 
-  getData(petId) {
-    return this.firestore.collection('adoptionList').doc(petId).valueChanges({idField: 'petId'});
+    this.adoptionService.getAdoptionDetail(adoptionId).subscribe(adoptionDetail => {
+      this.adoptionsDetail = adoptionDetail;
+    });
   }
 
   // alum siap

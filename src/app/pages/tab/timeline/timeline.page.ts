@@ -21,21 +21,18 @@ export class TimelinePage implements OnInit {
     this.firestore.collection('lostpetPost').valueChanges({idField: 'lostpetId'}).subscribe(
       adoptions => {
         this.lostpetPost = adoptions;
-        console.log(this.lostpetPost);
       }
     )
 
     this.firestore.collection('donationPost').valueChanges({idField: 'donationId'}).subscribe(
       adoptions => {
         this.donationPost = adoptions;
-        console.log(this.donationPost);
       }
     )
 
     this.firestore.collection('newPost').valueChanges({idField: 'newId'}).subscribe(
       adoptions => {
         this.newPost = adoptions;
-        console.log(this.newPost);
       }
     )
   }

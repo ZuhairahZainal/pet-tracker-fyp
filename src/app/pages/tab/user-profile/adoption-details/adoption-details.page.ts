@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AdoptionsDetail } from 'src/app/models/adoption/adoptions-detail';
+import { AdoptionService } from 'src/app/services/adoption/adoption.service';
+import firebase from 'firebase/app';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-adoption-details',
@@ -9,29 +13,57 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AdoptionDetailsPage implements OnInit {
 
-  petId: any;
+  public adoptionsDetail: AdoptionsDetail;
+  adoptionId: string;
+  userId: string;
   adoptionList;
 
   constructor(private firestore: AngularFirestore,
-              private activatedRoute: ActivatedRoute) {
-
-      this.petId = this.activatedRoute.snapshot.paramMap.get('petId');
-
-      this.getData(this.petId).subscribe( adoptionList => {
-        this.adoptionList = adoptionList;
-        console.log(adoptionList);
-      });
-   }
+              private adoptionService: AdoptionService,
+              private alertCtrl: AlertController,
+              private router: Router,
+              private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
+    const adoptionId: string = this.activatedRoute.snapshot.paramMap.get('id');
+
+    this.getUserId();
+
+    this.adoptionService.getAdoptionDetail(adoptionId).subscribe(adoptionDetail => {
+      this.adoptionsDetail = adoptionDetail;
+    });
   }
 
-  getData(petId) {
-    return this.firestore.collection('adoptionList').doc(petId).valueChanges({idField: 'petId'});
+  getUserId(){
+    let user = firebase.auth().currentUser;
+    this.userId = user.uid;
   }
 
-  deleteAdoptionPost(){
+  async deleteAdoptionPost(adoptionId: string){
+    const alert = await this.alertCtrl.create({
+      header: 'Delete Post',
+      message: 'Are you sure you want to delete this post?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => this.removePost(adoptionId)
+        },
+        {
+          text: 'No',
+        },
+      ],
+    });
 
+    alert.present();
+  }
+
+
+
+  removePost(adoptionId: string){
+    this.firestore.doc('adoptionPost/' + adoptionId).delete();
+    this.firestore.collection('adoption').doc(this.userId).collection('adoptionDetail').doc(adoptionId).delete().then(() => {
+      this.router.navigate(['tab/user-profile']);
+    })
   }
 
   updateAdoptionDetail(){
