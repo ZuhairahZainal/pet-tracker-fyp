@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Camera, CameraResultType } from '@capacitor/camera';
+import { LoadingController } from '@ionic/angular';
 import firebase from 'firebase/app';
 
 @Component({
@@ -15,29 +16,26 @@ export class PersonalInfoPage implements OnInit {
 
   newUserDetail = {
     name: '',
-    email: '',
-    phone: '',
     userImage: null,
-    userBio: null
+    userBio: ''
   }
 
   updateUserDetail: FormGroup;
   userId: any;
-  userInfo: any;
-  userDetails;
-
   userUsername: any;
   userFirstName: any;
   userLastName: any;
   userDOB: any;
   userPhone: any;
   userEmail: any;
+  userImage: any;
+  userBio: any;
 
   constructor(private firestore: AngularFirestore,
     private storage: AngularFireStorage,
+    public loadingCtrl: LoadingController,
     public fb: FormBuilder,
-    private router: Router,
-    private route: ActivatedRoute) {
+    private router: Router) {
 
       this.setUserId();
 
@@ -50,37 +48,52 @@ export class PersonalInfoPage implements OnInit {
           this.userDOB = profile['dob'];
           this.userPhone = profile['phone'];
           this.userEmail = profile['email'];
-        }
-      )
-
+          this.userImage = profile['userImage'];
+          this.userBio = profile['userBio']
+        })
     }
 
   ngOnInit(){
-    this.updateUserDetail = this.fb.group({
-      name: [''],
-      email: [''],
-      phone: [''],
-      userBio: ['']
-    })
+    this.setUserId();
+
+    this.updateUserDetail = new FormGroup({
+      name: new FormControl(this.newUserDetail.name, [
+        Validators.minLength(2),
+        Validators.required,
+      ]),
+      userBio: new FormControl(this.newUserDetail.userBio, [
+        Validators.minLength(1),
+        Validators.required,
+      ])
+    });
   }
 
   setUserId(){
     let user = firebase.auth().currentUser;
     this.userId = user.uid;
-    console.log(user.uid);
   }
 
+  async updateForm(): Promise<void>{
+    const loading = await this.loadingCtrl.create();
+    loading.present();
 
-  updateForm() {
-    this.updateProduct(this.userId, this.updateUserDetail.value);
-  }
+    this.newUserDetail.name = this.updateUserDetail.get('name').value;
+    this.newUserDetail.userBio = this.updateUserDetail.get('userBio').value;
 
-  updateProduct(userId, users) {
-    this.firestore.collection('users').doc(userId).update(users)
+    this.firestore.collection('users').doc(this.userId).update({
+      name: this.newUserDetail.name,
+      userBio: this.newUserDetail.userBio
+    })
     .then(() => {
-      this.takePicture;
-      // this.router.navigate(['tab/user-profile']);
-    }).catch(error => console.log(error));
+      loading.dismiss().then(() => {
+        this.router.navigate(['tab/user-profile']);
+      });
+      },
+      error => {
+       loading.dismiss().then(() => {
+         console.error(error);
+       });
+    });
   }
 
   async takePicture(): Promise<void>{
@@ -101,11 +114,12 @@ export class PersonalInfoPage implements OnInit {
       .then(() =>{
         userdpRef.getDownloadURL().subscribe(downloadURL => {
           this.newUserDetail.userImage = downloadURL;
+
+          this.firestore.collection('users').doc(this.userId).update({
+            userImage: this.newUserDetail.userImage
+          })
           console.log(this.newUserDetail.userImage);
-        })
-
-        this.newUserDetail.userImage.unsubsribe();
-
+        });
       })
     }catch(error){
       console.warn(error);

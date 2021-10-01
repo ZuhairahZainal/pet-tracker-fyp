@@ -17,11 +17,10 @@
   </ion-toolbar>
 
       <ion-list>
-        <ion-item *ngFor="let adoption of adoptionList | filter:filter" >
+        <ion-item *ngFor="let adoption of adoptionList | async | filter:filter" >
           <ion-grid>
             <ion-row>
             <ion-col>
-            <!-- <ion-card> -->
               <ion-grid>
                 <ion-row>
                   <ion-col size=4>
@@ -37,40 +36,12 @@
                   </ion-col>
 
                   <ion-col size=2 id="info">
-                    <ion-button fill=solid color="primary" [routerLink]="['/tab/adoption/adoption-details/', adoption.petId]" >
-                      <!-- <ion-label class=ion-padding>More</ion-label> -->
+                    <ion-button fill=solid color="primary" [routerLink]="['../adoption-details/' , adoption.adoptionId]" >
                       <ion-icon name="chevron-forward-outline"></ion-icon>
                     </ion-button>
                   </ion-col>
                 </ion-row>
               </ion-grid>
-
-              <!-- <ion-card-content>
-                <ion-buttons>
-                    <ion-grid size=3>
-                      <ion-row>
-                        <ion-col>
-                          <ion-button fill=solid color="primary" [routerLink]="['/tab/adoption/adoption-details/', adoption.petId]" >
-                            <ion-label class=ion-padding>More</ion-label>
-                          </ion-button>
-                        </ion-col>
-
-                        <ion-col>
-                          <ion-button fill=solid color="primary" [routerLink]="['/tab/adoption/adoption-details/', adoption.petId]" >
-                            <ion-label class=ion-padding>Request</ion-label>
-                          </ion-button>
-                        </ion-col>
-
-                        <ion-col>
-                          <ion-button>
-                            <ion-icon name="chatbubble-outline"></ion-icon>
-                          </ion-button>
-                        </ion-col>
-                      </ion-row>
-                  </ion-grid>
-                </ion-buttons>
-              </ion-card-content> -->
-            <!-- </ion-card> -->
           </ion-col>
         </ion-row>
       </ion-grid>

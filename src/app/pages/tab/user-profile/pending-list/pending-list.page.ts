@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AdoptionService } from 'src/app/services/adoption/adoption.service';
+import firebase from 'firebase/app';
+import { AdoptionsRequest } from 'src/app/models/adoption/adoptions-request';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-pending-list',
@@ -7,9 +12,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PendingListPage implements OnInit {
 
-  constructor() { }
 
-  ngOnInit() {
+  public pendingList: Observable<AdoptionsRequest[]>
+  userUsername: any;
+  PetName: any;
+  userId: any;
+  petId: any;
+
+  constructor(private adoptionService: AdoptionService) {
   }
 
+  ngOnInit() {
+    this.getUserId();
+    this.pendingList = this.adoptionService.getPendingList(this.userId);
+  }
+
+  getUserId(){
+    let user = firebase.auth().currentUser;
+    this.userId = user.uid;
+  }
 }

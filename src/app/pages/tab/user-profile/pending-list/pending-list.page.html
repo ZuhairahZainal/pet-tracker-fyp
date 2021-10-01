@@ -12,10 +12,14 @@
 
 <ion-content>
   <ion-list>
-    <ion-item>
-      <ion-label class="ion-padding-horizontal">Username</ion-label>
+    <ion-item *ngFor="let detail of pendingList | async">
+      <ion-label class="ion-padding-horizontal">{{ detail.userName }}</ion-label>
+      <ion-label class="ion-padding-horizontal">{{ detail.petName }}</ion-label>
+
+      <!-- routerLink="../request-user-profile" -->
       <ion-buttons>
-        <ion-button slot="end" routerLink="../request-user-profile">
+        <ion-button slot="end"[routerLink]="['/tab/user-profile/request-user-profile/', detail.requestId]">
+
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </ion-button>
       </ion-buttons>

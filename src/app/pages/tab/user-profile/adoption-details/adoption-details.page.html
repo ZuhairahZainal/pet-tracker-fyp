@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title> {{ adoptionList.petName }} </ion-title>
+    <ion-title> {{ adoptionsDetail?.petName }} </ion-title>
     <ion-buttons slot="end">
-      <ion-button routerLink="../adoption">
+      <ion-button routerLink="/tab/user-profile">
         <ion-icon slot="icon-only" name="close"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -16,52 +16,52 @@
       <ion-row>
         <ion-col>
         <ion-card>
-          <img [src]="adoptionList.petImage"/>
+          <img [src]="adoptionsDetail?.petImage"/>
           <ion-card-header>
             <ion-card-subtitle>Pet Name</ion-card-subtitle>
-            <ion-card-title>{{ adoptionList.petName }}</ion-card-title>
+            <ion-card-title>{{ adoptionsDetail?.petName }}</ion-card-title>
           </ion-card-header>
 
           <ion-card-header>
             <ion-card-title color="primary">Category</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            {{ adoptionList.petCategory }}
+            {{ adoptionsDetail?.petCategory }}
           </ion-card-content>
 
           <ion-card-header>
             <ion-card-title color="primary">Age</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            {{ adoptionList.petAge }} Month
+            {{ adoptionsDetail?.petAge }} Month
           </ion-card-content>
 
           <ion-card-header>
             <ion-card-title color="primary">Breed</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            {{ adoptionList.petBreed }}
+            {{ adoptionsDetail?.petBreed }}
           </ion-card-content>
 
           <ion-card-header>
             <ion-card-title color="primary">Gender</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            {{ adoptionList.petGender }}
+            {{ adoptionsDetail?.petGender }}
           </ion-card-content>
 
           <ion-card-header>
             <ion-card-title color="primary">Health Condition</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            {{ adoptionList.petCondition }}
+            {{ adoptionsDetail?.petCondition }}
           </ion-card-content>
 
           <ion-card-header>
             <ion-card-title color="primary">Spay Status</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            {{ adoptionList.petSpayStatus }}
+            {{ adoptionsDetail?.petSpayStatus }}
           </ion-card-content>
           </ion-card>
 
@@ -70,7 +70,7 @@
             <ion-icon name="create-outline"></ion-icon>
             <ion-label class="ion-padding">Edit</ion-label>
           </ion-button>
-          <ion-button expand="block" fill="solid" color="danger" (click)="deleteAdoptionPost()">
+          <ion-button expand="block" fill="solid" color="danger" (click)="deleteAdoptionPost(adoptionsDetail.adoptionId)">
             <ion-icon name="trash-outline"></ion-icon>
             <ion-label class="ion-padding">Delete</ion-label>
           </ion-button>

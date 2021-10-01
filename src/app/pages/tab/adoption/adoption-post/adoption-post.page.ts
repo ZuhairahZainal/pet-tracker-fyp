@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { AdoptionService } from 'src/app/services/adoption/adoption.service';
+import { AdoptionsDetail } from 'src/app/models/adoption/adoptions-detail';
+
 
 @Component({
   selector: 'app-adoption-post',
@@ -8,19 +11,14 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class AdoptionPostPage implements OnInit {
 
-  adoptionList;
+  public adoptionList: Observable<AdoptionsDetail[]>
   filter: string;
 
-  constructor( private firestore: AngularFirestore) {
-    this.firestore.collection('adoptionList').valueChanges({idField: 'petId'}).subscribe(
-      adoptionList => {
-        this.adoptionList = adoptionList;
-        console.log(adoptionList);
-      }
-    )
+  constructor(private adoptionService: AdoptionService) {
   }
 
   ngOnInit() {
+    this.adoptionList = this.adoptionService.getAdoptionPost();
   }
 
 }

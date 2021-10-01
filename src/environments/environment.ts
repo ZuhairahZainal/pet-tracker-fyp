@@ -11,7 +11,8 @@ export const environment = {
     projectId: "pet-tracker-fyp",
     storageBucket: "pet-tracker-fyp.appspot.com",
     messagingSenderId: "591348109428",
-    appId: "1:591348109428:web:86e7e510f4fb000298c121"
+    appId: "1:591348109428:web:86e7e510f4fb000298c121",
+    measurementId: "G-LDCGE6DQ2J"
   }
 };
 

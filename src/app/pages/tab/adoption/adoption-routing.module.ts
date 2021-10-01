@@ -14,11 +14,11 @@ const routes: Routes = [
     loadChildren: () => import('./adoption-form/adoption-form.module').then( m => m.AdoptionFormPageModule)
   },
   {
-    path: 'adoption-request',
+    path: 'adoption-request/:petId',
     loadChildren: () => import('./adoption-request/adoption-request.module').then( m => m.AdoptionRequestPageModule)
   },
   {
-    path: 'adoption-details/:petId',
+    path: 'adoption-details/:id',
     loadChildren: () => import('./adoption-details/adoption-details.module').then( m => m.AdoptionDetailsPageModule)
   },
   {
