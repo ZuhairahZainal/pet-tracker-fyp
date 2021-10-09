@@ -20,14 +20,16 @@ export class AdoptionRequestPage implements OnInit {
     userName: '',
     petName: '',
     petOwner: '',
-    requestName: '',
-    requestDescription: ''
+    requestDescription: '',
+    createdAt: new Date().toDateString(),
+    status: 'Pending'
   }
 
   requestNotif={
+    category: 'Adoption Request',
     petName: '',
     userName: '',
-    message: 'request to adopt'
+    createdAt: new Date().toDateString()
   }
 
   newRequestForm: FormGroup;
@@ -63,10 +65,6 @@ export class AdoptionRequestPage implements OnInit {
 
   ngOnInit() {
     this.newRequestForm = new FormGroup({
-      requestName: new FormControl(this.newAdoptionRequest.requestName, [
-        Validators.required,
-        Validators.minLength(2),
-      ]),
       requestDescription: new FormControl(this.newAdoptionRequest.requestDescription, [
         Validators.required,
         Validators.minLength(6)
@@ -78,11 +76,22 @@ export class AdoptionRequestPage implements OnInit {
     const loading = await this.loadingCtrl.create();
     loading.present();
 
+    const userRef = this.firestore.collection('adoptionPost').doc(this.newAdoptionRequest.petId);
+    const userRef1 = this.firestore.collection('adoption').doc(this.newAdoptionRequest.petOwner)
+    .collection('adoptionDetail').doc(this.newAdoptionRequest.petId);
+
+    const increment = firebase.firestore.FieldValue.increment(1);
+
+    userRef.update({ adoptCount: increment });
+    userRef1.update({ adoptCount: increment });
+
     this.newAdoptionRequest.requestId = this.firestore.createId();
-    this.newAdoptionRequest.requestName = this.newRequestForm.get('requestName').value;
     this.newAdoptionRequest.requestDescription = this.newRequestForm.get('requestDescription').value;
 
-    this.firestore.collection('notification').doc(this.newAdoptionRequest.petOwner).collection('adoptionRequest').doc(this.newAdoptionRequest.requestId).set(this.requestNotif);
+    this.firestore.collection('users').doc(this.newAdoptionRequest.petOwner).collection('notification').add(this.requestNotif);
+
+    this.firestore.collection('adoption').doc(this.newAdoptionRequest.userId).collection('adoptionApplication').doc(this.newAdoptionRequest.requestId).set(
+      this.newAdoptionRequest);
 
     this.firestore.collection('adoption').doc(this.newAdoptionRequest.petOwner).collection('adoptionRequest').doc(this.newAdoptionRequest.requestId).set(
      this.newAdoptionRequest).then(() => {

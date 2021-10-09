@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { AlertController, LoadingController } from '@ionic/angular';
@@ -15,8 +15,11 @@ import firebase from 'firebase/app'
 export class AddProductPage implements OnInit {
 
   newProductList = {
+    createdAt: new Date().toDateString(),
+    adminApprove: 'Pending',
     productId: '',
     userId: '',
+    userUsername: '',
     productName: '',
     productCategory: '',
     productPrice: '',
@@ -28,6 +31,7 @@ export class AddProductPage implements OnInit {
   productForm: FormGroup;
   productId: string;
   userId: string;
+  userUsername: string;
 
   constructor(private storage: AngularFireStorage,
               private firestore: AngularFirestore,
@@ -66,6 +70,10 @@ export class AddProductPage implements OnInit {
 
     this.userId = user.uid;
     this.newProductList.userId = `${user.uid}`;
+
+    this.firestore.collection('users').doc(this.userId).valueChanges().subscribe( userDetail => {
+      this.newProductList.userUsername = userDetail['name'];
+    })
   }
 
   //submit form, send data to database

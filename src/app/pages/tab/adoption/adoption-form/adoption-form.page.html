@@ -23,7 +23,11 @@
         <ion-card>
           <ion-card-content>
             <ion-label position="floating">Pet Name</ion-label>
-              <ion-input type="text" formControlName="petName" placeholder="Let others know its name..."></ion-input>
+              <ion-input type="text" formControlName="petName" placeholder="Let others know its name..." required></ion-input>
+
+              <ion-item lines="none" class="error-message" *ngIf="!newAdoptionForm.controls.petName.valid && newAdoptionForm.controls.petName.touched">
+                <p>The Pet Name is required to be at least 2 characters.</p>
+              </ion-item>
           </ion-card-content>
 
           <ion-card-content>
@@ -35,7 +39,16 @@
         <ion-card>
           <ion-card-content>
             <ion-label position="floating">Category</ion-label>
-              <ion-input type="text" formControlName="petCategory" placeholder="Which category is it?"></ion-input>
+              <ion-select value="gender" interface="action-sheet" formControlName="petCategory" placeholder="Which category is it?">
+                <ion-select-option value="Bird">Bird</ion-select-option>
+                <ion-select-option value="Cat">Cat</ion-select-option>
+                <ion-select-option value="Dog">Dog</ion-select-option>
+                <ion-select-option value="Rabbit">Rabbit</ion-select-option>
+                <ion-select-option value="Others">Others</ion-select-option>
+              </ion-select>
+              <ion-item lines="none" class="error-message" *ngIf="!newAdoptionForm.controls.petCategory.valid && newAdoptionForm.controls.petCategory.touched">
+                <p>Please select one.</p>
+              </ion-item>
           </ion-card-content>
         </ion-card>
 
@@ -43,13 +56,20 @@
           <ion-card-content>
             <ion-label position="floating">Breed</ion-label>
               <ion-input type="text" formControlName="petBreed" placeholder="State the breed here..."></ion-input>
+
+              <ion-item lines="none" class="error-message" *ngIf="!newAdoptionForm.controls.petBreed.valid && newAdoptionForm.controls.petBreed.touched">
+                <p>The pet breed is required to be at least 2 characters.</p>
+              </ion-item>
           </ion-card-content>
         </ion-card>
 
         <ion-card>
           <ion-card-content>
             <ion-label position="floating">Age (Month)</ion-label>
-              <ion-input type="number" formControlName="petAge" placeholder="Let others know its age!"></ion-input>
+            <ion-input type="number" formControlName="petAge" placeholder="Let others know its age!"></ion-input>
+            <ion-item lines="none" class="error-message" *ngIf="!newAdoptionForm.controls.petAge.valid && newAdoptionForm.controls.petAge.touched">
+              <p>The pet age is required to be at least 1.</p>
+            </ion-item>
           </ion-card-content>
         </ion-card>
 
@@ -60,6 +80,9 @@
               <ion-select-option value="Male">Male</ion-select-option>
               <ion-select-option value="Female">Female</ion-select-option>
             </ion-select>
+            <ion-item lines="none" class="error-message" *ngIf="!newAdoptionForm.controls.petGender.valid && newAdoptionForm.controls.petGender.touched">
+              <p>Please select one.</p>
+            </ion-item>
           </ion-card-content>
         </ion-card>
 
@@ -67,6 +90,9 @@
           <ion-card-content>
             <ion-label position="floating">Health Condition</ion-label>
               <ion-input type="text" formControlName="petCondition" placeholder="State their health condition here..."></ion-input>
+              <ion-item lines="none" class="error-message" *ngIf="!newAdoptionForm.controls.petCondition.valid && newAdoptionForm.controls.petCondition.touched">
+                <p>The condition of the pet should be at least 2 characters.</p>
+              </ion-item>
           </ion-card-content>
 
           <ion-card-content>
@@ -79,6 +105,9 @@
           <ion-card-content>
             <ion-label position="floating">Description</ion-label>
               <ion-textarea formControlName="petDescription" placeholder="Enter more information here..."></ion-textarea>
+              <ion-item lines="none" class="error-message" *ngIf="!newAdoptionForm.controls.petDescription.valid && newAdoptionForm.controls.petDescription.touched">
+                <p>The description of this post is required to be at least 10 characters.</p>
+              </ion-item>
           </ion-card-content>
         </ion-card>
 
@@ -101,6 +130,9 @@
               <ion-radio slot="end" color="tertiary" value="Not Done"></ion-radio>
             </ion-item>
           </ion-radio-group>
+          <ion-item lines="none" class="error-message" *ngIf="!newAdoptionForm.controls.petSpayStatus.valid && newAdoptionForm.controls.petSpayStatus.touched">
+            <p>Please select one.</p>
+          </ion-item>
         </ion-card>
     </ion-card>
   </div>

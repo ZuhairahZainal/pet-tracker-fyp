@@ -10,18 +10,16 @@ import { Product } from 'src/app/models/sales/product';
 })
 export class ProductService {
 
-  productId: any;
-
   constructor(public firestore: AngularFirestore,
               private router: Router) {}
 
   getUserProduct(userId: string, productId: string): Observable<Product>{
-    return this.firestore.collection('sale').doc(userId).collection('newProduct').doc<Product>(productId).valueChanges();
+    return this.firestore.collection('sale').doc(userId).collection('newProduct', ref => ref.orderBy('createdAt', 'desc')).doc<Product>(productId).valueChanges();
   }
 
     // Update
     updateProduct(userId, productId, productList) {
-      this.firestore.collection('sales').doc(userId).collection('newProduct').doc(productId).set(productList)
+      this.firestore.collection('sale').doc(userId).collection('newProduct').doc(productId).update(productList)
       .then(() => {
         this.router.navigate(['tab/timeline/sales/sales-history']);
       }).catch(error => console.log(error));

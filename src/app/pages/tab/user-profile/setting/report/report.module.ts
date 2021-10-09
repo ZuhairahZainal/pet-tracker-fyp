@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { EditInfoPageRoutingModule } from './edit-info-routing.module';
+import { ReportPageRoutingModule } from './report-routing.module';
 
-import { EditInfoPage } from './edit-info.page';
+import { ReportPage } from './report.page';
 
 @NgModule({
   imports: [
@@ -14,8 +14,8 @@ import { EditInfoPage } from './edit-info.page';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    EditInfoPageRoutingModule
+    ReportPageRoutingModule
   ],
-  declarations: [EditInfoPage]
+  declarations: [ReportPage]
 })
-export class EditInfoPageModule {}
+export class ReportPageModule {}

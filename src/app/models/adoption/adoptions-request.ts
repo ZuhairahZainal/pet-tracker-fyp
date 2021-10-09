@@ -7,4 +7,6 @@ export interface AdoptionsRequest {
   requestName: string,
   userId: string,
   userName: string,
+  createdAt: string,
+  status: string
 }

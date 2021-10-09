@@ -5,25 +5,25 @@ import { AdoptionsRequest } from 'src/app/models/adoption/adoptions-request';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-pending-list',
-  templateUrl: './pending-list.page.html',
-  styleUrls: ['./pending-list.page.scss'],
+  selector: 'app-adopt-request-list',
+  templateUrl: './adopt-request-list.page.html',
+  styleUrls: ['./adopt-request-list.page.scss'],
 })
-export class PendingListPage implements OnInit {
+export class AdoptRequestListPage implements OnInit {
 
-
-  public pendingList: Observable<AdoptionsRequest[]>
+  public applicationList: Observable<AdoptionsRequest[]>
   userUsername: any;
+  ownerUsername: any;
   PetName: any;
   userId: any;
   petId: any;
 
-  constructor(private adoptionService: AdoptionService) {
-  }
+  constructor(private adoptionService: AdoptionService) {}
 
   ngOnInit() {
     this.getUserId();
-    this.pendingList = this.adoptionService.getPendingList(this.userId);
+    this.applicationList = this.adoptionService.getApplicationList(this.userId);
+
   }
 
   getUserId(){

@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { PreferencePage } from './preference.page';
+import { ReportPage } from './report.page';
 
-describe('PreferencePage', () => {
-  let component: PreferencePage;
-  let fixture: ComponentFixture<PreferencePage>;
+describe('ReportPage', () => {
+  let component: ReportPage;
+  let fixture: ComponentFixture<ReportPage>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PreferencePage ],
+      declarations: [ ReportPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PreferencePage);
+    fixture = TestBed.createComponent(ReportPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

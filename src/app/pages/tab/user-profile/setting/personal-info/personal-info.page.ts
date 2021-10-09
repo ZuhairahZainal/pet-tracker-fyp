@@ -41,7 +41,6 @@ export class PersonalInfoPage implements OnInit {
 
       this.firestore.doc(`/users/${this.userId}`).valueChanges().subscribe(
         profile => {
-          console.log('Profile:', profile);
           this.userUsername = profile['name'];
           this.userFirstName = profile['firstname'];
           this.userLastName = profile['lastname'];

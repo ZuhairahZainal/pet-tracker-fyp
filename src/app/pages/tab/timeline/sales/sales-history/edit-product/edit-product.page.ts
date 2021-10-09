@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { ProductService } from '../../../../../../services/sales/product.service';
-import { AngularFirestore } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
 import { Product } from 'src/app/models/sales/product';
 
@@ -18,8 +17,6 @@ export class EditProductPage implements OnInit {
     productCategory: '',
     productPrice: '',
     productDescription: '',
-    productAgreement: '',
-    productImage: null
   }
 
   updateProductForm: FormGroup;
@@ -29,23 +26,8 @@ export class EditProductPage implements OnInit {
   userId: string;
 
   constructor(private productService: ProductService,
-              private firestore: AngularFirestore,
               private activatedRoute: ActivatedRoute,
-              public fb: FormBuilder) {
-
-                // this.productId = this.actRoute.snapshot.paramMap.get('productId');
-
-                // this.firestore.collection('sale').doc(this.userId).collection('newProduct').doc(this.productId)
-                // .valueChanges()
-                // .subscribe(products => {
-                //   console.log(products);
-                //   this.newProductList.productName = products['productName'];
-                //   this.newProductList.productCategory = products['productCategory'];
-                //   this.newProductList.productDescription = products['productDescription'];
-                //   this.newProductList.productImage = products['productImage'];
-                //   this.newProductList.productPrice = products['productPrice'];
-                // });
-  }
+              public fb: FormBuilder) {}
 
   ngOnInit() {
     this.getUserId();
@@ -75,7 +57,7 @@ export class EditProductPage implements OnInit {
     this.newProductList.productCategory = this.updateProductForm.get('productCategory').value;
     this.newProductList.productDescription = this.updateProductForm.get('productDescription').value;
 
-    this.productService.updateProduct(this.userId, this.productId, this.updateProductForm);
+    this.productService.updateProduct(this.userId, this.productId, this.newProductList);
   }
 }
 

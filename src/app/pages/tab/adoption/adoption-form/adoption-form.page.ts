@@ -22,10 +22,11 @@ import { LoadingController } from '@ionic/angular';
 })
 export class AdoptionFormPage implements OnInit {
   newAdoptionList = {
+    createdAt: new Date().toDateString(),
+    adminApprove: 'Pending',
+    adoptCount: 0,
     adoptionId: '',
     userId: '',
-    // userName: '',
-    // userEmail: '',
     petAge: '',
     petBreed: '',
     petCategory: '',
@@ -52,7 +53,6 @@ export class AdoptionFormPage implements OnInit {
 
   ngOnInit() {
     this.getUserId();
-    // this.getUserName();
     this.newAdoptionForm = new FormGroup({
       petAge: new FormControl(this.newAdoptionList.petAge,[
         Validators.required,
@@ -60,12 +60,14 @@ export class AdoptionFormPage implements OnInit {
       ]),
       petBreed: new FormControl(this.newAdoptionList.petBreed,[
         Validators.required,
+        Validators.minLength(2),
       ]),
       petCategory: new FormControl(this.newAdoptionList.petCategory,[
         Validators.required,
       ]),
       petCondition: new FormControl(this.newAdoptionList.petCondition,[
         Validators.required,
+        Validators.minLength(2),
       ]),
       petDescription: new FormControl(this.newAdoptionList.petDescription,[
         Validators.required,
@@ -92,15 +94,6 @@ export class AdoptionFormPage implements OnInit {
     this.newAdoptionList.userId = `${user.uid}`;
     this.userId = user.uid;
   }
-
-  // getUserName(){
-  //   this.firestore.doc(`/users/${this.userId}`).valueChanges().subscribe(
-  //     profile => {
-  //       this.newAdoptionList.userName = profile['name'];
-  //       this.newAdoptionList.userEmail = profile['email'];
-  //     }
-  //   )
-  // }
 
   async savePost(): Promise<void>{
     const loading = await this.loadingCtrl.create();

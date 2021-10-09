@@ -34,18 +34,6 @@
 
     <ion-item>
       <ion-label>
-        Security
-      </ion-label>
-      <ion-buttons>
-        <ion-button [routerLink]="['../setting/security']">
-          <ion-icon slot="end" name= "chevron-forward" ></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-item>
-
-
-    <ion-item>
-      <ion-label>
         Liked Post
       </ion-label>
       <ion-buttons>
@@ -55,13 +43,23 @@
       </ion-buttons>
     </ion-item>
 
+    <ion-item>
+      <ion-label>
+       Adoption Request
+      </ion-label>
+      <ion-buttons>
+        <ion-button [routerLink]="['../setting/adopt-request-list']">
+          <ion-icon slot="end" name= "chevron-forward" ></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
 
     <ion-item>
       <ion-label>
-        Help
+       Privacy & Security Help
       </ion-label>
       <ion-buttons>
-        <ion-button [routerLink]="['../setting/preference']">
+        <ion-button [routerLink]="['../setting/report']">
           <ion-icon slot="end" name= "chevron-forward" ></ion-icon>
         </ion-button>
       </ion-buttons>
@@ -78,15 +76,16 @@
       </ion-buttons>
     </ion-item>
 
-    <ion-item>
+    <ion-item  (click)="changePassword()">
       <ion-label>
-        Log Out
+        Change Password
       </ion-label>
-      <ion-buttons>
-        <ion-button (click)="logout()">
-          <ion-icon slot="end" name= "chevron-forward" ></ion-icon>
-        </ion-button>
-      </ion-buttons>
+    </ion-item>
+
+    <ion-item lines="none" class="ion-text-center">
+      <ion-label color="danger">
+        Close Account
+      </ion-label>
     </ion-item>
 
 

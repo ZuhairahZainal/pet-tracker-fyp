@@ -1,9 +1,106 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>edit-info</ion-title>
+    <ion-buttons slot="start">
+      <ion-button [routerLink]="['/tab/user-profile/adoption-details', adoptionsDetail?.adoptionId]">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title class="ion-text-center">Edit Adoption Post</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="updateAdoptionDetail()">
+        <ion-label>Done</ion-label>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <img [src]="adoptionsDetail?.petImage" id="img"/>
+
+  <ion-list lines="full">
+    <form [formGroup]="updateAdoptionForm" >
+      <ion-card>
+        <ion-card-content>
+          <ion-label position="floating">Pet Name</ion-label>
+            <ion-input type="text" formControlName="petName" [placeholder]="adoptionsDetail?.petName"></ion-input>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-content>
+          <ion-label position="floating">Category</ion-label>
+            <!-- <ion-input type="text" formControlName="petCategory" [placeholder]="adoptionsDetail?.petCategory"></ion-input> -->
+
+            <ion-select value="gender" interface="action-sheet" formControlName="petCategory" [placeholder]="adoptionsDetail?.petCategory">
+              <ion-select-option value="Bird">Bird</ion-select-option>
+              <ion-select-option value="Cat">Cat</ion-select-option>
+              <ion-select-option value="Dog">Dog</ion-select-option>
+              <ion-select-option value="Rabbit">Rabbit</ion-select-option>
+              <ion-select-option value="Others">Others</ion-select-option>
+            </ion-select>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-content>
+          <ion-label position="floating">Breed</ion-label>
+            <ion-input type="text" formControlName="petBreed" [placeholder]="adoptionsDetail?.petBreed"></ion-input>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-content>
+          <ion-label position="floating">Age (Month)</ion-label>
+            <ion-input type="number" formControlName="petAge" [placeholder]="adoptionsDetail?.petAge"></ion-input>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-content>
+          <ion-label>Gender</ion-label>
+          <ion-select value="gender" interface="action-sheet" formControlName="petGender" [placeholder]="adoptionsDetail?.petGender">
+            <ion-select-option value="Male">Male</ion-select-option>
+            <ion-select-option value="Female">Female</ion-select-option>
+          </ion-select>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-content>
+          <ion-label position="floating">Health Condition</ion-label>
+            <ion-input type="text" formControlName="petCondition" [placeholder]="adoptionsDetail?.petCondition"></ion-input>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-content>
+          <ion-label position="floating">Description</ion-label>
+            <ion-textarea formControlName="petDescription" [placeholder]="adoptionsDetail?.petDescription"></ion-textarea>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-radio-group formControlName="petSpayStatus" required>
+          <ion-list-header>
+            <ion-label>Spay Status</ion-label>
+          </ion-list-header>
+          <ion-item>
+            <ion-label>N/A</ion-label>
+            <ion-radio slot="end" color="primary" value="N/A"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Done</ion-label>
+            <ion-radio slot="end" color="secondary" value="Done"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Not Done</ion-label>
+            <ion-radio slot="end" color="tertiary" value="Not Done"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-card>
+    </form>
+  </ion-list>
 
 </ion-content>

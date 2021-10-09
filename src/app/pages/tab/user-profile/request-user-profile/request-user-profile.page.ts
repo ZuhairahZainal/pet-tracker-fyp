@@ -14,10 +14,14 @@ import { AlertController } from '@ionic/angular';
 export class RequestUserProfilePage implements OnInit {
 
   accept = {
+    createdAt: new Date().toDateString(),
+    category: 'Request Accept',
     message: 'Congrats, I accept you as the future owner of this pet!'
   }
 
   reject = {
+    createdAt: new Date().toDateString(),
+    category: 'Request Reject',
     message: 'Thank you for request to take care of this pet. Unfortunately, I have to reject your request.'
   }
 
@@ -95,11 +99,16 @@ export class RequestUserProfilePage implements OnInit {
   }
 
   acceptRequest(requestId: string, userId: string){
-    this.getUserId();
-    this.firestore.collection('notification').doc(userId).collection('adoptionResults').doc(requestId).set(this.accept);
+    this.firestore.collection('users').doc(userId).collection('notification').add(this.accept);
     this.firestore.collection('adoptionPost').doc(this.petRequested).delete();
     this.firestore.collection('adoption').doc(this.userId).collection('adoptionDetail').doc(this.petRequested).delete();
-    this.firestore.collection('adoption').doc(this.userId).collection('adoptionRequest').doc(requestId).delete().then(() => {
+    this.firestore.collection('adoption').doc(this.userRequest).collection('adoptionApplication').doc(requestId).update({
+      status: 'Accepted'
+    });
+
+    this.firestore.collection('adoption').doc(this.userId).collection('adoptionRequest').doc(requestId).update({
+      status: 'Accepted'
+    }).then(() => {
       this.router.navigate(['tab/user-profile/pending-list']);
     })
   }
@@ -122,8 +131,13 @@ export class RequestUserProfilePage implements OnInit {
   }
 
   rejectRequest(requestId: string, userId: string){
-    this.firestore.collection('notification').doc(userId).collection('adoptionResults').doc(requestId).set(this.reject);
-    this.firestore.collection('adoption').doc(this.userId).collection('adoptionRequest').doc(requestId).delete().then(() => {
+    this.firestore.collection('users').doc(userId).collection('notification').add(this.reject);
+    this.firestore.collection('adoption').doc(this.userRequest).collection('adoptionApplication').doc(requestId).update({
+      status: 'Rejected'
+    });
+    this.firestore.collection('adoption').doc(this.userId).collection('adoptionRequest').doc(requestId).update({
+      status: 'Rejected'
+    }).then(() => {
       this.router.navigate(['tab/user-profile/pending-list']);
     })
   }

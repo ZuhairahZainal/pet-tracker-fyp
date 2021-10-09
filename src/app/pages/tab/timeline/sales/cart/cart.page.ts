@@ -17,17 +17,20 @@ import { CartService } from 'src/app/services/sales/cart.service';
 export class CartPage implements OnInit {
 
   public cartList: Observable<Cart[]>;
+  cartTotal: string;
   userId: string;
-
 
   constructor(private alertCtrl: AlertController,
               private cartService: CartService,
               private router: Router,
-              private firestore: AngularFirestore) {}
+              private firestore: AngularFirestore) {
+
+                this.getUserId();
+                this.cartList = this.cartService.getCartList(this.userId);
+              }
 
   ngOnInit() {
-    this.getUserId();
-    this.cartList = this.cartService.getCartList(this.userId);
+    this.getTotal();
   }
 
   getUserId(){
@@ -35,12 +38,22 @@ export class CartPage implements OnInit {
     this.userId = user.uid;
   }
 
-  getTotalAmount() {
+  getTotal(){
+    let cartTotal = 0;
+    this.firestore.collection('sale').doc(this.userId).collection('cartList').get().subscribe(
+      (querySnapshot) => {
+        querySnapshot.forEach(
+          (doc) => {
+            cartTotal += doc.data().cartProductPrice;
+          }
+        );
+        this.cartTotal = `${cartTotal}`;
+        console.log(this.cartTotal);
+      }
+    );
   }
 
-
-
-  async removeProduct(cartId: string, cartProductName: string): Promise<void> {
+  async removeProduct(cartId: string, cartProductName: string) {
     const alert = await this.alertCtrl.create({
       header: 'Remove',
       message: `Are you sure you want to remove ${cartProductName}?`,
@@ -48,22 +61,19 @@ export class CartPage implements OnInit {
         {
           text: 'Yes',
           handler: () => {
-            // this.cartService.deleteProduct(this.cartId, this.userId).then(() => {
-            // this.router.navigateByUrl('/tab/timeline/sales/cart');
-            // })
+            this.cartService.deleteProduct(cartId, this.userId).then(() => {
+            this.router.navigateByUrl('/tab/timeline/sales/cart');
+            })
           }
         },
         {
           text: 'No',
           role: 'cancel',
-          handler: blah => {
-            console.log('Confirm Cancel: blah');
-          },
         },
       ],
     });
 
-    await alert.present();
+    alert.present();
 
   }
 }
