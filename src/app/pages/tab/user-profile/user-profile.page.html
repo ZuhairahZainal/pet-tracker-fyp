@@ -60,8 +60,8 @@
   <ion-list *ngIf="segment === 'feed'">
     <ion-grid>
       <ion-row>
-        <ion-col id="adopt" size="4" *ngFor="let feed of feedList" [routerLink]="['/tab/user-profile/feed-details/' , feed.feedFormId]" >
-            <img [src]="feed.feedImage"/>
+        <ion-col id="adopt" size="4" *ngFor="let feed of feedList" [routerLink]="['/tab/user-profile/feed-details/' , feed.postId]" >
+            <img [src]="feed.postImage"/>
         </ion-col>
       </ion-row>
    </ion-grid>
@@ -70,7 +70,7 @@
   <ion-list *ngIf="segment === 'lostpet'">
     <ion-grid>
       <ion-row>
-        <ion-col id="adopt" size="4" *ngFor="let lostpet of lostPetList" [routerLink]="['/tab/user-profile/lostpet-details/' , lostpet.lostPetFormId]" >
+        <ion-col id="adopt" size="4" *ngFor="let lostpet of lostPetList" [routerLink]="['/tab/user-profile/lostpet-details/' , lostpet.lostPetId]" >
             <img [src]="lostpet.petImage"/>
         </ion-col>
       </ion-row>
@@ -80,8 +80,8 @@
   <ion-list *ngIf="segment === 'donation'">
     <ion-grid>
       <ion-row>
-        <ion-col id="adopt" size="4" *ngFor="let donation of donationList" [routerLink]="['/tab/user-profile/donation-details/' , donation.donationFormIds]" >
-            <img [src]="donation.receiptImage"/>
+        <ion-col id="adopt" size="4" *ngFor="let donation of donationList" [routerLink]="['/tab/user-profile/donation-details/' , donation.donationId]" >
+            <img [src]="donation.donationImage"/>
         </ion-col>
       </ion-row>
    </ion-grid>

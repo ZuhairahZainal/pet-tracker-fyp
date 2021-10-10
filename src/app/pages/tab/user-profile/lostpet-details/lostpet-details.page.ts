@@ -40,7 +40,7 @@ export class LostpetDetailsPage implements OnInit {
     this.userId = user.uid;
   }
 
-  async deleteDonationPost(lostPetId: string){
+  async deleteLostPetPost(lostPetId: string){
     const alert = await this.alertCtrl.create({
       header: 'Delete Post',
       message: 'Are you sure you want to delete this post?',
@@ -59,8 +59,8 @@ export class LostpetDetailsPage implements OnInit {
   }
 
   removePost(lostPetId: string){
-    this.firestore.doc('feedPost/' + lostPetId).delete();
-    this.firestore.collection('feed').doc(this.userId).collection('timeline').doc(lostPetId).delete().then(() => {
+    this.firestore.doc('lostPetPost/' + lostPetId).delete();
+    this.firestore.collection('feed').doc(this.userId).collection('lostPet').doc(lostPetId).delete().then(() => {
       this.router.navigate(['tab/user-profile']);
     })
   }

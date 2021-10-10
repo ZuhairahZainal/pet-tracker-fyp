@@ -19,6 +19,10 @@ const routes: Routes = [
   {
     path: 'notification',
     loadChildren: () => import('./notification/notification.module').then( m => m.NotificationPageModule)
+  },
+  {
+    path: 'user-timeline-profile',
+    loadChildren: () => import('./user-timeline-profile/user-timeline-profile.module').then( m => m.UserTimelineProfilePageModule)
   }
 ];
 

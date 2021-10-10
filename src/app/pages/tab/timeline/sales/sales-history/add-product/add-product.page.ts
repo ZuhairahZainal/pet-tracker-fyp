@@ -148,7 +148,7 @@ export class AddProductPage implements OnInit {
 
     this.FileName = file.name;
 
-    const fileStoragePath = `adoption/petImage/${new Date().getTime()}_${file.name}`;
+    const fileStoragePath = `sale/newProduct/${new Date().getTime()}_${file.name}`;
 
     const imageRef = this.storage.ref(fileStoragePath);
 
