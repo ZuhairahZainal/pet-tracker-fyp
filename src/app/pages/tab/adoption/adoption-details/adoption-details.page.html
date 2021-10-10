@@ -39,7 +39,7 @@
                   <ion-label color="dark">
                     Adoption posted on:
                   </ion-label>
-                  {{ adoptionsDetail?.createdAt }}
+                  {{ adoptionsDetail?.date }}
                 </ion-card-subtitle>
               </ion-col>
             </ion-row>
@@ -141,7 +141,7 @@
             </ion-col>
 
             <ion-col>
-              <ion-button fill=solid color="primary" (click)="adoptPet()" [routerLink]="['/tab/adoption/adoption-request', adoptionsDetail?.adoptionId]">
+              <ion-button fill=solid color="primary" [routerLink]="['/tab/adoption/adoption-request', adoptionsDetail?.adoptionId]">
                 <ion-label class=ion-padding>Request to Adopt</ion-label>
               </ion-button>
             </ion-col>

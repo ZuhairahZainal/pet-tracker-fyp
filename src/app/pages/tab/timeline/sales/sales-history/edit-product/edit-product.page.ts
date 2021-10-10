@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
+import { FormGroup, FormControl } from "@angular/forms";
 import { ProductService } from '../../../../../../services/sales/product.service';
 import firebase from 'firebase/app';
 import { Product } from 'src/app/models/sales/product';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-edit-product',
@@ -13,6 +14,11 @@ import { Product } from 'src/app/models/sales/product';
 export class EditProductPage implements OnInit {
 
   newProductList = {
+    time: new Date().getTime(),
+    date: new Date().toDateString(),
+    adminApprove: 'Pending',
+    userName: '',
+    userImage: '',
     productName: '',
     productCategory: '',
     productPrice: '',
@@ -24,10 +30,12 @@ export class EditProductPage implements OnInit {
 
   productId: string;
   userId: string;
+  userName: string;
+  userImage: string;
 
   constructor(private productService: ProductService,
               private activatedRoute: ActivatedRoute,
-              public fb: FormBuilder) {}
+              private firestore: AngularFirestore) {}
 
   ngOnInit() {
     this.getUserId();
@@ -46,8 +54,17 @@ export class EditProductPage implements OnInit {
   }
 
   getUserId(){
-    let user = firebase.auth().currentUser;
+    const user = firebase.auth().currentUser;
+
     this.userId = user.uid;
+
+    this.firestore.collection('users').doc(this.userId).valueChanges().subscribe( userDetails => {
+      this.userName = userDetails['name'];
+      this.newProductList.userName = `${this.userName}`;
+
+      this.userImage = userDetails['userImage'];
+      this.newProductList.userImage = `${this.userImage}`;
+    })
   }
 
   //update form for changes

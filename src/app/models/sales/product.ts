@@ -1,6 +1,7 @@
 export interface Product {
   adminApprove: string,
-  createdAt: string,
+  time: number,
+  date: string,
   productId: string,
   productName: string,
   productCategory: string,

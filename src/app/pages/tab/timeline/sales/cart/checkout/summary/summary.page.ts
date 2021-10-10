@@ -126,9 +126,10 @@ export class SummaryPage implements OnInit {
 
     this.order = {
       orderId: this.orderId,
-      localeDate: new Date().toLocaleDateString(),
-      localeTime: new Date().toLocaleTimeString(),
-      getTime: new Date().getTime(),
+      time: new Date().getTime(),
+      date: new Date().toDateString(),
+      // localeDate: new Date().toLocaleDateString(),
+      // localeTime: new Date().toLocaleTimeString(),
     }
 
     this.firestore.collection('sale').doc(this.userId).collection('orders').doc(this.orderId).set(this.order);

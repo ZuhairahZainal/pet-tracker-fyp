@@ -3,7 +3,6 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Camera, CameraResultType } from '@capacitor/camera';
 import { AlertController, LoadingController } from '@ionic/angular';
 import firebase from 'firebase/app'
 import { Observable } from 'rxjs';
@@ -18,11 +17,13 @@ import { file } from 'src/app/models/file/file';
 export class AddProductPage implements OnInit {
 
   newProductList = {
-    createdAt: new Date().toDateString(),
+    time: new Date().getTime(),
+    date: new Date().toDateString(),
     adminApprove: 'Pending',
     productId: '',
     userId: '',
     userUsername: '',
+    userImage: '',
     productName: '',
     productCategory: '',
     productPrice: '',
@@ -54,6 +55,7 @@ export class AddProductPage implements OnInit {
   productId: string;
   userId: string;
   userUsername: string;
+  userImage: string;
 
   constructor(private storage: AngularFireStorage,
               private firestore: AngularFirestore,
@@ -101,6 +103,7 @@ export class AddProductPage implements OnInit {
 
     this.firestore.collection('users').doc(this.userId).valueChanges().subscribe( userDetail => {
       this.newProductList.userUsername = userDetail['name'];
+      this.newProductList.userImage = userDetail['userImage'];
     })
   }
 
