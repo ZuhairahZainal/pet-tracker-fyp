@@ -26,12 +26,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content overflow-scroll="true">
   <ion-toolbar>
-    <ion-segment (ionChange)="segmentChanged($event)" value="allpost" scrollable>
-      <ion-segment-button value="allpost">
+    <ion-segment (ionChange)="segmentChanged($event)" value="newsfeed" scrollable>
+      <ion-segment-button value="newsfeed">
         <ion-label>
-          All
+          News Feed
         </ion-label>
       </ion-segment-button>
       <ion-segment-button value="lostpets">
@@ -47,124 +47,79 @@
     </ion-segment>
   </ion-toolbar>
 
-  <ion-list *ngIf="segment === 'allpost'">
-    <ion-item *ngFor="let newPost of newPost" >
+  <ion-list *ngIf="segment === 'newsfeed'">
+    <ion-item *ngFor="let post of newPost | async | filter:filter" >
       <ion-grid>
-        <ion-row>
+        <ion-row class=ion-padding-top>
+          <ion-col size=3>
+            <ion-avatar>
+              <img *ngIf="post.userImage" [src]="post.userImage">
+              <img *ngIf="!post.userImage" src="../../../../assets/user.jpeg">
+            </ion-avatar>
+          </ion-col>
+
           <ion-col>
-            <ion-card>
-              <ion-card-header>
-                <ion-card-subtitle>
-                  Brunei Muara
-                </ion-card-subtitle>
-                <img src="https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/slideshows/is_my_cat_normal_slideshow/1800x1200_is_my_cat_normal_slideshow.jpg"/>
-                <ion-card-title>
-                   Username
-                </ion-card-title>
-                <ion-card-subtitle>
-                  Location
-                </ion-card-subtitle>
-                <ion-card-content>Hey everyone, my cat has been away from home since yesterday.
-                  Help me find her.
-                </ion-card-content>
-                <ion-icon  id="favourite" name="heart-outline"></ion-icon>
-                <ion-icon id="comment" name="chatbubble-ellipses-outline"></ion-icon>
-                <ion-icon id="forward"name="paper-plane-outline"></ion-icon>
-                <ion-icon id="share" name="share-outline"></ion-icon>
-
-              </ion-card-header>
-              <ion-card-content>
-
-              </ion-card-content>
-            </ion-card>
+            <ion-row>
+              <ion-col>
+                <ion-row>
+                 <ion-card-title>{{ post.userName }}</ion-card-title>
+                </ion-row>
+                <ion-row>
+                  <ion-card-subtitle>{{ post.date }}</ion-card-subtitle>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+              </ion-col>
+            </ion-row>
           </ion-col>
         </ion-row>
-      </ion-grid>
-    </ion-item>
 
-    <ion-item>
-      <ion-grid>
         <ion-row>
-          <ion-col>
-            <ion-card>
-              <ion-card-header>
-                <ion-card-subtitle>
-                  Donation - Medical Fees
-                </ion-card-subtitle>
-                <img src="http://www.mybunny.org/wordpress/wp-content/uploads/2018/08/2018-Aug-18-2.jpg"/>
-                <ion-card-title>
-                   Username 23
-                </ion-card-title>
-
-
-              </ion-card-header>
-              <ion-card-header>
-                <ion-card-subtitle>
-                  Total Fees:BND$900
-                </ion-card-subtitle>
-                <ion-card-subtitle>
-                   Good afternoon pet lovers, lately our pet rabbit had suffered broken leg  and we managed to
-                   give treatment at Exotic Animal Veterinary Center. Unfortunately, we cannot afford to have full payment
-                   for the treatment.
-
-                </ion-card-subtitle>
-
-
-              </ion-card-header>
-
-              <ion-card-content>
-                <ion-icon  id="favourite" name="heart-outline"></ion-icon>
-                <ion-icon id="comment" name="chatbubble-ellipses-outline"></ion-icon>
-                <ion-icon id="forward"name="paper-plane-outline"></ion-icon>
-                <ion-icon id="share"name="share-outline"></ion-icon>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
+          <ion-card>
+            <ion-card-title>{{ post.postTitle }}</ion-card-title>
+          </ion-card>
         </ion-row>
-      </ion-grid>
-    </ion-item>
 
-    <ion-item>
-      <ion-grid>
         <ion-row>
-          <ion-col>
-            <ion-card>
-              <ion-card-header>
-                <ion-card-subtitle>
-                  Donation - Medical Fees
-                </ion-card-subtitle>
-                <img src="http://www.mybunny.org/wordpress/wp-content/uploads/2018/08/2018-Aug-18-2.jpg"/>
-                <ion-card-title>
-                   Username 23
-                </ion-card-title>
+          <ion-card>
+            <ion-card-subtitle>{{ post.postDescription}}</ion-card-subtitle>
+          </ion-card>
+        </ion-row>
 
+        <ion-row>
+          <ion-card>
+            <img [src]="post.postImage">
+          </ion-card>
+        </ion-row>
 
-              </ion-card-header>
-              <ion-card-header>
-                <ion-card-subtitle>
-                  Total Fees:BND$900
-                </ion-card-subtitle>
+        <ion-row>
+          <ion-col size="9">
+            <ion-buttons>
+              <ion-button>
+                <ion-icon name="heart-outline"></ion-icon>
+              </ion-button>
 
-                <ion-card-subtitle>
-                   Good afternoon pet lovers, lately our pet rabbit had suffered broken leg  and we managed to
-                   give treatment at Exotic Animal Veterinary Center. Unfortunately, we cannot afford to have full payment
-                   for the treatment.
-                   <ion-card-subtitle>
-                    <ion-button id="donate" size="small" >Donate</ion-button>
-                   </ion-card-subtitle>
+              <ion-button>
+                <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+              </ion-button>
 
-                </ion-card-subtitle>
+              <ion-button>
+                <ion-icon name="chatbubbles-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-col>
+          <ion-col size="3">
+            <ion-buttons>
+              <ion-button>
+                <ion-icon name="share-outline"></ion-icon>
+              </ion-button>
 
-
-              </ion-card-header>
-
-              <ion-card-content>
-                <ion-icon  id="favourite" name="heart-outline"></ion-icon>
-                <ion-icon id="comment" name="chatbubble-ellipses-outline"></ion-icon>
-                <ion-icon id="forward"name="paper-plane-outline"></ion-icon>
-                <ion-icon id="share"name="share-outline"></ion-icon>
-              </ion-card-content>
-            </ion-card>
+              <ion-button>
+                <ion-icon name="alert-circle-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -172,132 +127,203 @@
   </ion-list>
 
   <ion-list *ngIf="segment === 'lostpets'">
-    <ion-item *ngFor="let lostpetPost of lostpetPost">
+    <ion-item *ngFor="let post of lostpetPost | async | filter:filter" >
       <ion-grid>
-        <ion-row>
+        <ion-row class=ion-padding-top>
+          <ion-col size=3>
+            <ion-avatar>
+              <img *ngIf="post.userImage" [src]="post.userImage">
+              <img *ngIf="!post.userImage" src="../../../../assets/user.jpeg">
+            </ion-avatar>
+          </ion-col>
+
           <ion-col>
-            <ion-card>
-              <ion-card-header>
-                <ion-card-subtitle>
-                  Brunei Muara
-                </ion-card-subtitle>
-                <img src="https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/slideshows/is_my_cat_normal_slideshow/1800x1200_is_my_cat_normal_slideshow.jpg"/>
-                <ion-card-title>
-                   Username
-                </ion-card-title>
-                <ion-card-subtitle>
-                  {{ lostpetPost.location}}
-                </ion-card-subtitle>
-                <ion-card-content>
-                  <ion-label> {{ lostpetPost.description }} </ion-label>
-                </ion-card-content>
-                <ion-icon  id="favourite" name="heart-outline"></ion-icon>
-                <ion-icon id="comment" name="chatbubble-ellipses-outline"></ion-icon>
-                <ion-icon id="forward"name="paper-plane-outline"></ion-icon>
-                <ion-icon id="share" name="share-outline"></ion-icon>
-
-              </ion-card-header>
-              <ion-card-content>
-
-              </ion-card-content>
-            </ion-card>
+            <ion-row>
+              <ion-col>
+                <ion-row>
+                 <ion-card-title>{{ post.userName }}</ion-card-title>
+                </ion-row>
+                <ion-row>
+                  <ion-card-subtitle>{{ post.date }}</ion-card-subtitle>
+                </ion-row>
+              </ion-col>
+            </ion-row>
           </ion-col>
         </ion-row>
-      </ion-grid>
-    </ion-item>
-    </ion-list>
 
-   <ion-list *ngIf="segment === 'donations'">
-    <ion-item *ngFor="let donationPost of donationPost">
-      <ion-grid>
         <ion-row>
-          <ion-col>
-            <ion-card>
-              <ion-card-header>
-                <ion-card-subtitle >
-                  Donation - {{ donationPost.donationType }}
-                </ion-card-subtitle>
-                <img src="https://mauivet.com/wp-content/uploads/2019/01/pet-surgery-7.jpg"/>
-                <ion-card-title>
-                   Username 13
-                </ion-card-title>
-
-
-              </ion-card-header>
-              <ion-card-header>
-                <ion-card-subtitle>
-                  Total Fees:BND $43,000
-                </ion-card-subtitle>
-                <ion-card-subtitle>
-                  {{ donationPost.description }}
-              </ion-card-subtitle>
-                <ion-card-subtitle>
-
-                   <ion-card-subtitle>
-                    <ion-button id="donate" size="small" >Donate</ion-button>
-                   </ion-card-subtitle>
-
-                </ion-card-subtitle>
-
-
-              </ion-card-header>
-
-              <ion-card-content>
-                <ion-icon  id="favourite" name="heart-outline"></ion-icon>
-                <ion-icon id="comment" name="chatbubble-ellipses-outline"></ion-icon>
-                <ion-icon id="forward"name="paper-plane-outline"></ion-icon>
-                <ion-icon id="share"name="share-outline"></ion-icon>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
+          <ion-card>
+            <ion-card-subtitle>Last Location: {{ post.lastLocation }}</ion-card-subtitle>
+          </ion-card>
         </ion-row>
-      </ion-grid>
-    </ion-item>
 
-    <ion-item>
-      <ion-grid>
+        <ion-row *ngIf="post.reward === 'Reward Given'">
+          <ion-card>
+            <ion-card-title>Reward if Found: ${{ post.rewardAmount }}</ion-card-title>
+          </ion-card>
+        </ion-row>
+
         <ion-row>
-          <ion-col>
-            <ion-card>
-              <ion-card-header>
-                <ion-card-subtitle color="danger">
-                  Urgent
-                </ion-card-subtitle>
-                <img src="https://www.rd.com/wp-content/uploads/2021/01/GettyImages-588935825.jpg"/>
-                <ion-card-title>
-                   Username 43
-                </ion-card-title>
+          <ion-card>
+            <ion-card-subtitle>Pet Name: {{ post.petName }}</ion-card-subtitle>
+          </ion-card>
+        </ion-row>
 
+        <ion-row>
+          <ion-card>
+            <ion-card-subtitle>Pet Details: {{ post.petBreed }}, {{ post.petGender }}, {{ post.petColor }}</ion-card-subtitle>
+          </ion-card>
+        </ion-row>
 
-              </ion-card-header>
-              <ion-card-header>
-                <ion-card-subtitle>
-                  Total Fees Required: BND $24,000
-                </ion-card-subtitle>
-                <ion-card-subtitle>
-                   Greetings everyone! My dog is undergoing surgery for removing appendix. However, the price for medical treatment is quite expensive
-                   and they only accept full payment only.
-                   <ion-card-subtitle>
-                    <ion-button id="donate" size="small" >Donate</ion-button>
-                   </ion-card-subtitle>
+        <ion-row>
+          <ion-card>
+            <ion-card-subtitle>{{ post.description}}</ion-card-subtitle>
+          </ion-card>
+        </ion-row>
 
-                </ion-card-subtitle>
+        <ion-row>
+          <ion-card>
+            <img [src]="post.petImage">
+          </ion-card>
+        </ion-row>
 
+        <ion-row>
+          <ion-col size="9">
+            <ion-buttons>
+              <ion-button>
+                <ion-icon name="heart-outline"></ion-icon>
+              </ion-button>
 
-              </ion-card-header>
+              <ion-button>
+                <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+              </ion-button>
 
-              <ion-card-content>
-                <ion-icon  id="favourite" name="heart-outline"></ion-icon>
-                <ion-icon id="comment" name="chatbubble-ellipses-outline"></ion-icon>
-                <ion-icon id="forward"name="paper-plane-outline"></ion-icon>
-                <ion-icon id="share"name="share-outline"></ion-icon>
-              </ion-card-content>
-            </ion-card>
+              <ion-button>
+                <ion-icon name="chatbubbles-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-col>
+          <ion-col size="3">
+            <ion-buttons>
+              <ion-button>
+                <ion-icon name="share-outline"></ion-icon>
+              </ion-button>
+
+              <ion-button>
+                <ion-icon name="alert-circle-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-item>
   </ion-list>
 
+  <ion-list *ngIf="segment === 'donations'">
+    <ion-item *ngFor="let post of donationPost | async | filter:filter" >
+      <ion-grid>
+        <ion-row class=ion-padding-top>
+          <ion-col size=3>
+            <ion-avatar>
+              <img *ngIf="post.userImage" [src]="post.userImage">
+              <img *ngIf="!post.userImage" src="../../../../assets/user.jpeg">
+            </ion-avatar>
+          </ion-col>
 
+          <ion-col>
+            <ion-row>
+              <ion-col>
+                <ion-row>
+                 <ion-card-title>{{ post.userName }}</ion-card-title>
+                </ion-row>
+                <ion-row>
+                  <ion-card-subtitle>{{ post.date }}</ion-card-subtitle>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-card>
+            <ion-card-subtitle>Donation - {{ post.donationType }}</ion-card-subtitle>
+          </ion-card>
+        </ion-row>
+
+        <ion-row>
+          <ion-card>
+            <ion-card-title>{{ post.donationTitle }}</ion-card-title>
+          </ion-card>
+        </ion-row>
+
+        <ion-row>
+          <ion-card>
+            <ion-card-title>Total Donation Required: ${{ post.donationAmount }}</ion-card-title>
+          </ion-card>
+        </ion-row>
+
+        <ion-row>
+          <ion-card>
+            <ion-card-subtitle>{{ post.donationDescription}}</ion-card-subtitle>
+          </ion-card>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="7">
+            <ion-card>
+              <ion-card-subtitle>Receipt/Proof</ion-card-subtitle>
+            </ion-card>
+          </ion-col>
+          <ion-col size="5">
+            <ion-card>
+              <ion-buttons>
+                <ion-button color="primary" fill="solid">
+                  <ion-label class="ion-padding">Donate</ion-label>
+                </ion-button>
+              </ion-buttons>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-card>
+            <img [src]="post.donationImage">
+          </ion-card>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="9">
+            <ion-buttons>
+              <ion-button>
+                <ion-icon name="heart-outline"></ion-icon>
+              </ion-button>
+
+              <ion-button>
+                <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+              </ion-button>
+
+              <ion-button>
+                <ion-icon name="chatbubbles-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-col>
+          <ion-col size="3">
+            <ion-buttons>
+              <ion-button>
+                <ion-icon name="share-outline"></ion-icon>
+              </ion-button>
+
+              <ion-button>
+                <ion-icon name="alert-circle-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
 </ion-content>

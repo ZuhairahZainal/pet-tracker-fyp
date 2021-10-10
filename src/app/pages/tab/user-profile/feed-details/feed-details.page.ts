@@ -59,8 +59,8 @@ export class FeedDetailsPage implements OnInit {
   }
 
   removePost(feedId: string){
-    this.firestore.doc('feedPost/' + feedId).delete();
-    this.firestore.collection('feed').doc(this.userId).collection('timeline').doc(feedId).delete().then(() => {
+    this.firestore.doc('newsFeedPost/' + feedId).delete();
+    this.firestore.collection('feed').doc(this.userId).collection('newsFeed').doc(feedId).delete().then(() => {
       this.router.navigate(['tab/user-profile']);
     })
   }

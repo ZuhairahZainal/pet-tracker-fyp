@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Donation, Feed, LostPet } from 'src/app/models/timeline/timeline';
+import { TimelineService } from 'src/app/services/timeline/timeline.service';
 
 @Component({
   selector: 'app-timeline',
@@ -10,34 +12,23 @@ import { Router } from '@angular/router';
 })
 export class TimelinePage implements OnInit {
 
-  lostpetPost;
-  donationPost;
-  newPost;
-  public segment: string = 'allpost';
+  public lostpetPost: Observable<LostPet[]>;
+  public donationPost: Observable<Donation[]>;
+  public newPost: Observable<Feed[]>;
 
-  constructor(private firestore: AngularFirestore,
-              private afauth: AngularFireAuth,
-              private router: Router) {
-    this.firestore.collection('lostpetPost').valueChanges({idField: 'lostpetId'}).subscribe(
-      adoptions => {
-        this.lostpetPost = adoptions;
-      }
-    )
+  public segment: string = 'newsfeed';
+  filter: string;
 
-    this.firestore.collection('donationPost').valueChanges({idField: 'donationId'}).subscribe(
-      adoptions => {
-        this.donationPost = adoptions;
-      }
-    )
-
-    this.firestore.collection('newPost').valueChanges({idField: 'newId'}).subscribe(
-      adoptions => {
-        this.newPost = adoptions;
-      }
-    )
-  }
+  constructor(private afauth: AngularFireAuth,
+              private timelineService: TimelineService,
+              private router: Router) {}
 
   ngOnInit() {
+    this.lostpetPost = this.timelineService.getLostPetPost();
+
+    this.donationPost = this.timelineService.getDonationPost();
+
+    this.newPost = this.timelineService.getFeedPost();
   }
 
   segmentChanged(ev: any) {

@@ -1,9 +1,71 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>edit-info</ion-title>
+    <ion-buttons slot="start">
+      <ion-button [routerLink]="['/tab/user-profile/donation-details', donationDetail?.donationId]">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title class="ion-text-center">Edit News Feed Post</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="updateDonationDetail()">
+        <ion-label>Done</ion-label>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <img [src]="donationDetail?.donationImage" id="img"/>
+
+  <ion-list lines="full">
+    <div [formGroup]="donationUpdateForm">
+      <ion-card>
+        <ion-card-content>
+          <ion-label position="floating">Donation Title</ion-label>
+            <ion-input required type="text" formControlName="donationTitle" [placeholder]="donationDetail?.donationTitle"></ion-input>
+
+            <ion-item lines="none" class="error-message" *ngIf="!donationUpdateForm.controls.donationTitle.valid && donationUpdateForm.controls.donationTitle.touched">
+              <p>Title for donation is required to be at least 2 characters.</p>
+            </ion-item>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-content>
+          <ion-select value="donationType" interface="action-sheet"  [placeholder]="donationDetail?.donationType" formControlName="donationType">
+            <ion-select-option value="Medical Fees">Medical Fees</ion-select-option>
+            <ion-select-option value="Pet Foods">Pet Foods</ion-select-option>
+            <ion-select-option value="Others">Others</ion-select-option>
+          </ion-select>
+          <ion-item lines="none" class="error-message" *ngIf="!donationUpdateForm.controls.donationType.valid && donationUpdateForm.controls.donationType.touched">
+            <p>Please select one.</p>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-content>
+          <ion-label position="floating">Donation Amount</ion-label>
+          <ion-input type="number" formControlName="donationAmount" [placeholder]="donationDetail?.donationAmount"></ion-input>
+
+          <ion-item lines="none" class="error-message" *ngIf="!donationUpdateForm.controls.donationAmount.valid && donationUpdateForm.controls.donationAmount.touched">
+            <p>Donation amount is required to be stated.</p>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-content>
+          <ion-label position="floating">Description</ion-label>
+            <ion-textarea required formControlName="donationDescription" rows="5" cols="33" [placeholder]="donationDetail?.donationDescription"></ion-textarea>
+            <ion-item lines="none" class="error-message" *ngIf="!donationUpdateForm.controls.donationDescription.valid && donationUpdateForm.controls.donationDescription.touched">
+              <p>The description of this post is required to be at least 10 characters.</p>
+            </ion-item>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    </ion-list>
 
 </ion-content>

@@ -22,11 +22,14 @@ import { finalize, tap } from 'rxjs/operators';
 })
 export class AdoptionFormPage implements OnInit {
   newAdoptionList = {
-    createdAt: new Date().toDateString(),
+    time: new Date().getTime(),
+    date: new Date().toDateString(),
     adminApprove: 'Pending',
     adoptCount: 0,
     adoptionId: '',
     userId: '',
+    userImage: '',
+    userName: '',
     petAge: '',
     petBreed: '',
     petCategory: '',
@@ -65,7 +68,7 @@ export class AdoptionFormPage implements OnInit {
   petId: string;
   userId: string;
   userName: string;
-  userEmail: string;
+  userImage: string;
 
   constructor(private firestore: AngularFirestore,
               private storage: AngularFireStorage,
@@ -120,10 +123,18 @@ export class AdoptionFormPage implements OnInit {
   }
 
   getUserId(){
-    let user = firebase.auth().currentUser;
+    const user = firebase.auth().currentUser;
 
     this.newAdoptionList.userId = `${user.uid}`;
     this.userId = user.uid;
+
+    this.firestore.collection('users').doc(this.userId).valueChanges().subscribe( userDetails => {
+      this.userName = userDetails['name'];
+      this.newAdoptionList.userName = `${this.userName}`;
+
+      this.userImage = userDetails['userImage'];
+      this.newAdoptionList.userImage = `${this.userImage}`;
+    })
   }
 
   async savePost(): Promise<void>{

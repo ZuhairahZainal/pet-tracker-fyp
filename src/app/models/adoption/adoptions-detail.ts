@@ -2,7 +2,8 @@ export interface AdoptionsDetail {
   adoptCount: number,
   adminApprove: string,
   adoptionId: string,
-  createdAt: string,
+  time: number,
+  date: string,
   petAge: number,
   petBreed: string,
   petCategory: string,
@@ -14,4 +15,6 @@ export interface AdoptionsDetail {
   petName: string,
   petSpayStatus: string,
   userId: string,
+  userImage: string,
+  userName: string,
 }

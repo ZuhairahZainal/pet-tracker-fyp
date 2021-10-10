@@ -14,13 +14,15 @@ import { AlertController } from '@ionic/angular';
 export class RequestUserProfilePage implements OnInit {
 
   accept = {
-    createdAt: new Date().toDateString(),
+    time: new Date().getTime(),
+    date: new Date().toDateString(),
     category: 'Request Accept',
     message: 'Congrats, I accept you as the future owner of this pet!'
   }
 
   reject = {
-    createdAt: new Date().toDateString(),
+    time: new Date().getTime(),
+    date: new Date().toDateString(),
     category: 'Request Reject',
     message: 'Thank you for request to take care of this pet. Unfortunately, I have to reject your request.'
   }

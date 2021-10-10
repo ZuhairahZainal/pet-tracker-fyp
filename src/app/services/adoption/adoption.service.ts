@@ -16,7 +16,7 @@ export class AdoptionService {
 
   // adoption post
   getAdoptionPost(): Observable<AdoptionsDetail[]> {
-    return this.firestore.collection<AdoptionsDetail>(`adoptionPost`, ref => ref.orderBy('createdAt', 'asc')).valueChanges();
+    return this.firestore.collection<AdoptionsDetail>(`adoptionPost`, ref => ref.orderBy('time', 'desc')).valueChanges();
   }
 
   getAdoptionDetail(adoptionId: string): Observable<AdoptionsDetail> {
@@ -25,7 +25,7 @@ export class AdoptionService {
 
   // adoption in user profile
   ownerAdoptionDetail(adoptionId: string, userId: string): Observable<AdoptionsDetail> {
-    return this.firestore.collection('adoption').doc(userId).collection('adoptionDetail' , ref => ref.orderBy('createdAt', 'asc')).doc<AdoptionsDetail>(adoptionId).valueChanges();
+    return this.firestore.collection('adoption').doc(userId).collection('adoptionDetail' , ref => ref.orderBy('time', 'desc')).doc<AdoptionsDetail>(adoptionId).valueChanges();
   }
 
   // Update adoption details
@@ -40,7 +40,7 @@ export class AdoptionService {
 
   // pending list
   getPendingList(userId: string): Observable<AdoptionsRequest[]> {
-    return this.firestore.collection('adoption').doc(userId).collection<AdoptionsRequest>('adoptionRequest' , ref => ref.orderBy('createdAt', 'asc')).valueChanges();
+    return this.firestore.collection('adoption').doc(userId).collection<AdoptionsRequest>('adoptionRequest' , ref => ref.orderBy('time', 'desc')).valueChanges();
   }
 
   // fetch user profile
@@ -50,7 +50,7 @@ export class AdoptionService {
 
   // adoption application list
   getApplicationList(userId: string): Observable<AdoptionsRequest[]> {
-    return this.firestore.collection('adoption').doc(userId).collection<AdoptionsRequest>('adoptionApplication', ref => ref.orderBy('createdAt', 'asc')).valueChanges();
+    return this.firestore.collection('adoption').doc(userId).collection<AdoptionsRequest>('adoptionApplication', ref => ref.orderBy('time', 'desc')).valueChanges();
   }
 
   fetchOwnerProfile(userId: string, requestId): Observable<AdoptionsRequest>{

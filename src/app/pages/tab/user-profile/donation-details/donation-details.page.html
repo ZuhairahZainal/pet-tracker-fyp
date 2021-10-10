@@ -1,9 +1,77 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>donation-details</ion-title>
+    <ion-title> Donation Post </ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/tab/user-profile">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <img [src]="donationDetail?.donationImage" id="img"/>
+  <ion-list>
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-subtitle>Posted on </ion-card-subtitle>
+              <ion-card-title>{{ donationDetail?.date }}</ion-card-title>
+            </ion-card-header>
+
+            <ion-card-header>
+              <ion-card-title color="primary">Post Category</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ donationDetail?.category }}
+            </ion-card-content>
+
+            <ion-card-header>
+              <ion-card-title color="primary">Donation Title</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ donationDetail?.donationTitle }}
+            </ion-card-content>
+
+            <ion-card-header>
+              <ion-card-title color="primary">Donation Type</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ donationDetail?.donationType }}
+            </ion-card-content>
+
+            <ion-card-header>
+              <ion-card-title color="primary">Donation Amount</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ donationDetail?.donationAmount }}
+            </ion-card-content>
+
+            <ion-card-header>
+              <ion-card-title color="primary">Donation Description</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ donationDetail?.donationDescription }}
+            </ion-card-content>
+
+          <ion-buttons class="ion-padding">
+            <ion-button expand="block" fill="solid" [routerLink]="['../donation-details/edit-info/', donationDetail?.donationId]">
+              <ion-icon name="create-outline"></ion-icon>
+              <ion-label class="ion-padding">Edit</ion-label>
+            </ion-button>
+            <ion-button expand="block" fill="solid" color="danger" (click)="deleteDonationPost(donationDetail.donationId)">
+              <ion-icon name="trash-outline"></ion-icon>
+              <ion-label class="ion-padding">Delete</ion-label>
+            </ion-button>
+          </ion-buttons>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  </ion-list>
 
 </ion-content>

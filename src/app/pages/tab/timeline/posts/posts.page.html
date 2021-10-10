@@ -12,31 +12,28 @@
 
 <ion-content>
   <ion-list>
-    <ion-item>
-      <ion-label class="ion-padding-horizontal">New Post</ion-label>
-      <ion-buttons>
-        <ion-button slot="end" routerLink="./newpost-form">
-          <ion-icon name="chevron-forward-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-item>
+    <ion-card>
+      <ion-card-content>
+        <ion-item lines="none" routerLink="./newpost-form">
+          <ion-label class="ion-padding-horizontal">NEWS FEED POST</ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
 
-    <ion-item>
-      <ion-label class="ion-padding-horizontal">Donation Post</ion-label>
-      <ion-buttons>
-        <ion-button slot="end" routerLink="./donate-form">
-          <ion-icon name="chevron-forward-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-item>
+    <ion-card>
+      <ion-card-content>
+        <ion-item lines="none" routerLink="./lostpet-form">
+          <ion-label class="ion-padding-horizontal">LOST PET POST</ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
 
-    <ion-item>
-      <ion-label class="ion-padding-horizontal">Lost Pet Post</ion-label>
-      <ion-buttons>
-        <ion-button slot="end" routerLink="./lostpet-form">
-          <ion-icon name="chevron-forward-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-item>
-  </ion-list>
+    <ion-card>
+      <ion-card-content>
+        <ion-item lines="none" routerLink="./donate-form">
+          <ion-label class="ion-padding-horizontal">DONATION POST</ion-label>
+        </ion-item>
+      </ion-card-content>
+  </ion-card>
+</ion-list>
 </ion-content>

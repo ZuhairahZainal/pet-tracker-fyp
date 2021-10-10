@@ -61,7 +61,7 @@ export class DonationDetailsPage implements OnInit {
 
   removePost(donationId: string){
     this.firestore.doc('donationPost/' + donationId).delete();
-    this.firestore.collection('feed').doc(this.userId).collection('donationPost').doc(donationId).delete().then(() => {
+    this.firestore.collection('feed').doc(this.userId).collection('donation').doc(donationId).delete().then(() => {
       this.router.navigate(['tab/user-profile']);
     })
   }

@@ -1,9 +1,143 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>lostpet-details</ion-title>
+    <ion-title> Lost Pet Post </ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/tab/user-profile">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <img [src]="lostPetDetail?.petImage" id="img"/>
+  <ion-list>
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+              <ion-card>
+                <ion-card-header>
+                   <ion-card-subtitle>Lost Pet Details</ion-card-subtitle>
+
+                    <ion-card-subtitle color="tertiary">
+                      <ion-label color="dark">
+                        Posted on:
+                      </ion-label>
+                        {{ lostPetDetail?.date }}
+                    </ion-card-subtitle>
+
+                    <ion-card-subtitle color="tertiary">
+                      <ion-label color="dark">
+                        Post Description:
+                      </ion-label>
+                        {{ lostPetDetail?.description }}
+                    </ion-card-subtitle>
+                </ion-card-header>
+              </ion-card>
+
+              <ion-card>
+                <ion-card-header>
+                <ion-card-subtitle>Lost Pet Details</ion-card-subtitle>
+
+                <ion-card-subtitle color="tertiary">
+                  <ion-label color="dark">
+                    Pet Name:
+                  </ion-label>
+                {{ lostPetDetail?.petName }}
+                </ion-card-subtitle>
+
+                <ion-card-subtitle color="tertiary">
+                  <ion-label color="dark">
+                    Pet Color:
+                  </ion-label>
+                    {{ lostPetDetail?.petColor }}
+                </ion-card-subtitle>
+
+                <ion-card-subtitle color="tertiary">
+                  <ion-label color="dark">
+                    Pet Gender:
+                  </ion-label>
+                    {{ lostPetDetail?.petGender }}
+                </ion-card-subtitle>
+
+                <ion-card-subtitle color="tertiary">
+                  <ion-label color="dark">
+                    Pet Breed:
+                  </ion-label>
+                    {{ lostPetDetail?.petBreed }}
+                </ion-card-subtitle>
+
+                <ion-card-subtitle color="tertiary">
+                  <ion-label color="dark">
+                    Pet Last Location:
+                  </ion-label>
+                    {{ lostPetDetail?.lastLocation }}
+                </ion-card-subtitle>
+              </ion-card-header>
+            </ion-card>
+
+            <ion-card>
+              <ion-card-header>
+                <ion-card-subtitle>Post Details</ion-card-subtitle>
+
+                <ion-card-subtitle color="tertiary">
+                  <ion-label color="dark">
+                    Posted on:
+                  </ion-label>
+                  {{ lostPetDetail?.date }}
+                </ion-card-subtitle>
+
+                <ion-card-subtitle color="tertiary">
+                  <ion-label color="dark">
+                    Post Category:
+                  </ion-label>
+                {{ lostPetDetail?.category }}
+                </ion-card-subtitle>
+
+                <ion-card-subtitle>
+                  <ion-label color="dark">
+                    Post Description:
+                  </ion-label>
+                </ion-card-subtitle>
+
+                <ion-card-subtitle color="tertiary">
+                  {{ lostPetDetail?.description }}
+                </ion-card-subtitle>
+
+                <ion-card-subtitle color="tertiary">
+                  <ion-label color="dark">
+                    Have Reward:
+                  </ion-label>
+                    {{ lostPetDetail?.reward }}
+                </ion-card-subtitle>
+
+                <ion-card-subtitle color="tertiary">
+                  <ion-label color="dark">
+                    Reward Amount:
+                  </ion-label>
+                    {{ lostPetDetail?.rewardAmount }}
+                </ion-card-subtitle>
+              </ion-card-header>
+              </ion-card>
+
+
+           <ion-buttons class="ion-padding">
+            <ion-button expand="block" fill="solid" [routerLink]="['../lostpet-details/edit-info/', lostPetDetail?.lostPetId]">
+              <ion-icon name="create-outline"></ion-icon>
+              <ion-label class="ion-padding">Edit</ion-label>
+            </ion-button>
+            <ion-button expand="block" fill="solid" color="danger" (click)="deleteLostPetPost(lostPetDetail.lostPetId)">
+              <ion-icon name="trash-outline"></ion-icon>
+              <ion-label class="ion-padding">Delete</ion-label>
+            </ion-button>
+            </ion-buttons>
+        </ion-col>
+
+      </ion-row>
+
+    </ion-grid>
+  </ion-item>
+  </ion-list>
 
 </ion-content>

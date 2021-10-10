@@ -9,7 +9,7 @@ const routes: Routes = [
     component: FeedDetailsPage
   },
   {
-    path: 'edit-info',
+    path: 'edit-info/:id',
     loadChildren: () => import('./edit-info/edit-info.module').then( m => m.EditInfoPageModule)
   }
 ];

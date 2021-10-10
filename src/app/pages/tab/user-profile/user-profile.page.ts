@@ -43,17 +43,17 @@ export class UserProfilePage implements OnInit {
                     this.adoptionList = adoptions;
                 })
 
-                this.firestore.collection('feed').doc(this.currentUser).collection('donationPost').valueChanges({idField: 'timelineId'}).subscribe(
+                this.firestore.collection('feed').doc(this.currentUser).collection('donation', ref => ref.orderBy('time', 'desc')).valueChanges({idField: 'donationId'}).subscribe(
                   donations => {
                     this.donationList = donations;
                 })
 
-                this.firestore.collection('feed').doc(this.currentUser).collection('lostPetPost').valueChanges({idField: 'lostPetPostId'}).subscribe(
+                this.firestore.collection('feed').doc(this.currentUser).collection('lostPet', ref => ref.orderBy('time', 'desc')).valueChanges({idField: 'lostPetId'}).subscribe(
                   lostpets => {
                     this.lostPetList = lostpets;
                 })
 
-                this.firestore.collection('feed').doc(this.currentUser).collection('timeline').valueChanges({idField: 'donationPostId'}).subscribe(
+                this.firestore.collection('feed').doc(this.currentUser).collection('newsFeed', ref => ref.orderBy('time', 'desc')).valueChanges({idField: 'newsFeedId'}).subscribe(
                   feeds => {
                     this.feedList = feeds;
                 })

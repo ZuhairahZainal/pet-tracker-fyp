@@ -4,6 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AdoptionsDetail } from 'src/app/models/adoption/adoptions-detail';
 import { AdoptionService } from 'src/app/services/adoption/adoption.service';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-edit-info',
@@ -13,6 +14,11 @@ import { AdoptionService } from 'src/app/services/adoption/adoption.service';
 export class EditInfoPage implements OnInit {
 
   newAdoptionDetail = {
+    time: new Date().getTime(),
+    date: new Date().toDateString(),
+    adminApprove: 'Pending',
+    userImage: '',
+    userName: '',
     petAge: '',
     petBreed: '',
     petCategory: '',
@@ -27,10 +33,13 @@ export class EditInfoPage implements OnInit {
   updateAdoptionForm: FormGroup;
   adoptionId: string;
   userId: string;
+  userName: string;
+  userImage: string;
   adoptionList;
 
   constructor(private adoptionService: AdoptionService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private firestore: AngularFirestore) {
               }
 
   ngOnInit() {
@@ -58,8 +67,17 @@ export class EditInfoPage implements OnInit {
   }
 
   getUserId(){
-    let user = firebase.auth().currentUser;
+    const user = firebase.auth().currentUser;
+
     this.userId = user.uid;
+
+    this.firestore.collection('users').doc(this.userId).valueChanges().subscribe( userDetails => {
+      this.userName = userDetails['name'];
+      this.newAdoptionDetail.userName = `${this.userName}`;
+
+      this.userImage = userDetails['userImage'];
+      this.newAdoptionDetail.userImage = `${this.userImage}`;
+    })
   }
 
   updateAdoptionDetail(): void{

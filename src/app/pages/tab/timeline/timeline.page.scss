@@ -13,3 +13,8 @@ ion-card{
 ion-label{
   font-family: "AbeeZee" !important;
 }
+
+ion-card{
+  --ion-background-color: transparent;
+  box-shadow: none !important;
+}

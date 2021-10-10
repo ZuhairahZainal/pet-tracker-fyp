@@ -21,7 +21,8 @@ export class AdoptionRequestPage implements OnInit {
     petName: '',
     petOwner: '',
     requestDescription: '',
-    createdAt: new Date().toDateString(),
+    time: new Date().getTime(),
+    date: new Date().toDateString(),
     status: 'Pending'
   }
 
@@ -29,7 +30,8 @@ export class AdoptionRequestPage implements OnInit {
     category: 'Adoption Request',
     petName: '',
     userName: '',
-    createdAt: new Date().toDateString()
+    time: new Date().getTime(),
+    date: new Date().toDateString(),
   }
 
   newRequestForm: FormGroup;
