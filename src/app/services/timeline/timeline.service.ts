@@ -30,7 +30,8 @@ export class TimelineService {
 
   // Donation for Timeline
   getDonationPost(): Observable<Donation[]> {
-    return this.firestore.collection<Donation>(`donationPost`, ref => ref.orderBy('time', 'desc')).valueChanges();  }
+    return this.firestore.collection<Donation>(`donationPost`, ref => ref.orderBy('time', 'desc')).valueChanges();
+  }
 
   // Feed for Timeline
   getFeedPost(): Observable<Feed[]> {
