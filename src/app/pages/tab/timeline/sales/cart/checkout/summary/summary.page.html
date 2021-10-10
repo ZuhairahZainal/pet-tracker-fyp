@@ -1,0 +1,139 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="../">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title class="ion-text-center">
+     Purchase Summary
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item-sliding *ngFor="let p of cartList | async" class="ion-text-wrap">
+
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="3">
+            <img [src]="p.cartProductImage"/>
+          </ion-col>
+
+          <ion-col size="5">
+            <b>{{ p.cartProductName }}</b>
+          </ion-col>
+
+          <ion-col size="4" class="ion-text-end">
+            {{ p.cartProductPrice | currency:'BND' }}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-item-sliding>
+
+  <ion-list>
+    <ion-item lines="inset">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-label>Total</ion-label>
+          </ion-col>
+
+          <ion-col>
+            <ion-label class="ion-text-right">{{ cartTotal | currency:'BND'}}</ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+
+    <ion-item lines="inset">
+      <ion-grid>
+        <ion-row>
+          <ion-col class="ion-padding" size=7>
+            <ion-label>Billing Address</ion-label>
+          </ion-col>
+        </ion-row>
+
+        <ion-card *ngFor="let a of address | async">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-row>
+                  <ion-col>
+                    <ion-label> No. {{ a.num }}, Simpang {{ a.simpang }} </ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col>
+                    <ion-label>{{ a.kampung }}, {{ a.postCode }} </ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col>
+                    <ion-label>{{ a.cityName }}, {{ a.countryName }} </ion-label>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-grid>
+     </ion-item>
+
+     <ion-item lines="inset">
+      <ion-grid>
+        <ion-row>
+          <ion-col class="ion-padding" size=7>
+            <ion-label>Card Details</ion-label>
+          </ion-col>
+        </ion-row>
+
+        <ion-card *ngFor="let c of cardDetail | async">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-row>
+                  <ion-col>
+                    <ion-label> {{ c.firstName }} {{ c.lastName }} </ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col>
+                    <ion-label>Card Number: {{ c.creditCardNumber }}</ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col>
+                    <ion-label>CVV: {{ c.cvv }} </ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col>
+                    <ion-label>Expiration: {{ c.expiration }} </ion-label>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-grid>
+     </ion-item>
+  </ion-list>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-button class="ion-text-center" fill="outline" color="dark" (click)="completePurchase()" routerDirection="forward" routerDirection="forward">Confirm Purchase</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

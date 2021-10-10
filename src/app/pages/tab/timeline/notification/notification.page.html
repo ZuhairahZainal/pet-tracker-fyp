@@ -73,6 +73,20 @@
                 </ion-card-subtitle>
               </ion-card-content>
             </ion-card>
+
+            <ion-card *ngIf="result.category === 'Disapproval Post'" routerLink="/tab/user-profile">
+              <ion-card-header>
+                <ion-card-title color="danger">Sorry, Previous Post Deleted</ion-card-title>
+                <ion-card-subtitle>
+                  Dear User, {{result.message}} some problems encountered upon approval. Please contact us for more information.
+                </ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-card-subtitle>
+                  {{ result.createdAt }}
+                </ion-card-subtitle>
+              </ion-card-content>
+            </ion-card>
           </ion-item>
         </ion-list>
       </ion-col>

@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> News Feed Post </ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/tab/user-profile">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <img [src]="feedDetails?.feedImage" id="img"/>
+  <ion-list>
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-subtitle>Posted on </ion-card-subtitle>
+              <ion-card-title>{{ feedDetails?.createdAt }}</ion-card-title>
+            </ion-card-header>
+
+            <ion-card-header>
+              <ion-card-title color="primary">Post Category</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ feedDetails?.category }}
+            </ion-card-content>
+
+            <ion-card-header>
+              <ion-card-title color="primary">Post Status</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ feedDetails?.feedStatus }}
+            </ion-card-content>
+
+          <ion-buttons class="ion-padding">
+            <ion-button expand="block" fill="solid" [routerLink]="['../feed-details/edit-info/', feedDetails?.feedFormId]">
+              <ion-icon name="create-outline"></ion-icon>
+              <ion-label class="ion-padding">Edit</ion-label>
+            </ion-button>
+            <ion-button expand="block" fill="solid" color="danger" (click)="deleteFeedPost(feedDetails.feedFormId)">
+              <ion-icon name="trash-outline"></ion-icon>
+              <ion-label class="ion-padding">Delete</ion-label>
+            </ion-button>
+          </ion-buttons>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  </ion-list>
+
+</ion-content>

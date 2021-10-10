@@ -36,7 +36,7 @@ export class ForgotPasswordPage implements OnInit
       this.afauth.sendPasswordResetEmail(this.email).then(()=> {
         loading.dismiss();
         this.toast('Please check your email!', 'success');
-        this.router.navigate(['/login']);
+        this.router.navigate(['/auth/login']);
       })
       .catch((error)=> {
         loading.dismiss();

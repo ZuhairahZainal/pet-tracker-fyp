@@ -11,7 +11,11 @@ import firebase from 'firebase/app';
 export class UserProfilePage implements OnInit {
 
   adoptionList;
-  public segment: string = "allpost";
+  feedList;
+  donationList;
+  lostPetList;
+
+  public segment: string = "feed";
   currentUser: string;
 
   // for user profile detail
@@ -19,20 +23,6 @@ export class UserProfilePage implements OnInit {
   userUsername: any;
   userBio: any;
   userImage: any;
-
-  //for adoption post
-  adoptionId: any;
-  postOwnerId: any;
-  petAdoptName: any;
-  petAdoptAge: any;
-  petAdoptBreed: any;
-  petAdoptCategory: any;
-  petAdoptCondition: any;
-  petAdoptDescription: any;
-  petAdoptGender: any;
-  petAdoptSpayStatus: any;
-  petAdoptImage: any;
-  petAdoptMedicalRecord: any;
 
   constructor(private firestore: AngularFirestore,
               private userService: UserService) {
@@ -51,7 +41,23 @@ export class UserProfilePage implements OnInit {
                 this.firestore.collection('adoption').doc(this.currentUser).collection('adoptionDetail').valueChanges({idField: 'petId'}).subscribe(
                   adoptions => {
                     this.adoptionList = adoptions;
-                  })
+                })
+
+                this.firestore.collection('feed').doc(this.currentUser).collection('donationPost').valueChanges({idField: 'timelineId'}).subscribe(
+                  donations => {
+                    this.donationList = donations;
+                })
+
+                this.firestore.collection('feed').doc(this.currentUser).collection('lostPetPost').valueChanges({idField: 'lostPetPostId'}).subscribe(
+                  lostpets => {
+                    this.lostPetList = lostpets;
+                })
+
+                this.firestore.collection('feed').doc(this.currentUser).collection('timeline').valueChanges({idField: 'donationPostId'}).subscribe(
+                  feeds => {
+                    this.feedList = feeds;
+                })
+
   }
 
 

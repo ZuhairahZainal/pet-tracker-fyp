@@ -33,10 +33,20 @@
   </ion-grid>
 
   <ion-toolbar>
-    <ion-segment (ionChange)="segmentChanged($event)" value="allpost" scrollable>
-      <ion-segment-button value="allpost">
+    <ion-segment (ionChange)="segmentChanged($event)" value="feed" scrollable>
+      <ion-segment-button value="feed">
         <ion-label>
-          Shared Post
+          News Feed
+        </ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="lostpet">
+        <ion-label>
+          Lost Pet
+        </ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="donation">
+        <ion-label>
+          Donation
         </ion-label>
       </ion-segment-button>
       <ion-segment-button value="adoption">
@@ -47,10 +57,34 @@
     </ion-segment>
   </ion-toolbar>
 
-  <ion-list *ngIf="segment === 'allpost'">
-    <ion-item>
-      <ion-label>All post</ion-label>
-    </ion-item>
+  <ion-list *ngIf="segment === 'feed'">
+    <ion-grid>
+      <ion-row>
+        <ion-col id="adopt" size="4" *ngFor="let feed of feedList" [routerLink]="['/tab/user-profile/feed-details/' , feed.feedFormId]" >
+            <img [src]="feed.feedImage"/>
+        </ion-col>
+      </ion-row>
+   </ion-grid>
+  </ion-list>
+
+  <ion-list *ngIf="segment === 'lostpet'">
+    <ion-grid>
+      <ion-row>
+        <ion-col id="adopt" size="4" *ngFor="let lostpet of lostPetList" [routerLink]="['/tab/user-profile/lostpet-details/' , lostpet.lostPetFormId]" >
+            <img [src]="lostpet.petImage"/>
+        </ion-col>
+      </ion-row>
+   </ion-grid>
+  </ion-list>
+
+  <ion-list *ngIf="segment === 'donation'">
+    <ion-grid>
+      <ion-row>
+        <ion-col id="adopt" size="4" *ngFor="let donation of donationList" [routerLink]="['/tab/user-profile/donation-details/' , donation.donationFormIds]" >
+            <img [src]="donation.receiptImage"/>
+        </ion-col>
+      </ion-row>
+   </ion-grid>
   </ion-list>
 
   <ion-list *ngIf="segment === 'adoption'">

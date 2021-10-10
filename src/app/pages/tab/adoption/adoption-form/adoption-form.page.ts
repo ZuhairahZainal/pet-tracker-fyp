@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 
 // firebase
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireStorage } from '@angular/fire/storage';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import firebase from 'firebase/app';
 
 // routing
 import { ActivatedRoute, Router } from '@angular/router';
 
-// taking picture
-import { Camera, CameraResultType} from '@capacitor/camera';
-
 // form validation
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
+import { file } from 'src/app/models/file/file';
+import { Observable } from 'rxjs';
+import { finalize, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-adoption-form',
@@ -39,6 +39,28 @@ export class AdoptionFormPage implements OnInit {
     petMedicalRecord: null
   }
 
+  ngFireUploadTask: AngularFireUploadTask;
+
+  progressNum: Observable<number>;
+
+  progressSnapshot: Observable<any>;
+
+  fileUploadedPath: Observable<string>;
+
+  files: Observable<file[]>;
+
+  FileName: string;
+  FileSize: number;
+
+  isImgUploading: boolean;
+  isImgUploaded: boolean;
+
+  isMedRecUploading: boolean;
+  isMedRecUploaded: boolean;
+
+  private ngFirestoreCollection: AngularFirestoreCollection<file>;
+
+
   newAdoptionForm: FormGroup;
   petId: string;
   userId: string;
@@ -49,7 +71,16 @@ export class AdoptionFormPage implements OnInit {
               private storage: AngularFireStorage,
               public loadingCtrl: LoadingController,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) {
+                this.isImgUploading = false;
+                this.isImgUploaded = false;
+
+                this.isMedRecUploading = false;
+                this.isMedRecUploaded = false;
+
+                this.ngFirestoreCollection = firestore.collection<file>('adoptionPost');
+                this.files = this.ngFirestoreCollection.valueChanges();
+               }
 
   ngOnInit() {
     this.getUserId();
@@ -129,56 +160,90 @@ export class AdoptionFormPage implements OnInit {
     });
   }
 
-  async takePicture(): Promise<void>{
-    try{
-      const petImage = await Camera.getPhoto({
-        quality: 90,
-        allowEditing: false,
-        resultType: CameraResultType.Base64
-      });
 
-      const petImageRef = this.storage.ref(
-        `adoptionList/petImage/${new Date().getTime()}/petImage.png`
-      );
+  uploadPicture(event: Event) {
 
-      petImageRef.putString(petImage.base64String, 'base64', {
-        contentType: 'image/png',
-      })
-      .then(() =>{
-        petImageRef.getDownloadURL().subscribe(downloadURL => {
-          this.newAdoptionList.petImage = downloadURL;
-        })
+    let file = (event.target as HTMLInputElement).files[0];
 
-      })
-    }catch(error){
-      console.warn(error);
+    if (file.type.split('/')[0] !== 'image') {
+      console.log('File type is not supported!')
+      return;
     }
+
+    this.isImgUploading = true;
+    this.isImgUploaded = false;
+
+    this.FileName = file.name;
+
+    const fileStoragePath = `adoption/petImage/${new Date().getTime()}_${file.name}`;
+
+    const imageRef = this.storage.ref(fileStoragePath);
+
+    this.ngFireUploadTask = this.storage.upload(fileStoragePath, file);
+
+    this.progressNum = this.ngFireUploadTask.percentageChanges();
+    this.progressSnapshot = this.ngFireUploadTask.snapshotChanges().pipe(
+
+      finalize(() => {
+        this.fileUploadedPath = imageRef.getDownloadURL();
+
+        this.fileUploadedPath.subscribe(resp=>{
+          this.newAdoptionList.petImage = resp;
+
+          this.isImgUploading = false;
+          this.isImgUploaded = true;
+        },error => {
+          console.log(error);
+        })
+      }),
+      tap(snap => {
+          this.FileSize = snap.totalBytes;
+      })
+    )
   }
 
-  async addMedicalRecord(): Promise<void>{
-    try{
-      const petMedicalRecord = await Camera.getPhoto({
-        quality: 90,
-        allowEditing: false,
-        resultType: CameraResultType.Base64
-      });
+  uploadMedicalRecord(event: Event) {
 
-      const petMedicalRecordRef = this.storage.ref(
-        `adoptionList/petMedicalRecord/${new Date().getTime()}/petMedicalRecord.png`
-      );
+    let file = (event.target as HTMLInputElement).files[0];
 
-      petMedicalRecordRef.putString(petMedicalRecord.base64String, 'base64', {
-        contentType: 'image/png',
-      })
-      .then(() =>{
-        petMedicalRecordRef.getDownloadURL().subscribe(downloadURL => {
-          this.newAdoptionList.petMedicalRecord = downloadURL;
-        })
-
-      })
-    }catch(error){
-      console.warn(error);
+    if (file.type.split('/')[0] !== 'image') {
+      console.log('File type is not supported!')
+      return;
     }
+
+    this.isMedRecUploading = true;
+    this.isMedRecUploaded = false;
+
+    this.FileName = file.name;
+
+    const fileStoragePath = `adoption/petMedicalRecord/${new Date().getTime()}_${file.name}`;
+
+    const imageRef = this.storage.ref(fileStoragePath);
+
+    this.ngFireUploadTask = this.storage.upload(fileStoragePath, file);
+
+    this.progressNum = this.ngFireUploadTask.percentageChanges();
+    this.progressSnapshot = this.ngFireUploadTask.snapshotChanges().pipe(
+
+      finalize(() => {
+        this.fileUploadedPath = imageRef.getDownloadURL();
+
+        this.fileUploadedPath.subscribe(resp=>{
+          this.newAdoptionList.petMedicalRecord = resp;
+
+          this.isMedRecUploading = false;
+          this.isMedRecUploaded = true;
+        },error => {
+          console.log(error);
+        })
+      }),
+      tap(snap => {
+          this.FileSize = snap.totalBytes;
+      })
+    )
   }
+
+
+
 
 }

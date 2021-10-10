@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { NotifPageRoutingModule } from './notif-routing.module';
+import { FeedDetailsPageRoutingModule } from './feed-details-routing.module';
 
-import { NotifPage } from './notif.page';
+import { FeedDetailsPage } from './feed-details.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    NotifPageRoutingModule
+    FeedDetailsPageRoutingModule
   ],
-  declarations: [NotifPage]
+  declarations: [FeedDetailsPage]
 })
-export class NotifPageModule {}
+export class FeedDetailsPageModule {}

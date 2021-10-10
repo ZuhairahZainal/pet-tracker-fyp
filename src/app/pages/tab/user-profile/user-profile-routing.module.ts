@@ -23,6 +23,18 @@ const routes: Routes = [
   {
     path: 'adoption-details/:id',
     loadChildren: () => import('./adoption-details/adoption-details.module').then( m => m.AdoptionDetailsPageModule)
+  },
+  {
+    path: 'feed-details/:id',
+    loadChildren: () => import('./feed-details/feed-details.module').then( m => m.FeedDetailsPageModule)
+  },
+  {
+    path: 'donation-details/:id',
+    loadChildren: () => import('./donation-details/donation-details.module').then( m => m.DonationDetailsPageModule)
+  },
+  {
+    path: 'lostpet-details/:id',
+    loadChildren: () => import('./lostpet-details/lostpet-details.module').then( m => m.LostpetDetailsPageModule)
   }
 ];
 

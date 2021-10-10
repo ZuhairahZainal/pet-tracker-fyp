@@ -14,7 +14,7 @@ export class ProductService {
               private router: Router) {}
 
   getUserProduct(userId: string, productId: string): Observable<Product>{
-    return this.firestore.collection('sale').doc(userId).collection('newProduct', ref => ref.orderBy('createdAt', 'desc')).doc<Product>(productId).valueChanges();
+    return this.firestore.collection('sale').doc(userId).collection('newProduct', ref => ref.orderBy('createdAt', 'asc')).doc<Product>(productId).valueChanges();
   }
 
     // Update
