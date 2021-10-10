@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { AdoptionService } from 'src/app/services/adoption/adoption.service';
 import firebase from 'firebase/app';
 import { AdoptionsRequest } from 'src/app/models/adoption/adoptions-request';

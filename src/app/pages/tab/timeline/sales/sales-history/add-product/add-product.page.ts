@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireStorage } from '@angular/fire/storage';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { AlertController, LoadingController } from '@ionic/angular';
 import firebase from 'firebase/app'
+import { Observable } from 'rxjs';
+import { finalize, tap } from 'rxjs/operators';
+import { file } from 'src/app/models/file/file';
 
 @Component({
   selector: 'app-add-product',
@@ -15,8 +18,11 @@ import firebase from 'firebase/app'
 export class AddProductPage implements OnInit {
 
   newProductList = {
+    createdAt: new Date().toDateString(),
+    adminApprove: 'Pending',
     productId: '',
     userId: '',
+    userUsername: '',
     productName: '',
     productCategory: '',
     productPrice: '',
@@ -25,16 +31,42 @@ export class AddProductPage implements OnInit {
     productImage: null
   }
 
+
+  ngFireUploadTask: AngularFireUploadTask;
+
+  progressNum: Observable<number>;
+
+  progressSnapshot: Observable<any>;
+
+  fileUploadedPath: Observable<string>;
+
+  files: Observable<file[]>;
+
+  FileName: string;
+  FileSize: number;
+
+  isImgUploading: boolean;
+  isImgUploaded: boolean;
+
+  private ngFirestoreCollection: AngularFirestoreCollection<file>;
+
   productForm: FormGroup;
   productId: string;
   userId: string;
+  userUsername: string;
 
   constructor(private storage: AngularFireStorage,
               private firestore: AngularFirestore,
               public loadingCtrl: LoadingController,
               public alertCtrl: AlertController,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) {
+                this.isImgUploading = false;
+                this.isImgUploaded = false;
+
+                this.ngFirestoreCollection = firestore.collection<file>('productList');
+                this.files = this.ngFirestoreCollection.valueChanges();
+              }
 
   ngOnInit() {
     this.getUserId();
@@ -66,6 +98,10 @@ export class AddProductPage implements OnInit {
 
     this.userId = user.uid;
     this.newProductList.userId = `${user.uid}`;
+
+    this.firestore.collection('users').doc(this.userId).valueChanges().subscribe( userDetail => {
+      this.newProductList.userUsername = userDetail['name'];
+    })
   }
 
   //submit form, send data to database
@@ -96,32 +132,46 @@ export class AddProductPage implements OnInit {
         console.error(error);
       });
     });
-
   }
 
-  async takePicture(): Promise<void>{
-    try{
-      const productImage = await Camera.getPhoto({
-        quality: 90,
-        allowEditing: false,
-        resultType: CameraResultType.Base64
-      });
+  uploadPicture(event: Event) {
 
-      const productImageRef = this.storage.ref(
-        `productList/${new Date().getTime()}/productImage.png`
-      );
+    let file = (event.target as HTMLInputElement).files[0];
 
-      productImageRef.putString(productImage.base64String, 'base64', {
-        contentType: 'image/png',
-      })
-      .then(() =>{
-        productImageRef.getDownloadURL().subscribe(downloadURL => {
-          this.newProductList.productImage = downloadURL;
-        })
-      })
-    }catch(error){
-      console.warn(error);
+    if (file.type.split('/')[0] !== 'image') {
+      console.log('File type is not supported!')
+      return;
     }
-  }
 
+    this.isImgUploading = true;
+    this.isImgUploaded = false;
+
+    this.FileName = file.name;
+
+    const fileStoragePath = `adoption/petImage/${new Date().getTime()}_${file.name}`;
+
+    const imageRef = this.storage.ref(fileStoragePath);
+
+    this.ngFireUploadTask = this.storage.upload(fileStoragePath, file);
+
+    this.progressNum = this.ngFireUploadTask.percentageChanges();
+    this.progressSnapshot = this.ngFireUploadTask.snapshotChanges().pipe(
+
+      finalize(() => {
+        this.fileUploadedPath = imageRef.getDownloadURL();
+
+        this.fileUploadedPath.subscribe(resp=>{
+          this.newProductList.productImage = resp;
+
+          this.isImgUploading = false;
+          this.isImgUploaded = true;
+        },error => {
+          console.log(error);
+        })
+      }),
+      tap(snap => {
+          this.FileSize = snap.totalBytes;
+      })
+    )
+  }
 }

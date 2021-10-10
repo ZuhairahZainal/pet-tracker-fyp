@@ -13,16 +13,12 @@ const routes: Routes = [
     loadChildren: () => import('./address/address.module').then( m => m.AddressPageModule)
   },
   {
-    path: 'card',
-    loadChildren: () => import('./card/card.module').then( m => m.CardPageModule)
-  },
-  {
     path: 'card-details',
     loadChildren: () => import('./card-details/card-details.module').then( m => m.CardDetailsPageModule)
   },
   {
-    path: 'notif',
-    loadChildren: () => import('./notif/notif.module').then( m => m.NotifPageModule)
+    path: 'summary',
+    loadChildren: () => import('./summary/summary.module').then( m => m.SummaryPageModule)
   }
 ];
 

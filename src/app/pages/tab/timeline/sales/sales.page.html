@@ -80,6 +80,9 @@
                 <ion-card-subtitle>
                   {{product.productDescription}}
                 </ion-card-subtitle>
+                <ion-card-subtitle color="tertiary">
+                  Seller: {{product.userUsername}}
+                </ion-card-subtitle>
               </ion-card-header>
 
               <ion-card-content>
@@ -90,7 +93,7 @@
                       <ion-col>
                           <ion-button expand=block fill="solid" >
                             <ion-icon name="cart-outline"></ion-icon>
-                            <ion-label class="ion-padding" (click)="addToCartDB(product.productId)">Add to Cart</ion-label>
+                            <ion-label class="ion-padding" (click)="addToCartDB(product?.productId)">Add to Cart</ion-label>
                           </ion-button>
                         </ion-col>
                       </ion-row>
@@ -114,7 +117,7 @@
   </ion-list>
 
   <ion-list *ngIf="segment === 'petfoods'">
-    <ion-item *ngFor="let product of productLists | filter:filter" >
+    <ion-item lines="none" *ngFor="let product of productLists | filter:filter" >
       <ion-grid *ngIf="product.productCategory === 'Pet Food'">
         <ion-row>
           <ion-col>

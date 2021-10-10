@@ -15,15 +15,83 @@
     <ion-row>
       <ion-col>
         <ion-list>
-          <ion-item *ngFor="let result of adoptionResults | async">
-            <ion-label>{{ result.message }}</ion-label>
-          </ion-item>
+          <ion-item *ngFor="let result of notification" lines="none">
 
-          <ion-item *ngFor="let result of adoptionRequests | async" routerLink="/tab/user-profile/pending-list">
-            <ion-label>{{result.userName}} {{ result.message }} {{result.petName}}</ion-label>
+            <ion-card *ngIf="result.category === 'Adoption Request'" routerLink="/tab/user-profile/pending-list" >
+              <ion-card-header>
+                <ion-card-title color="tertiary">Adoption Request</ion-card-title>
+                <ion-card-subtitle>
+                  Dear Pet Owner, {{result.userName}} would like to request
+                  adoption for {{result.petName}}. Click for more information
+                </ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-card-subtitle>
+                  {{ result.createdAt }}
+                </ion-card-subtitle>
+              </ion-card-content>
+            </ion-card>
+
+            <ion-card *ngIf="result.category === 'Request Accept'" routerLink="/tab/user-profile/setting/adopt-request-list">
+              <ion-card-header>
+                <ion-card-title color="success">Thank you! Request Accepted</ion-card-title>
+                <ion-card-subtitle>
+                  Dear User, {{result.message}}.
+                </ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-card-subtitle>
+                  {{ result.createdAt }}
+                </ion-card-subtitle>
+              </ion-card-content>
+            </ion-card>
+
+            <ion-card *ngIf="result.category === 'Request Reject'" routerLink="/tab/user-profile/setting/adopt-request-list">
+              <ion-card-header>
+                <ion-card-title color="danger">Sorry! Request Rejected</ion-card-title>
+                <ion-card-subtitle>
+                  Dear User, {{result.message}}.
+                </ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-card-subtitle>
+                  {{ result.createdAt }}
+                </ion-card-subtitle>
+              </ion-card-content>
+            </ion-card>
+
+            <ion-card *ngIf="result.category === 'Disapproval Adoption Post'" routerLink="/tab/user-profile">
+              <ion-card-header>
+                <ion-card-title color="danger">Sorry, Previous Post Deleted</ion-card-title>
+                <ion-card-subtitle>
+                  Dear User, {{result.message}} some problems encountered upon approval. Please contact us for more information.
+                </ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-card-subtitle>
+                  {{ result.createdAt }}
+                </ion-card-subtitle>
+              </ion-card-content>
+            </ion-card>
+
+            <ion-card *ngIf="result.category === 'Disapproval Post'" routerLink="/tab/user-profile">
+              <ion-card-header>
+                <ion-card-title color="danger">Sorry, Previous Post Deleted</ion-card-title>
+                <ion-card-subtitle>
+                  Dear User, {{result.message}} some problems encountered upon approval. Please contact us for more information.
+                </ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-card-subtitle>
+                  {{ result.createdAt }}
+                </ion-card-subtitle>
+              </ion-card-content>
+            </ion-card>
           </ion-item>
         </ion-list>
       </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
+
+

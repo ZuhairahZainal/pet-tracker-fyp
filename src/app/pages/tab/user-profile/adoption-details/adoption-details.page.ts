@@ -5,6 +5,7 @@ import { AdoptionsDetail } from 'src/app/models/adoption/adoptions-detail';
 import { AdoptionService } from 'src/app/services/adoption/adoption.service';
 import firebase from 'firebase/app';
 import { AlertController } from '@ionic/angular';
+// import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-adoption-details',
@@ -13,7 +14,19 @@ import { AlertController } from '@ionic/angular';
 })
 export class AdoptionDetailsPage implements OnInit {
 
+  // newAdoptionDetail = {
+  //   petAge: '',
+  //   petBreed: '',
+  //   petCategory: '',
+  //   petCondition: '',
+  //   petDescription: '',
+  //   petGender: '',
+  //   petName: '',
+  //   petSpayStatus: '',
+  // }
+
   public adoptionsDetail: AdoptionsDetail;
+  // updateAdoptionForm: FormGroup;
   adoptionId: string;
   userId: string;
   adoptionList;
@@ -25,13 +38,26 @@ export class AdoptionDetailsPage implements OnInit {
               private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
-    const adoptionId: string = this.activatedRoute.snapshot.paramMap.get('id');
+    this.adoptionId = this.activatedRoute.snapshot.paramMap.get('id');
 
     this.getUserId();
 
-    this.adoptionService.getAdoptionDetail(adoptionId).subscribe(adoptionDetail => {
+    this.adoptionService.ownerAdoptionDetail(this.adoptionId, this.userId).subscribe(adoptionDetail => {
       this.adoptionsDetail = adoptionDetail;
     });
+
+    // this.updateAdoptionForm = new FormGroup({
+    //   petAge: new FormControl(this.newAdoptionDetail.petAge),
+    //   petName: new FormControl(this.newAdoptionDetail.petName),
+    //   petCategory: new FormControl(this.newAdoptionDetail.petCategory),
+    //   petCondition: new FormControl(this.newAdoptionDetail.petCondition),
+    //   petBreed: new FormControl(this.newAdoptionDetail.petAge),
+    //   petSpayStatus: new FormControl(this.newAdoptionDetail.petSpayStatus),
+    //   petGender: new FormControl(this.newAdoptionDetail.petGender),
+    //   petDescription: new FormControl(this.newAdoptionDetail.petDescription),
+
+    // })
+
   }
 
   getUserId(){
@@ -46,7 +72,7 @@ export class AdoptionDetailsPage implements OnInit {
       buttons: [
         {
           text: 'Yes',
-          handler: () => this.removePost(adoptionId)
+          handler: () => this.removePost(adoptionId),
         },
         {
           text: 'No',
@@ -57,8 +83,6 @@ export class AdoptionDetailsPage implements OnInit {
     alert.present();
   }
 
-
-
   removePost(adoptionId: string){
     this.firestore.doc('adoptionPost/' + adoptionId).delete();
     this.firestore.collection('adoption').doc(this.userId).collection('adoptionDetail').doc(adoptionId).delete().then(() => {
@@ -66,7 +90,16 @@ export class AdoptionDetailsPage implements OnInit {
     })
   }
 
-  updateAdoptionDetail(){
+  // updateAdoptionDetail(){
+  //   this.newAdoptionDetail.petName = this.updateAdoptionForm.get('petName').value;
+  //   this.newAdoptionDetail.petAge = this.updateAdoptionForm.get('petAge').value;
+  //   this.newAdoptionDetail.petCategory = this.updateAdoptionForm.get('petCategory').value;
+  //   this.newAdoptionDetail.petDescription = this.updateAdoptionForm.get('petDescription').value;
+  //   this.newAdoptionDetail.petGender = this.updateAdoptionForm.get('petGender').value;
+  //   this.newAdoptionDetail.petSpayStatus = this.updateAdoptionForm.get('petSpayStatus').value;
+  //   this.newAdoptionDetail.petBreed = this.updateAdoptionForm.get('petBreed').value;
+  //   this.newAdoptionDetail.petCondition = this.updateAdoptionForm.get('petConditon').value;
 
-  }
+  //   this.adoptionService.updateAdoptionDetail(this.userId, this.adoptionId, this.newAdoptionDetail);
+  // }
 }

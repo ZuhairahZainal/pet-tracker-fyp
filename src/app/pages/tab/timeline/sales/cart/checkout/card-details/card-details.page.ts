@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController, AlertController } from '@ionic/angular';
+import firebase from 'firebase';
+
 
 @Component({
   selector: 'app-card-details',
@@ -10,39 +14,70 @@ import { LoadingController, AlertController } from '@ionic/angular';
 })
 export class CardDetailsPage implements OnInit {
 
-firstName: string;
-lastName: string;
-creditCardNumber: number;
-cvv: number;
-expiration: Date;
-
-public cardDetailsForm: FormGroup;
-  constructor(
-    public loadingCtrl: LoadingController,
-    public alertCtrl: AlertController,
-    private formbuilder: FormBuilder,
-    private router: Router
-  ) {
-    this.cardDetailsForm = formbuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      creditCardNumber: ['', Validators.required],
-      cvv:['', Validators.required],
-      expiration: ['', Validators.required],
-   });
+  cardDetails = {
+    cardId: '',
+    userId: '',
+    firstName: '',
+    lastName: '',
+    creditCardNumber: '',
+    cvv: '',
+    expiration: new Date().toDateString,
   }
-  async newCard(){
-    const loading = await this.loadingCtrl.create();
-    const firstName = this.cardDetailsForm.value.num;
-    const lastName = this.cardDetailsForm.value.simpang;
-    const creditCardNumber = this.cardDetailsForm.value.kampung;
-    const cvv = this.cardDetailsForm.value.postCode;
-    const expiration = this.cardDetailsForm.value.cityName;
-    return await loading.present();
 
-  }
+
+cardDetailsForm: FormGroup;
+userId: any;
+
+constructor(private firestore: AngularFirestore,
+            public loadingCtrl: LoadingController,
+            public alertCtrl: AlertController,
+            private router: Router) { }
+
 
   ngOnInit() {
+    this.getUserId()
+    this.cardDetailsForm = new FormGroup({
+      firstName: new FormControl(this.cardDetails.firstName,[Validators.required]),
+      lastName: new FormControl (this.cardDetails.lastName,[Validators.required]),
+      creditCardNumber: new FormControl (this.cardDetails.creditCardNumber,[Validators.required, Validators.maxLength(16)]),
+      cvv: new FormControl (this.cardDetails.cvv,[Validators.required, Validators.maxLength(3)]),
+      expiration: new FormControl (this.cardDetails.expiration,[Validators.required]),
+     });
+
+    }
+
+  getUserId(){
+    let user = firebase.auth().currentUser;
+    this.cardDetails.userId = `${user.uid}`;
+    this.userId = user.uid;
   }
 
+  async newCard(): Promise<void>{
+    const loading = await this.loadingCtrl.create();
+    loading.present();
+    this.cardDetails.cardId = this.firestore.createId();
+    this.cardDetails.firstName = this.cardDetailsForm.get('firstName').value;
+    this.cardDetails.lastName = this.cardDetailsForm.get('lastName').value;
+    this.cardDetails.creditCardNumber = this.cardDetailsForm.get('creditCardNumber').value;
+    this.cardDetails.cvv = this.cardDetailsForm.get('cvv').value;
+    this.cardDetails.expiration = this.cardDetailsForm.get('expiration').value;
+
+      this.firestore.collection('sale').doc(this.cardDetails.userId)
+      .collection('newcardDetails').doc(this.cardDetails.cardId)
+      .set(this.cardDetails)
+
+      .then(
+        () => {
+          loading.dismiss().then(() => {
+            this.router.navigateByUrl('/tab/timeline/sales/cart/checkout');
+          });
+        },
+        error => {
+          loading.dismiss().then(() => {
+            console.error(error);
+          });
+        }
+      );
+
+  }
 }

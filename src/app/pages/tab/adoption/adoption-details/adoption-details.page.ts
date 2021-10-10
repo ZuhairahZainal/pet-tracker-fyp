@@ -28,9 +28,4 @@ export class AdoptionDetailsPage implements OnInit {
     });
   }
 
-  // alum siap
-  adoptPet(){
-    this.adopt++;
-  }
-
 }

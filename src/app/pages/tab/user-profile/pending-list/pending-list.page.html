@@ -14,12 +14,13 @@
   <ion-list>
     <ion-item *ngFor="let detail of pendingList | async">
       <ion-label class="ion-padding-horizontal">{{ detail.userName }}</ion-label>
-      <ion-label class="ion-padding-horizontal">{{ detail.petName }}</ion-label>
 
-      <!-- routerLink="../request-user-profile" -->
+      <ion-label *ngIf="detail.status === 'Pending'" class="ion-padding-horizontal" color="tertiary">{{ detail.status }}</ion-label>
+      <ion-label *ngIf="detail.status === 'Accepted'" class="ion-padding-horizontal" color="success">{{ detail.status }}</ion-label>
+      <ion-label *ngIf="detail.status === 'Rejected'" class="ion-padding-horizontal" color="danger">{{ detail.status }}</ion-label>
+
       <ion-buttons>
-        <ion-button slot="end"[routerLink]="['/tab/user-profile/request-user-profile/', detail.requestId]">
-
+        <ion-button slot="end" [routerLink]="['/tab/user-profile/request-user-profile/', detail.requestId]">
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </ion-button>
       </ion-buttons>

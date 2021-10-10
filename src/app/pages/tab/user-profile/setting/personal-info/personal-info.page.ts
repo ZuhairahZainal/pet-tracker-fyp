@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireStorage } from '@angular/fire/storage';
+import { AngularFirestore,  AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { LoadingController } from '@ionic/angular';
 import firebase from 'firebase/app';
+import { Observable } from 'rxjs';
+import { file } from 'src/app/models/file/file';
+import { finalize, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-personal-info',
@@ -19,6 +22,24 @@ export class PersonalInfoPage implements OnInit {
     userImage: null,
     userBio: ''
   }
+
+  ngFireUploadTask: AngularFireUploadTask;
+
+  progressNum: Observable<number>;
+
+  progressSnapshot: Observable<any>;
+
+  fileUploadedPath: Observable<string>;
+
+  files: Observable<file[]>;
+
+  FileName: string;
+  FileSize: number;
+
+  isImgUploading: boolean;
+  isImgUploaded: boolean;
+
+  private ngFirestoreCollection: AngularFirestoreCollection<file>;
 
   updateUserDetail: FormGroup;
   userId: any;
@@ -37,11 +58,17 @@ export class PersonalInfoPage implements OnInit {
     public fb: FormBuilder,
     private router: Router) {
 
+      this.isImgUploading = false;
+      this.isImgUploaded = false;
+
+      this.ngFirestoreCollection = firestore.collection<file>('users');
+      this.files = this.ngFirestoreCollection.valueChanges();
+
+
       this.setUserId();
 
       this.firestore.doc(`/users/${this.userId}`).valueChanges().subscribe(
         profile => {
-          console.log('Profile:', profile);
           this.userUsername = profile['name'];
           this.userFirstName = profile['firstname'];
           this.userLastName = profile['lastname'];
@@ -96,33 +123,48 @@ export class PersonalInfoPage implements OnInit {
     });
   }
 
-  async takePicture(): Promise<void>{
-    try{
-      const userdp = await Camera.getPhoto({
-        quality: 90,
-        allowEditing: false,
-        resultType: CameraResultType.Base64
-      });
+  uploadPicture(event: Event) {
 
-      const userdpRef = this.storage.ref(
-        `users/${this.userId}/image.png`
-      );
+    let file = (event.target as HTMLInputElement).files[0];
 
-      userdpRef.putString(userdp.base64String, 'base64', {
-        contentType: 'image/png',
-      })
-      .then(() =>{
-        userdpRef.getDownloadURL().subscribe(downloadURL => {
-          this.newUserDetail.userImage = downloadURL;
+    if (file.type.split('/')[0] !== 'image') {
+      console.log('File type is not supported!')
+      return;
+    }
+
+    this.isImgUploading = true;
+    this.isImgUploaded = false;
+
+    this.FileName = file.name;
+
+    const fileStoragePath = `users/${this.userId}/image.png`;
+
+    const imageRef = this.storage.ref(fileStoragePath);
+
+    this.ngFireUploadTask = this.storage.upload(fileStoragePath, file);
+
+    this.progressNum = this.ngFireUploadTask.percentageChanges();
+    this.progressSnapshot = this.ngFireUploadTask.snapshotChanges().pipe(
+
+      finalize(() => {
+        this.fileUploadedPath = imageRef.getDownloadURL();
+
+        this.fileUploadedPath.subscribe(resp=>{
+          this.newUserDetail.userImage = resp;
 
           this.firestore.collection('users').doc(this.userId).update({
             userImage: this.newUserDetail.userImage
-          })
-          console.log(this.newUserDetail.userImage);
-        });
+          });
+          this.isImgUploading = false;
+          this.isImgUploaded = true;
+        },error => {
+          console.log(error);
+        })
+      }),
+      tap(snap => {
+          this.FileSize = snap.totalBytes;
       })
-    }catch(error){
-      console.warn(error);
-    }
+    )
   }
+
 }

@@ -21,12 +21,12 @@ const routes: Routes = [
     loadChildren: () => import('./personal-info/personal-info.module').then( m => m.PersonalInfoPageModule)
   },
   {
-    path: 'preference',
-    loadChildren: () => import('./preference/preference.module').then( m => m.PreferencePageModule)
+    path: 'report',
+    loadChildren: () => import('./report/report.module').then( m => m.ReportPageModule)
   },
   {
-    path: 'security',
-    loadChildren: () => import('./security/security.module').then( m => m.SecurityPageModule)
+    path: 'adopt-request-list',
+    loadChildren: () => import('./adopt-request-list/adopt-request-list.module').then( m => m.AdoptRequestListPageModule)
   }
 ];
 

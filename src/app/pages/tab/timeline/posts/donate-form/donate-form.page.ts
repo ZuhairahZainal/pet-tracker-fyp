@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-donate-form',
@@ -15,9 +16,11 @@ export class DonateFormPage implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private firebaseData: AngularFirestore,
               private router: Router,
+              private userService: UserService
              ) { }
 
   ngOnInit() {
+
     this.donationForm = this.formBuilder.group({
       title: ['', Validators.compose([Validators.required, Validators.maxLength(45)])],
       donationType: ['', Validators.compose([Validators.required])],

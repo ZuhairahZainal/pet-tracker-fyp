@@ -7,73 +7,155 @@
     </ion-buttons>
 
     <ion-title class="ion-text-center">
-      Summary
+     Checkout
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Summary</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-item-sliding *ngFor="let p of cartList | async" class="ion-text-wrap">
+
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="3">
+            <img [src]="p.cartProductImage"/>
+          </ion-col>
+
+          <ion-col size="5">
+            <b>{{ p.cartProductName }}</b>
+          </ion-col>
+
+          <ion-col size="4" class="ion-text-end">
+            {{ p.cartProductPrice | currency:'BND' }}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-item-sliding>
 
 
-  <div class="product">
-    <ion-card mode="ios">
-    <ion-card-content>
-  <div class="product-info">
-    <ion-label><strong>POLO</strong></ion-label>
-     <p>Product: Tshirt</p>
-     <p>Price: BND 50.00</p>
-     <p>Quantity: 1</p>
-     </div>
-     </ion-card-content>
-    </ion-card>
-  </div>
-
-
-  <hr>
-  <div class="total">
+  <ion-list>
     <ion-item lines="inset">
-     <ion-label>Sub Total</ion-label>
-       <ion-label slot="end" class="ion-text-right">BND 100.00</ion-label>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-label>Total</ion-label>
+          </ion-col>
+
+          <ion-col>
+            <ion-label class="ion-text-right">{{ cartTotal | currency:'BND'}}</ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-item>
 
+    <ion-item lines="inset">
+      <ion-grid>
+        <ion-row>
+          <ion-col class="ion-padding" size=7>
+            <ion-label>Billing Address</ion-label>
+          </ion-col>
 
-  <ion-item lines="inset">
-    <ion-label>Tax</ion-label>
-      <ion-label slot="end" class="ion-text-right">BND 1.00</ion-label>
-   </ion-item>
+          <ion-col size=4>
+            <ion-button routerLink="./address" routerDirection="forward" class="ion-text-right">Add Address</ion-button>
+          </ion-col>
+        </ion-row>
 
-   <ion-item lines="inset">
-    <ion-label>Total</ion-label>
-      <ion-label slot="end" class="ion-text-right">BND 101.00</ion-label>
-   </ion-item>
+        <ion-card *ngFor="let a of address | async">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-row>
+                  <ion-col>
+                    <ion-label> No. {{ a.num }}, Simpang {{ a.simpang }} </ion-label>
+                  </ion-col>
+                </ion-row>
 
+                <ion-row>
+                  <ion-col>
+                    <ion-label>{{ a.kampung }}, {{ a.postCode }} </ion-label>
+                  </ion-col>
+                </ion-row>
 
-   <ion-item lines="inset">
-    <ion-label>Billing Address</ion-label>
-      <ion-label slot="end" class="ion-text-right">
-        <p>{{num}}</p>
-        <p>{{simpang}}</p>
-        <p>{{kampung}}</p>
-        <p>{{postCode}}</p>
-      <p>{{cityName}}</p>
-      <p>{{countryName}}</p>
+                <ion-row>
+                  <ion-col>
+                    <ion-label>{{ a.cityName }}, {{ a.countryName }} </ion-label>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-button expand="block" fill="solid" color="danger">
+                <ion-icon name="trash-outline"></ion-icon>
+                <ion-label class="ion-padding" (click)="deleteAddress(a.addressId)">Delete</ion-label>
+              </ion-button>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-grid>
+     </ion-item>
 
-      <div id="butang">
-      <p><ion-button routerLink="./address" routerDirection="forward" class="ion-text-right">Change Address</ion-button></p>
-    </div>
-    </ion-label>
-   </ion-item>
+     <ion-item lines="inset">
+      <ion-grid>
+        <ion-row>
+          <ion-col class="ion-padding" size=7>
+            <ion-label>Card Details</ion-label>
+          </ion-col>
 
-   <ion-item lines="inset">
-    <ion-label>Your Last Step</ion-label>
-      <div id="button">
-        <ion-button routerLink="./card" routerDirection="forward">Pay Now</ion-button>
-       </div>
-   </ion-item>
-</div>
+          <ion-col size=4>
+            <ion-button routerLink="./card-details" routerDirection="forward" class="ion-text-right">Add New Card</ion-button>
+          </ion-col>
+        </ion-row>
+
+        <ion-card *ngFor="let c of cardDetail | async">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-row>
+                  <ion-col>
+                    <ion-label> {{ c.firstName }} {{ c.lastName }} </ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col>
+                    <ion-label>Card Number: {{ c.creditCardNumber }}</ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col>
+                    <ion-label>CVV: {{ c.cvv }} </ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col>
+                    <ion-label>Expiration: {{ c.expiration }} </ion-label>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-button expand="block" fill="solid" color="danger">
+                <ion-icon name="trash-outline"></ion-icon>
+                <ion-label class="ion-padding" (click)="deleteCard(c.cardId)">Delete</ion-label>
+              </ion-button>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-grid>
+     </ion-item>
+  </ion-list>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-button class="ion-text-center" fill="outline" color="dark" routerLink="./summary" routerDirection="forward" routerDirection="forward">Pay Now</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>

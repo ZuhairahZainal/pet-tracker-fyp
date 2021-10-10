@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content padding>
-<form [formGroup]="changeAddressForm" (submit)="newAddress()">
+<form [formGroup]="addressDetailForm" (submit)="newAddress()">
 
   <ion-item>
     <ion-label stacked>Number</ion-label>
@@ -19,7 +19,7 @@
 
   <ion-item>
     <ion-label stacked>Simpang</ion-label>
-    <ion-input formControlName="simpang" type="text" placeholder="Simpang Number"> </ion-input>
+    <ion-input formControlName="simpang" type="number" placeholder="Simpang Number"> </ion-input>
   </ion-item>
 
   <ion-item>
@@ -41,6 +41,7 @@
     <ion-input formControlName="countryName" type="text" placeholder="Country Name"> </ion-input>
   </ion-item>
 
-  <ion-button expand="block" type="submit" [disabled]="!changeAddressForm.valid"> Add New Address </ion-button>
+
+<ion-button routerDirection="forward" expand="block" type="submit" [disabled]="!addressDetailForm.valid"> Add Address </ion-button>
 </form>
 </ion-content>

@@ -21,4 +21,8 @@ export class NotificationService {
     getAdoptionRequest(userId: string): Observable<RequestRequest[]> {
       return this.firestore.collection('notification').doc(userId).collection<RequestRequest>(`adoptionRequest`).valueChanges();
     }
+
+    getNotification(userId: string){
+      return this.firestore.collection('users').doc(userId).collection('notification', ref => ref.orderBy('createdAt', 'asc')).valueChanges();
+    }
 }
