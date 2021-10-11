@@ -1,9 +1,50 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title></ion-title>
+    <ion-title> {{ vetDetail?.vetName }} </ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/tab/timeline/vet">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <img [src]="vetDetail?.vetPhoto">
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ vetDetail?.vetName }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-card-subtitle> Location: {{ vetDetail?.vetAddress }} </ion-card-subtitle>
+      <ion-card-subtitle> District: {{ vetDetail?.vetDistrict }} </ion-card-subtitle>
+      <ion-card-subtitle> Opening Hours: {{ vetDetail?.vetOpen }} - {{ vetDetail?.vetClose }} </ion-card-subtitle>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Services</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-card-subtitle> Services:  {{ vetDetail?.vetService }} </ion-card-subtitle>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Contact Information</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-card-subtitle> Email: {{ vetDetail?.vetEmail }} </ion-card-subtitle>
+      <ion-card-subtitle> Phone Number: {{ vetDetail?.vetPhone }} {{ vetDetail?.vetMobilePhone }} </ion-card-subtitle>
+      <ion-card-subtitle> Social Media: {{ vetDetail?.vetSocMed }} </ion-card-subtitle>
+
+    </ion-card-content>
+  </ion-card>
 </ion-content>
