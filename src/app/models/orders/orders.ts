@@ -10,8 +10,7 @@ export interface ProductDetail {
 }
 
 export interface Orders {
-  getTime: number,
-  localeDate: string,
-  localeTime: string,
-  orderId: string,
+  date: string,
+  time: number,
+  orderId: any,
 }

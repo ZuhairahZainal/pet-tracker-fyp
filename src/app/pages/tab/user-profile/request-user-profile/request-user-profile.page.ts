@@ -102,6 +102,7 @@ export class RequestUserProfilePage implements OnInit {
 
   acceptRequest(requestId: string, userId: string){
     this.firestore.collection('users').doc(userId).collection('notification').add(this.accept);
+    this.firestore.collection('notification').doc(this.userId).set(this.accept);
     this.firestore.collection('adoptionPost').doc(this.petRequested).delete();
     this.firestore.collection('adoption').doc(this.userId).collection('adoptionDetail').doc(this.petRequested).delete();
     this.firestore.collection('adoption').doc(this.userRequest).collection('adoptionApplication').doc(requestId).update({
@@ -134,6 +135,7 @@ export class RequestUserProfilePage implements OnInit {
 
   rejectRequest(requestId: string, userId: string){
     this.firestore.collection('users').doc(userId).collection('notification').add(this.reject);
+    this.firestore.collection('notification').doc(this.userId).set(this.reject);
     this.firestore.collection('adoption').doc(this.userRequest).collection('adoptionApplication').doc(requestId).update({
       status: 'Rejected'
     });

@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Vet in Brunei</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-toolbar>
+    <ion-searchbar placeholder="Search by keyword..." [(ngModel)]="filter" animated="true"></ion-searchbar>
+  </ion-toolbar>
+
+  <ion-list>
+    <ion-item *ngFor="let vet of vetLists | async" >
+      <ion-grid>
+        <ion-row>
+        <ion-col>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>
+</ion-list>
+
+</ion-content>

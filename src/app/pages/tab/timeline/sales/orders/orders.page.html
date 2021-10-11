@@ -14,14 +14,14 @@
 
 <ion-content>
   <ion-grid >
-    <ion-row *ngFor="let p of productDetail | async ">
+    <ion-row *ngFor="let p of addressDetail ">
       <ion-col>
         <ion-list>
           <ion-item>
             <ion-grid>
               <ion-row>
                 <ion-col>
-                  <ion-label>Product Name: {{ p.cartProductName }} </ion-label>
+                  <ion-label>Product Name: {{ p.kampung }} </ion-label>
                 </ion-col>
               </ion-row>
 

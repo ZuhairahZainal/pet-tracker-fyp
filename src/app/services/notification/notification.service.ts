@@ -23,6 +23,6 @@ export class NotificationService {
     }
 
     getNotification(userId: string){
-      return this.firestore.collection('users').doc(userId).collection('notification', ref => ref.orderBy('time', 'desc')).valueChanges();
+      return this.firestore.collection('notification', ref => ref.orderBy('time', 'desc')).doc(userId).valueChanges();
     }
 }

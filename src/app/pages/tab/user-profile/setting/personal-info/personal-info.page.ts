@@ -20,7 +20,8 @@ export class PersonalInfoPage implements OnInit {
   newUserDetail = {
     name: '',
     userImage: null,
-    userBio: ''
+    userBio: '',
+    phone: ''
   }
 
   ngFireUploadTask: AngularFireUploadTask;
@@ -91,6 +92,10 @@ export class PersonalInfoPage implements OnInit {
       userBio: new FormControl(this.newUserDetail.userBio, [
         Validators.minLength(1),
         Validators.required,
+      ]),
+      phone: new FormControl(this.newUserDetail.phone, [
+        Validators.pattern('[- +()0-9]+'),
+        Validators.required,
       ])
     });
   }
@@ -106,14 +111,16 @@ export class PersonalInfoPage implements OnInit {
 
     this.newUserDetail.name = this.updateUserDetail.get('name').value;
     this.newUserDetail.userBio = this.updateUserDetail.get('userBio').value;
+    this.newUserDetail.phone = this.updateUserDetail.get('phone').value;
 
     this.firestore.collection('users').doc(this.userId).update({
       name: this.newUserDetail.name,
-      userBio: this.newUserDetail.userBio
+      userBio: this.newUserDetail.userBio,
+      phone: this.newUserDetail.phone
     })
     .then(() => {
       loading.dismiss().then(() => {
-        this.router.navigate(['tab/user-profile']);
+        this.router.navigate(['tab/user-profile/setting/personal-info']);
       });
       },
       error => {

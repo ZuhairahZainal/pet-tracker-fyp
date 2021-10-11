@@ -23,6 +23,10 @@ const routes: Routes = [
   {
     path: 'user-timeline-profile',
     loadChildren: () => import('./user-timeline-profile/user-timeline-profile.module').then( m => m.UserTimelineProfilePageModule)
+  },
+  {
+    path: 'vet',
+    loadChildren: () => import('./vet/vet.module').then( m => m.VetPageModule)
   }
 ];
 

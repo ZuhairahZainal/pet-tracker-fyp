@@ -118,8 +118,8 @@
 
   <ion-list *ngIf="segment === 'petfoods'">
     <ion-item lines="none" *ngFor="let product of productLists | filter:filter" >
-      <ion-grid *ngIf="product.productCategory === 'Pet Food'">
-        <ion-row>
+      <ion-grid >
+        <ion-row *ngIf="product.productCategory === 'Pet Food'">
           <ion-col>
             <ion-card>
               <img [src]="product.productImage" alt=""/>
@@ -175,8 +175,8 @@
 
   <ion-list *ngIf="segment === 'pethouse'">
     <ion-item *ngFor="let product of productLists | filter:filter" >
-      <ion-grid *ngIf="product.productCategory === 'Pet House'">
-        <ion-row>
+      <ion-grid >
+        <ion-row *ngIf="product.productCategory === 'Pet House'">
           <ion-col>
             <ion-card>
               <img [src]="product.productImage" alt=""/>
@@ -232,8 +232,8 @@
 
   <ion-list *ngIf="segment === 'petaccessories'">
     <ion-item *ngFor="let product of productLists | filter:filter" >
-      <ion-grid *ngIf="product.productCategory === 'Pet Accessories'">
-        <ion-row>
+      <ion-grid >
+        <ion-row *ngIf="product.productCategory === 'Pet Accessories'">
           <ion-col>
             <ion-card>
               <img [src]="product.productImage" alt=""/>
@@ -289,7 +289,7 @@
 
   <ion-list *ngIf="segment === 'petcare'">
     <ion-item *ngFor="let product of productLists | filter:filter" >
-      <ion-grid *ngIf="product.productCategory === 'Pet Care'">
+      <ion-grid  *ngIf="product.productCategory === 'Pet Care'">
         <ion-row>
           <ion-col>
             <ion-card>
@@ -346,8 +346,8 @@
 
   <ion-list *ngIf="segment === 'others'">
     <ion-item *ngFor="let product of productLists | filter:filter" >
-      <ion-grid *ngIf="product.productCategory === 'Others'">
-        <ion-row>
+      <ion-grid >
+        <ion-row *ngIf="product.productCategory === 'Others'">
           <ion-col>
             <ion-card>
               <img [src]="product.productImage" alt=""/>

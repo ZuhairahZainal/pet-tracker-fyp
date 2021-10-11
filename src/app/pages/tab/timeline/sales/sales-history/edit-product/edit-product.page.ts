@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { FormGroup, FormControl } from "@angular/forms";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ProductService } from '../../../../../../services/sales/product.service';
 import firebase from 'firebase/app';
 import { Product } from 'src/app/models/sales/product';
@@ -46,10 +46,20 @@ export class EditProductPage implements OnInit {
     });
 
     this.updateProductForm = new FormGroup({
-      productName: new FormControl(this.newProductList.productName),
-      productCategory: new FormControl(this.newProductList.productCategory),
-      productPrice: new FormControl(this.newProductList.productPrice),
-      productDescription: new FormControl(this.newProductList.productDescription)
+      productName: new FormControl(this.newProductList.productName,[
+        Validators.required,
+        Validators.minLength(2),
+      ]),
+      productCategory: new FormControl(this.newProductList.productCategory,[
+        Validators.required,
+      ]),
+      productPrice: new FormControl(this.newProductList.productPrice,[
+        Validators.required,
+      ]),
+      productDescription: new FormControl(this.newProductList.productDescription,[
+        Validators.required,
+        Validators.minLength(2)
+      ])
     })
   }
 
