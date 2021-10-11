@@ -12,19 +12,19 @@ export class SalesService {
 
   constructor(public firestore: AngularFirestore) { }
 
-  // fetch orders
-  getProductDetails(userId: string, orderId): Observable<ProductDetail[]> {
-    return this.firestore.collection('sale').doc(userId).collection('orders').doc(orderId).collection<ProductDetail>(`productDetails`).valueChanges();
+  // fetch product detail
+  getProductDetails(userId: string, orderId): Observable<ProductDetail> {
+    return this.firestore.collection('sale').doc(userId).collection('orders').doc(orderId).collection(`productDetails`).doc<ProductDetail>(orderId).valueChanges();
   }
 
-  // fetch address
-  getAddressDetail(userId: string, orderId): Observable<Address[]> {
-    return this.firestore.collection('sale').doc(userId).collection('orders').doc(orderId).collection<Address>(`addressDetail`).valueChanges();
+  // fetch address detail
+  getAddressDetail(userId: string, orderId): Observable<Address> {
+    return this.firestore.collection('sale').doc(userId).collection('orders').doc(orderId).collection(`addressDetail`).doc<Address>(orderId).valueChanges();
   }
 
-  // fetch card
-  getCardDetail(userId: string, orderId): Observable<CardDetail[]> {
-    return this.firestore.collection('sale').doc(userId).collection('orders').doc(orderId).collection<CardDetail>(`cardDetail`).valueChanges();
+  // fetch card detail
+  getCardDetail(userId: string, orderId): Observable<CardDetail> {
+    return this.firestore.collection('sale').doc(userId).collection('orders').doc(orderId).collection(`cardDetail`).doc<CardDetail>(orderId).valueChanges();
   }
 
   // fetch order ids

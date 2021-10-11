@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> Product Details </ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/tab/timeline/sales/orders">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor="let product of productDetails ">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-row>
+            <ion-col>
+              <ion-card id="product">
+                <ion-card id="product">
+                  <img [src]="product?.cartProductImage">
+                </ion-card>
+                <ion-card-title> {{ product?.cartProductName }} </ion-card-title>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-card id="product">
+                <ion-card-subtitle> Product Price: ${{ product?.cartProductPrice }} </ion-card-subtitle>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-card id="product">
+                <ion-card-subtitle> Product Category: {{ product?.cartProductCategory }} </ion-card-subtitle>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-card id="product">
+                <ion-card-subtitle> Description: {{ product?.cartProductDescription }}  </ion-card-subtitle>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Payment Detail</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-card-subtitle> Card Name: {{ cardDetails?.firstName }} {{ cardDetails?.lastName }} </ion-card-subtitle>
+      <ion-card-subtitle> Account No: {{ cardDetails?.creditCardNumber }} </ion-card-subtitle>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Address Detail</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-card-subtitle> No. {{ addressDetails?.addressNo }}, Simpang {{ addressDetails?.simpang }} </ion-card-subtitle>
+      <ion-card-subtitle> {{ addressDetails?.kampung }}, {{ addressDetails?.postCode }} </ion-card-subtitle>
+      <ion-card-subtitle> {{ addressDetails?.cityName }}, {{ addressDetails?.countryName }} </ion-card-subtitle>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

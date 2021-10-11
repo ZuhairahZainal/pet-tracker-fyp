@@ -17,10 +17,6 @@ const routes: Routes = [
     loadChildren: () => import('./orders/orders.module').then( m => m.OrdersPageModule)
   },
   {
-    path: 'purchase-history',
-    loadChildren: () => import('./purchase-history/purchase-history.module').then( m => m.PurchaseHistoryPageModule)
-  },
-  {
     path: 'sales-history',
     loadChildren: () => import('./sales-history/sales-history.module').then( m => m.SalesHistoryPageModule)
   }

@@ -2,6 +2,7 @@ export interface Address{
   addressId: string;
   userId: any;
   num: number;
+  addressNo: number;
   simpang: number;
   kampung: string;
   postCode: string;

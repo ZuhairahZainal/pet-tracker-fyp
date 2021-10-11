@@ -19,6 +19,8 @@ export class SummaryPage implements OnInit {
   public address: Observable<Address[]>;
   public cardDetail: Observable<CardDetail[]>;
 
+  public productIds: any[] = [];
+
   userId: string;
   orderId: any;
   cartTotal: string;
@@ -126,15 +128,15 @@ export class SummaryPage implements OnInit {
 
     this.order = {
       orderId: this.orderId,
+      totalAmount: this.cartTotal,
+      orderStatus: 'Purchase Successful',
       time: new Date().getTime(),
       date: new Date().toDateString(),
-      // localeDate: new Date().toLocaleDateString(),
-      // localeTime: new Date().toLocaleTimeString(),
     }
 
     this.firestore.collection('sale').doc(this.userId).collection('orders').doc(this.orderId).set(this.order);
 
-    this.firestore.collection('sale').doc(this.userId).collection('orders').doc(this.orderId).collection('addressDetail').doc(this.orderAddressId).set({
+    this.firestore.collection('sale').doc(this.userId).collection('orders').doc(this.orderId).collection('addressDetail').doc(this.orderId).set({
       orderAddressId: this.orderAddressId,
       userId: this.userId,
       addressId: this.addressId,
@@ -150,6 +152,7 @@ export class SummaryPage implements OnInit {
       user.forEach( product =>{
         let data = product.payload.doc.data();
         let id = product.payload.doc.id;
+
         console.log( "ID: ", id, " Data: " , data );
 
         this.firestore.collection('sale').doc(this.userId).collection('orders').doc(this.orderId).collection('productDetails').doc(id).set(data);
@@ -159,7 +162,7 @@ export class SummaryPage implements OnInit {
         });
     });
 
-    this.firestore.collection('sale').doc(this.userId).collection('orders').doc(this.orderId).collection('cardDetail').doc(this.orderCardId).set({
+    this.firestore.collection('sale').doc(this.userId).collection('orders').doc(this.orderId).collection('cardDetail').doc(this.orderId).set({
       orderCardId: this.orderCardId,
       cardId: this.cardId,
       creditCardNumber: this.creditCardNumber,

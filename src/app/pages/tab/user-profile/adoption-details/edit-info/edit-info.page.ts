@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import firebase from 'firebase/app';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AdoptionsDetail } from 'src/app/models/adoption/adoptions-detail';
 import { AdoptionService } from 'src/app/services/adoption/adoption.service';
@@ -53,15 +53,35 @@ export class EditInfoPage implements OnInit {
     });
 
     this.updateAdoptionForm = new FormGroup({
-      petAge: new FormControl(this.newAdoptionDetail.petAge),
-      petName: new FormControl(this.newAdoptionDetail.petName),
-      petCategory: new FormControl(this.newAdoptionDetail.petCategory),
-      petCondition: new FormControl(this.newAdoptionDetail.petCondition),
-      petBreed: new FormControl(this.newAdoptionDetail.petAge),
-      petSpayStatus: new FormControl(this.newAdoptionDetail.petSpayStatus),
-      petGender: new FormControl(this.newAdoptionDetail.petGender),
-      petDescription: new FormControl(this.newAdoptionDetail.petDescription),
-
+      petAge: new FormControl(this.newAdoptionDetail.petAge,[
+        Validators.required,
+        Validators.min(0),
+      ]),
+      petBreed: new FormControl(this.newAdoptionDetail.petBreed,[
+        Validators.required,
+        Validators.minLength(2),
+      ]),
+      petCategory: new FormControl(this.newAdoptionDetail.petCategory,[
+        Validators.required,
+      ]),
+      petCondition: new FormControl(this.newAdoptionDetail.petCondition,[
+        Validators.required,
+        Validators.minLength(2),
+      ]),
+      petDescription: new FormControl(this.newAdoptionDetail.petDescription,[
+        Validators.required,
+        Validators.minLength(10),
+      ]),
+      petGender: new FormControl(this.newAdoptionDetail.petGender,[
+        Validators.required,
+      ]),
+      petName: new FormControl(this.newAdoptionDetail.petName,[
+        Validators.required,
+        Validators.minLength(2),
+      ]),
+      petSpayStatus: new FormControl(this.newAdoptionDetail.petSpayStatus,[
+        Validators.required,
+      ])
     })
 
   }
