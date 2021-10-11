@@ -1,5 +1,7 @@
 {
   "name": "Pet Tracker",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

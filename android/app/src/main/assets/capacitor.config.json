@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "Pet Tracker",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
