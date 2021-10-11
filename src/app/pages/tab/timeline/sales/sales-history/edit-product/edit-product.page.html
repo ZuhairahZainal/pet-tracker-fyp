@@ -40,6 +40,9 @@
     <ion-card-content>
       <ion-label position="floating">Product Name</ion-label>
       <ion-input formControlName="productName" type="text" [placeholder]="productDetail?.productName"></ion-input>
+      <ion-item lines="none" class="error-message" *ngIf="!updateProductForm.controls.productPrice.valid && updateProductForm.controls.productPrice.touched">
+        <p>Product name is required and to be at least 2 characters.</p>
+      </ion-item>
     </ion-card-content>
 
     <ion-card-content>
@@ -51,16 +54,25 @@
         <ion-select-option value="Pet Accessories">Pet Accessories</ion-select-option>
         <ion-select-option value="Others">Others</ion-select-option>
       </ion-select>
+      <ion-item lines="none" class="error-message" *ngIf="!updateProductForm.controls.productCategory.valid && updateProductForm.controls.productCategory.touched">
+        <p>Product category is required to selected.</p>
+      </ion-item>
     </ion-card-content>
 
     <ion-card-content>
       <ion-label position="floating">Product Description</ion-label>
       <ion-textarea formControlName="productDescription" type="text" [placeholder]="productDetail?.productDescription"></ion-textarea>
+      <ion-item lines="none" class="error-message" *ngIf="!updateProductForm.controls.productPrice.valid && updateProductForm.controls.productPrice.touched">
+        <p>Product description is required and to be at least 2 characters.</p>
+      </ion-item>
     </ion-card-content>
 
     <ion-card-content>
       <ion-label position="floating">Product Price</ion-label>
       <ion-input formControlName="productPrice" type="number" [placeholder]="productDetail?.productPrice"></ion-input>
+      <ion-item lines="none" class="error-message" *ngIf="!updateProductForm.controls.productPrice.valid && updateProductForm.controls.productPrice.touched">
+        <p>Product price is required to be stated.</p>
+      </ion-item>
     </ion-card-content>
     </ion-card>
 

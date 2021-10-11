@@ -1,2 +1,16 @@
 export interface Vet {
+  adminApproval: string,
+  time: number,
+  date: string,
+  vetId: string,
+  vetName: string,
+  vetAddress: string,
+  vetEmail: string,
+  vetPhone: number,
+  vetMobilePhone: number,
+  vetSocMed: string,
+  vetService: string,
+  vetPhoto: string,
+  vetOpen: string,
+  vetClose: string,
 }

@@ -74,7 +74,7 @@ export class CartPage implements OnInit {
     });
 
     alert.present();
-
   }
+
 }
 
