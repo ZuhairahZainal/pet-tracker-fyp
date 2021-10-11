@@ -31,6 +31,7 @@ import { CallNumber } from '@ionic-native/call-number/ngx';
 import { SplashScreen} from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Ng2SearchPipeModule  } from 'ng2-search-filter';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -46,7 +47,12 @@ import { Ng2SearchPipeModule  } from 'ng2-search-filter';
             Ng2SearchPipeModule,
             IonicModule.forRoot(),
             AppRoutingModule],
-  providers: [AuthService, SplashScreen, StatusBar, CallNumber, AuthGuard, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [AuthService,
+              SplashScreen,
+              StatusBar,
+              Geolocation,
+              CallNumber,
+              AuthGuard, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

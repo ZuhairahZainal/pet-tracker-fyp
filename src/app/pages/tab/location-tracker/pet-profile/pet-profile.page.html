@@ -1,0 +1,102 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="../">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title class="ion-text-center">Pet Profile </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button routerLink="/tab/location-tracker/pet-profile/edit-info">
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="4">
+        <ion-card class="ion-padding-top">
+          <ion-avatar>
+            <img src="../../../../../assets/catprofile.png"/>
+          </ion-avatar>
+        </ion-card>
+      </ion-col>
+
+      <ion-col>
+        <ion-card>
+          <ion-card-title>Name</ion-card-title>
+          <ion-card-subtitle class="ion-padding-top">Breed</ion-card-subtitle>
+          <ion-card-subtitle class="ion-padding-top">Greed</ion-card-subtitle>
+          <ion-card-subtitle class="ion-padding-top">Age</ion-card-subtitle>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-toolbar>
+    <ion-segment (ionChange)="segmentChanged($event)" value="medication" scrollable>
+      <ion-segment-button value="medication">
+        <ion-label>
+          Medication
+        </ion-label>
+      </ion-segment-button>
+
+      <ion-segment-button value="appointment">
+        <ion-label>
+          Appointment
+        </ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <ion-card *ngIf="segment === 'medication'">
+    <ion-card-header>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="9">
+            <ion-card-title class="ion-padding-top">Medication Intake</ion-card-title>
+          </ion-col>
+          <ion-col size="3">
+            <ion-button fill=clear>
+              <ion-icon id="more" slot="icon-only" name="ellipsis-horizontal-circle-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item></ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="segment === 'appointment'">
+    <ion-card-header>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="9">
+            <ion-card-title class="ion-padding-top">Appointment</ion-card-title>
+          </ion-col>
+          <ion-col size="3">
+            <ion-button fill=clear>
+              <ion-icon id="more" slot="icon-only" name="ellipsis-horizontal-circle-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item></ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
