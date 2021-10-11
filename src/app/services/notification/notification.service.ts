@@ -22,7 +22,7 @@ export class NotificationService {
       return this.firestore.collection('notification').doc(userId).collection<RequestRequest>(`adoptionRequest`).valueChanges();
     }
 
-    getNotification(userId: string){
-      return this.firestore.collection('notification', ref => ref.orderBy('time', 'desc')).doc(userId).valueChanges();
+    getNotification(userId: string): Observable<Notification[]> {
+      return this.firestore.collection('users').doc(userId).collection<Notification>('notification', ref => ref.orderBy('time', 'desc')).valueChanges();
     }
 }
