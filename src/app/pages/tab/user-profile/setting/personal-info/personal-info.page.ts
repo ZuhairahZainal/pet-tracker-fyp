@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore,  AngularFirestoreCollection } from '@angular/fire/firestore';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Camera, CameraResultType } from '@capacitor/camera';
 import { LoadingController } from '@ionic/angular';
 import firebase from 'firebase/app';
 import { Observable } from 'rxjs';
@@ -56,7 +55,6 @@ export class PersonalInfoPage implements OnInit {
   constructor(private firestore: AngularFirestore,
     private storage: AngularFireStorage,
     public loadingCtrl: LoadingController,
-    public fb: FormBuilder,
     private router: Router) {
 
       this.isImgUploading = false;

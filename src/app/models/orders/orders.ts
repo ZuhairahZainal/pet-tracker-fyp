@@ -13,4 +13,6 @@ export interface Orders {
   date: string,
   time: number,
   orderId: any,
+  orderStatus: string,
+  totalAmount: string,
 }
