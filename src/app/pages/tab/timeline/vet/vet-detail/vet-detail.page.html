@@ -42,9 +42,11 @@
 
     <ion-card-content>
       <ion-card-subtitle> Email: {{ vetDetail?.vetEmail }} </ion-card-subtitle>
-      <ion-card-subtitle> Phone Number: {{ vetDetail?.vetPhone }} {{ vetDetail?.vetMobilePhone }} </ion-card-subtitle>
+      <ion-card-subtitle> Phone Number: {{ vetDetail?.vetPhone }} </ion-card-subtitle>
+      <ion-button class="ion-text-center" fill="outline" color="dark" (click)="callVet(vetDetail.vetPhone, vetDetail.vetName)">Call Vet</ion-button>
+      <ion-card-subtitle> Mobile Number: {{ vetDetail?.vetMobilePhone }} </ion-card-subtitle>
+      <ion-button class="ion-text-center" fill="outline" color="dark" (click)="callVet(vetDetail.vetMobilePhone, vetDetail.vetName)">Call Vet</ion-button>
       <ion-card-subtitle> Social Media: {{ vetDetail?.vetSocMed }} </ion-card-subtitle>
-
     </ion-card-content>
   </ion-card>
 </ion-content>

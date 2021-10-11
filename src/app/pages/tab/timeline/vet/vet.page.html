@@ -17,14 +17,14 @@
   <ion-list>
     <ion-item *ngFor="let vet of vetLists | async | filter:filter" >
       <ion-grid>
-        <ion-row>
+        <ion-row  [routerLink]="['/tab/timeline/vet/vet-detail' , vet.vetId ]">
           <ion-col size="2">
             <ion-avatar>
               <img *ngIf="vet.vetPhoto" [src]="vet.vetPhoto">
             </ion-avatar>
           </ion-col>
           <ion-col size="10">
-            <ion-card [routerLink]="['/tab/timeline/vet/vet-detail' , vet.vetId ]">
+            <ion-card>
               <ion-card-title>{{ vet.vetName }}, {{ vet.vetDistrict }}</ion-card-title>
               <ion-card-subtitle>Opening hours: {{ vet.vetOpen }} - {{ vet.vetClose }}</ion-card-subtitle>
             </ion-card>
