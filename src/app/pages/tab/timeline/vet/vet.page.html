@@ -1,30 +1,37 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Vet in Brunei</ion-title>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/tab/timeline">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title  class="ion-text-center">Vet in Brunei</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-toolbar>
-    <ion-searchbar placeholder="Search by keyword..." [(ngModel)]="filter" animated="true"></ion-searchbar>
+    <ion-searchbar placeholder="Search by nearby..." [(ngModel)]="filter" animated="true"></ion-searchbar>
   </ion-toolbar>
 
   <ion-list>
-    <ion-item *ngFor="let vet of vetLists | async" >
+    <ion-item *ngFor="let vet of vetLists | async | filter:filter" >
       <ion-grid>
-        <ion-row>
-        <ion-col>
-          <ion-grid>
-            <ion-row>
-              <ion-col>
-
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-item>
-</ion-list>
+        <ion-row  [routerLink]="['/tab/timeline/vet/vet-detail' , vet.vetId ]">
+          <ion-col size="2">
+            <ion-avatar>
+              <img *ngIf="vet.vetPhoto" [src]="vet.vetPhoto">
+            </ion-avatar>
+          </ion-col>
+          <ion-col size="10">
+            <ion-card>
+              <ion-card-title>{{ vet.vetName }}, {{ vet.vetDistrict }}</ion-card-title>
+              <ion-card-subtitle>Opening hours: {{ vet.vetOpen }} - {{ vet.vetClose }}</ion-card-subtitle>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
 
 </ion-content>

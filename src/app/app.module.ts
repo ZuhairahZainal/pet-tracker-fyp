@@ -20,13 +20,18 @@ import { environment } from '../environments/environment';
 //forms
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { Ng2SearchPipeModule  } from 'ng2-search-filter';
-
 //services
 import { AuthService } from './services/auth/auth.service';
 
 //guards
 import { AuthGuard } from '../app/guards/auth.guard';
+
+// plugins
+import { CallNumber } from '@ionic-native/call-number/ngx';
+import { SplashScreen} from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Ng2SearchPipeModule  } from 'ng2-search-filter';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,7 +47,12 @@ import { AuthGuard } from '../app/guards/auth.guard';
             Ng2SearchPipeModule,
             IonicModule.forRoot(),
             AppRoutingModule],
-  providers: [AuthService, AuthGuard, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [AuthService,
+              SplashScreen,
+              StatusBar,
+              Geolocation,
+              CallNumber,
+              AuthGuard, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

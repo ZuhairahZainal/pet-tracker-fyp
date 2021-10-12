@@ -92,8 +92,6 @@ export class AdoptionRequestPage implements OnInit {
 
     this.firestore.collection('users').doc(this.newAdoptionRequest.petOwner).collection('notification').add(this.requestNotif);
 
-    this.firestore.collection('notification').doc(this.newAdoptionRequest.userId).set(this.requestNotif);
-
     this.firestore.collection('adoption').doc(this.newAdoptionRequest.userId).collection('adoptionApplication').doc(this.newAdoptionRequest.requestId).set(
       this.newAdoptionRequest);
 

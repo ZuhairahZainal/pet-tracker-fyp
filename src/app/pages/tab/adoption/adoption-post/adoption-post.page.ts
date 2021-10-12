@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { AdoptionService } from 'src/app/services/adoption/adoption.service';
 import { AdoptionsDetail } from 'src/app/models/adoption/adoptions-detail';
 
-
 @Component({
   selector: 'app-adoption-post',
   templateUrl: './adoption-post.page.html',

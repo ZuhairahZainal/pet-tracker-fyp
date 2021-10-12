@@ -105,8 +105,7 @@ export class ReportPage implements OnInit {
     this.report.reportType = this.reportForm.get('reportType').value;
     this.report.reportDescription = this.reportForm.get('reportDescription').value;
 
-    this.firestore.collection('admin-notification').doc(this.report.reportId)
-    .set(this.report);
+    this.firestore.collection('admin-notif').doc(this.report.reportId).set(this.report);
 
     this.firestore.collection('report').doc(this.report.reportId).set(this.report).then(() => {
       loading.dismiss().then(() => {

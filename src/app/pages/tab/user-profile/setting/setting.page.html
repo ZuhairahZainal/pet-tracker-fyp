@@ -11,7 +11,7 @@
     </ion-title>
 
     <ion-buttons slot="end">
-      <ion-button routerLink="/auth/login">
+      <ion-button (click)="logout()">
         <ion-icon id="logout" icon="icon-only" name="log-out-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -81,14 +81,6 @@
         Change Password
       </ion-label>
     </ion-item>
-
-    <ion-item lines="none" class="ion-text-center">
-      <ion-label color="danger">
-        Close Account
-      </ion-label>
-    </ion-item>
-
-
   </ion-list>
 </ion-content>
 

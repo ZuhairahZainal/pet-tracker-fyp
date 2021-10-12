@@ -65,7 +65,6 @@ export class AdoptionFormPage implements OnInit {
 
 
   newAdoptionForm: FormGroup;
-  petId: string;
   userId: string;
   userName: string;
   userImage: string;
@@ -73,8 +72,7 @@ export class AdoptionFormPage implements OnInit {
   constructor(private firestore: AngularFirestore,
               private storage: AngularFireStorage,
               public loadingCtrl: LoadingController,
-              private router: Router,
-              private route: ActivatedRoute) {
+              private router: Router) {
                 this.isImgUploading = false;
                 this.isImgUploaded = false;
 
@@ -118,8 +116,6 @@ export class AdoptionFormPage implements OnInit {
         Validators.required,
       ])
     });
-
-    this.petId = this.route.snapshot.params.petId || 'new';
   }
 
   getUserId(){

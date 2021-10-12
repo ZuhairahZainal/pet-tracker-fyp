@@ -32,15 +32,13 @@
                 <ion-label>{{ userName }}</ion-label>
               </ion-col>
             </ion-row>
-            <ion-row>
-              <ion-col>
-                <ion-button fill="outline" class="upload ion-padding ion-no-margin ion-text-right">
-                  <input type="file" class="upload" (change)="uploadPicture($event)" id="selectedFile" style="display: none;" />
-                  <input type="button" class="upload" value="Add Image" onclick="document.getElementById('selectedFile').click();" />
-                </ion-button>
-              </ion-col>
-            </ion-row>
           </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-button class="upload ion-padding">
+            <input type="file" class="upload" (change)="uploadPicture($event)" id="selectedFile" style="display: none;" />
+            <input type="button" class="upload" value="Insert Verified Receipt/Proof" onclick="document.getElementById('selectedFile').click();" />
+          </ion-button>
         </ion-row>
       </ion-grid>
     </ion-item>
@@ -50,7 +48,7 @@
 
     <ion-card>
       <ion-card-content>
-        <ion-label position="floating">Donation Image</ion-label>
+        <ion-label position="floating">Donation Receipt/Proof</ion-label>
 
         <img *ngIf="newDonationDetail.donationImage" [src]="newDonationDetail.donationImage"/>
         <ion-card *ngIf="isImgUploading && !isImgUploaded">

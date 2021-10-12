@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireStorage } from '@angular/fire/storage';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController, AlertController } from '@ionic/angular';
 import firebase from 'firebase';
@@ -37,13 +36,26 @@ constructor(private firestore: AngularFirestore,
   ngOnInit() {
     this.getUserId()
     this.cardDetailsForm = new FormGroup({
-      firstName: new FormControl(this.cardDetails.firstName,[Validators.required]),
-      lastName: new FormControl (this.cardDetails.lastName,[Validators.required]),
-      creditCardNumber: new FormControl (this.cardDetails.creditCardNumber,[Validators.required, Validators.maxLength(16)]),
-      cvv: new FormControl (this.cardDetails.cvv,[Validators.required, Validators.maxLength(3)]),
-      expiration: new FormControl (this.cardDetails.expiration,[Validators.required]),
+      firstName: new FormControl(this.cardDetails.firstName,[
+        Validators.required
+      ]),
+      lastName: new FormControl (this.cardDetails.lastName,[
+        Validators.required
+      ]),
+      creditCardNumber: new FormControl (this.cardDetails.creditCardNumber,[
+        Validators.required,
+        Validators.minLength(16),
+        Validators.maxLength(16)
+      ]),
+      cvv: new FormControl (this.cardDetails.cvv,[
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(3)
+      ]),
+      expiration: new FormControl (this.cardDetails.expiration,[
+        Validators.required
+      ]),
      });
-
     }
 
   getUserId(){

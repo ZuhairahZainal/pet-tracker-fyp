@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { VetPageRoutingModule } from './vet-routing.module';
 
 import { VetPage } from './vet.page';
-import { Ng2SearchPipe } from 'ng2-search-filter';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 @NgModule({
@@ -15,7 +15,7 @@ import { Ng2SearchPipe } from 'ng2-search-filter';
     CommonModule,
     FormsModule,
     IonicModule,
-    Ng2SearchPipe,
+    Ng2SearchPipeModule,
     VetPageRoutingModule
   ],
   declarations: [VetPage]

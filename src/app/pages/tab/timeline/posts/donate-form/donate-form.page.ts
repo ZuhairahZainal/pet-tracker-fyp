@@ -32,7 +32,7 @@ export class DonateFormPage implements OnInit {
     donationAmount: '',
     donationDescription: '',
     donationImage: null,
-  };
+  }
 
   donationForm: FormGroup;
   userId: string;

@@ -19,6 +19,9 @@
         <ion-item lines="none">
           <ion-textarea type="text" formControlName="requestDescription" placeholder="Tell the owner about you.."></ion-textarea>
         </ion-item>
+        <ion-item lines="none" class="error-message" *ngIf="!newRequestForm.controls.petAge.valid && newRequestForm.controls.petAge.touched">
+          <p>The description of this post is required to be at least 6 characters</p>
+        </ion-item>
       </ion-list>
 
       <div class="ion-text-center">

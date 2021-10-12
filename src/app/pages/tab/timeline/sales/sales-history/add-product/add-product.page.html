@@ -25,10 +25,14 @@
 
       <ion-card>
         <ion-card-content>
+          <ion-label position="floating">Product Image</ion-label>
+
           <ion-card-content>
-            <ion-button fill="clear">
-              <input type="file" class="upload" (change)="uploadPicture($event)" />
+            <ion-button class="upload ion-padding ion-no-margin ion-text-center">
+              <input type="file" class="upload" (change)="uploadPicture($event)" id="selectedFile" style="display: none;" />
+              <input type="button" class="upload" value="Add Image" onclick="document.getElementById('selectedFile').click();" />
             </ion-button>
+
 
             <ion-card *ngIf="isImgUploading && !isImgUploaded">
               <ion-card-header>
@@ -64,15 +68,15 @@
 
       <ion-card-content>
         <ion-label position="floating">Product Name</ion-label>
-        <ion-input formControlName="productName" type="text" required></ion-input>
-        <ion-item lines="none" class="error-message" *ngIf="!productForm.controls.productPrice.valid && productForm.controls.productPrice.touched">
+        <ion-input formControlName="productName" type="text" placeholder="Enter Your Product Name" required></ion-input>
+        <ion-item lines="none" class="error-message" *ngIf="!productForm.controls.productName.valid && productForm.controls.productName.touched">
           <p>Product name is required and to be at least 2 characters.</p>
         </ion-item>
       </ion-card-content>
 
       <ion-card-content>
         <ion-label position="floating">Product Category</ion-label>
-        <ion-select value="gender" interface="action-sheet" formControlName="productCategory">
+        <ion-select value="gender" interface="action-sheet" formControlName="productCategory" placeholder="Choose Your Product Category">
           <ion-select-option value="Pet Food">Pet Food</ion-select-option>
           <ion-select-option value="Pet House">Pet House</ion-select-option>
           <ion-select-option value="Pet Care">Pet Care</ion-select-option>
@@ -86,22 +90,22 @@
 
       <ion-card-content>
         <ion-label position="floating">Product Description</ion-label>
-        <ion-textarea formControlName="productDescription" type="text" required></ion-textarea>
-        <ion-item lines="none" class="error-message" *ngIf="!productForm.controls.productPrice.valid && productForm.controls.productPrice.touched">
+        <ion-textarea formControlName="productDescription" type="text" required placeholder="Provide Brief Description of Your Product"></ion-textarea>
+        <ion-item lines="none" class="error-message" *ngIf="!productForm.controls.productDescription.valid && productForm.controls.productDescription.touched">
           <p>Product description is required and to be at least 2 characters.</p>
         </ion-item>
       </ion-card-content>
 
       <ion-card-content>
         <ion-label position="floating">Product Price</ion-label>
-        <ion-input formControlName="productPrice" type="number" required></ion-input>
+        <ion-input formControlName="productPrice" type="number" required placeholder="Enter Your Product Price"></ion-input>
         <ion-item lines="none" class="error-message" *ngIf="!productForm.controls.productPrice.valid && productForm.controls.productPrice.touched">
           <p>Product price is required to be stated.</p>
         </ion-item>
       </ion-card-content>
       </ion-card>
 
-      <ion-radio-group formControlName="productAgreement" required>
+      <ion-radio-group formControlName="productAgreement">
         <ion-item>
           <ion-label class="ion-text-wrap">By this, you agreed that commission fee will be applied when the user made a successful sale.</ion-label>
           <ion-radio slot="start" color="primary" value="Agree"></ion-radio>
