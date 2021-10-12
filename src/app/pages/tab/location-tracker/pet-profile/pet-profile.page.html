@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button routerLink="../">
+      <ion-button routerLink="/tab/location-tracker">
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -62,7 +62,7 @@
             <ion-card-title class="ion-padding-top">Medication Intake</ion-card-title>
           </ion-col>
           <ion-col size="3">
-            <ion-button fill=clear>
+            <ion-button fill=clear routerLink="/tab/location-tracker/pet-profile/add-reminder">
               <ion-icon id="more" slot="icon-only" name="ellipsis-horizontal-circle-outline"></ion-icon>
             </ion-button>
           </ion-col>
@@ -71,10 +71,18 @@
     </ion-card-header>
 
     <ion-card-content>
-      <ion-list>
-        <ion-item></ion-item>
-      </ion-list>
-    </ion-card-content>
+      <ion-list *ngFor="let reminder of newReminder">
+        <ion-item *ngIf="reminder?.reminderType === 'Medication'">
+          <ion-label>{{reminder?.descriptionReminder}}</ion-label>
+          <ion-buttons>
+         <ion-button fill="clear" (click)="deleteReminder(reminder?.reminderId)">
+          <ion-icon name="trash-outline"></ion-icon>
+         </ion-button>
+        </ion-buttons>
+        </ion-item>
+
+
+      </ion-list>    </ion-card-content>
   </ion-card>
 
   <ion-card *ngIf="segment === 'appointment'">
@@ -85,7 +93,7 @@
             <ion-card-title class="ion-padding-top">Appointment</ion-card-title>
           </ion-col>
           <ion-col size="3">
-            <ion-button fill=clear>
+            <ion-button fill=clear routerLink="/tab/location-tracker/pet-profile/add-reminder">
               <ion-icon id="more" slot="icon-only" name="ellipsis-horizontal-circle-outline"></ion-icon>
             </ion-button>
           </ion-col>
@@ -94,9 +102,18 @@
     </ion-card-header>
 
     <ion-card-content>
-      <ion-list>
-        <ion-item></ion-item>
-      </ion-list>
+        <ion-list *ngFor="let reminder of newReminder">
+          <ion-item *ngIf="reminder?.reminderType === 'Appointment'">
+            <ion-label>{{reminder?.descriptionReminder}}</ion-label>
+            <ion-buttons>
+           <ion-button fill="clear" (click)="deleteReminder(reminder?.reminderId)">
+            <ion-icon name="trash-outline" ></ion-icon>
+           </ion-button>
+          </ion-buttons>
+          </ion-item>
+
+
+        </ion-list>
     </ion-card-content>
   </ion-card>
 </ion-content>

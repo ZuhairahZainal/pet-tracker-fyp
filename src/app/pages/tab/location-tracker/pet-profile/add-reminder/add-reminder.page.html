@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add New Reminder</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+  <form [formGroup]="newReminder" (ngSubmit)="submitIt()">
+
+  <ion-card-title>Type of Reminder</ion-card-title>
+
+
+<ion-select formControlName="reminderType"  >
+  <ion-select-option id="medication"  class="ion-text-capitalize" value="Medication" >Medication</ion-select-option>
+  <ion-select-option id="Appointment"  class="ion-text-capitalize" Value="Appointment" >Appointment</ion-select-option>
+</ion-select>
+
+
+<ion-card-title>Description</ion-card-title>
+<ion-item >
+    <ion-input type="text" placeholder="Reminder Name" formControlName="descriptionReminder"></ion-input>
+</ion-item>
+
+
+<ion-item >
+<ion-card-title>Repeat</ion-card-title>
+  <ion-toggle formControlName="repeat" id="toogleButton" slot="end"color="secondary" value="yes"></ion-toggle>
+</ion-item>
+
+<ion-card-title>Day Type</ion-card-title>
+
+<section class ="ion-text-center">
+
+<ion-select formControlName="dayType">
+  <ion-select-option id="daily" class="ion-text-capitalize" value="Daily" >Daily</ion-select-option>
+  <ion-select-option id="weekly" class="ion-text-capitalize" value="Weekly" >Weekly</ion-select-option>
+  <ion-select-option id="monthly" class ="ion-text-captialize" value="Monthly">Monthly</ion-select-option>
+</ion-select>
+
+</section>
+
+<section class="ion-text-center" id="reminderButtons">
+  <ion-button id="cancelButton" class="ion-text-capitalize" size="small" color="secondary" routerLink="../" >Cancel</ion-button>
+  <ion-button id="createButton" class="ion-text-capitalize" size="small" color="primary" type="submit">Create</ion-button>
+
+</section>
+</form>
+</ion-content>

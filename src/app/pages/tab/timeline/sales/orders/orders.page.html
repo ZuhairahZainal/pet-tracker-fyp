@@ -24,7 +24,7 @@
                 <ion-card-subtitle *ngIf="order.orderStatus === 'Purchase Successful'" class="ion-padding-bottom">Order Status: <b style="color: green">{{ order.orderStatus }}</b>  </ion-card-subtitle>
                 <ion-card-subtitle *ngIf="order.orderStatus === 'Order Completed'" class="ion-padding-bottom">Order Status: <b style="color: blue">{{ order.orderStatus }}</b>  </ion-card-subtitle>
 
-                <ion-card-subtitle class="ion-padding-bottom">Total Amount: <b>${{ order.totalAmount }}</b>  </ion-card-subtitle>
+                <ion-card-subtitle class="ion-padding-bottom">Total Amount: <b>{{ order.totalAmount  | currency:'BND'}}</b>  </ion-card-subtitle>
 
                 <ion-card-subtitle>Date: <b>{{ order.date }}</b> </ion-card-subtitle>
               </ion-card>
