@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'edit-info',
     loadChildren: () => import('./edit-info/edit-info.module').then( m => m.EditInfoPageModule)
+  },
+  {
+    path: 'add-reminder',
+    loadChildren: () => import('./add-reminder/add-reminder.module').then( m => m.AddReminderPageModule)
   }
 ];
 

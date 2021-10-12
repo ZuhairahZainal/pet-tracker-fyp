@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 import { Donation, Feed, LostPet } from 'src/app/models/timeline/timeline';
 import { TimelineService } from 'src/app/services/timeline/timeline.service';
 import firebase from 'firebase/app';
-import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
 
 @Component({
   selector: 'app-timeline',
