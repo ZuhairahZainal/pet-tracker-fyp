@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoadingController, AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import firebase from 'firebase';
-
 
 @Component({
   selector: 'app-card-details',
@@ -13,16 +12,15 @@ import firebase from 'firebase';
 })
 export class CardDetailsPage implements OnInit {
 
-  cardDetails = {
-    cardId: '',
-    userId: '',
-    firstName: '',
-    lastName: '',
-    creditCardNumber: '',
-    cvv: '',
-    expiration: new Date().toDateString,
-  }
-
+cardDetails = {
+  cardId: '',
+  userId: '',
+  firstName: '',
+  lastName: '',
+  creditCardNumber: '',
+  cvv: '',
+  expiration: new Date().toDateString,
+}
 
 cardDetailsForm: FormGroup;
 userId: any;
@@ -31,7 +29,6 @@ constructor(private firestore: AngularFirestore,
             public loadingCtrl: LoadingController,
             public alertCtrl: AlertController,
             private router: Router) { }
-
 
   ngOnInit() {
     this.getUserId()
@@ -56,7 +53,7 @@ constructor(private firestore: AngularFirestore,
         Validators.required
       ]),
      });
-    }
+  }
 
   getUserId(){
     let user = firebase.auth().currentUser;
@@ -74,14 +71,13 @@ constructor(private firestore: AngularFirestore,
     this.cardDetails.cvv = this.cardDetailsForm.get('cvv').value;
     this.cardDetails.expiration = this.cardDetailsForm.get('expiration').value;
 
-      this.firestore.collection('sale').doc(this.cardDetails.userId)
-      .collection('newcardDetails').doc(this.cardDetails.cardId)
-      .set(this.cardDetails)
+      this.firestore.collection('users').doc(this.cardDetails.userId)
+      .collection('cardDetails').doc(this.cardDetails.cardId).set(this.cardDetails)
 
       .then(
         () => {
           loading.dismiss().then(() => {
-            this.router.navigateByUrl('/tab/timeline/sales/cart/checkout');
+            this.router.navigateByUrl('/tab/timeline/fundraiser');
           });
         },
         error => {
@@ -92,4 +88,6 @@ constructor(private firestore: AngularFirestore,
       );
 
   }
+
+
 }

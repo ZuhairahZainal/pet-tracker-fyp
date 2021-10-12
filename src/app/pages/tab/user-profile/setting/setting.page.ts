@@ -55,13 +55,11 @@ export class SettingPage implements OnInit {
          {
           text: 'Change Password',
           handler: data => {
-            //First you get the current logged in user
             const currentUser = firebase.auth().currentUser;
 
             const credentials = firebase.auth.EmailAuthProvider.credential(
               currentUser.email, data.oldPassword);
 
-              //Reauthenticating here with the data above
               currentUser.reauthenticateWithCredential(credentials).then(
                 async success => {
                   if(data.newPassword != data.passwordConfirmation){
@@ -87,9 +85,7 @@ export class SettingPage implements OnInit {
                     alert.present();
 
                     currentUser.updatePassword(data.newPassword).then(function(){
-                    //Update Success
                     }).catch(function(error){
-                      //Update Failed
                     });
                   }
                 },
@@ -110,4 +106,5 @@ export class SettingPage implements OnInit {
         });
     alert.present();
   }
+
 }

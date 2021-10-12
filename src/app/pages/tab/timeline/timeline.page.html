@@ -116,7 +116,7 @@
                 <ion-icon name="share-outline"></ion-icon>
               </ion-button>
 
-              <ion-button>
+              <ion-button (click)="reportPost(post.userId, post.postId)">
                 <ion-icon name="alert-circle-outline"></ion-icon>
               </ion-button>
             </ion-buttons>
@@ -209,7 +209,7 @@
                 <ion-icon name="share-outline"></ion-icon>
               </ion-button>
 
-              <ion-button>
+              <ion-button (click)="reportPost(post.userId, post.lostPetId)">
                 <ion-icon name="alert-circle-outline"></ion-icon>
               </ion-button>
             </ion-buttons>
@@ -281,7 +281,7 @@
           <ion-col size="5">
             <ion-card>
               <ion-buttons>
-                <ion-button color="primary" fill="solid">
+                <ion-button color="primary" fill="solid" routerLink="../timeline/fundraiser">
                   <ion-label class="ion-padding">Donate</ion-label>
                 </ion-button>
               </ion-buttons>
@@ -317,7 +317,7 @@
                 <ion-icon name="share-outline"></ion-icon>
               </ion-button>
 
-              <ion-button>
+              <ion-button (click)="reportPost(post.userId, post.donationId)">
                 <ion-icon name="alert-circle-outline"></ion-icon>
               </ion-button>
             </ion-buttons>

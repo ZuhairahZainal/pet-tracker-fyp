@@ -1,0 +1,79 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="../">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title class="ion-text-center">
+      Details
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-list>
+  <ion-item lines="inset">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="ion-padding" size=7>
+          <ion-label>Card Details</ion-label>
+        </ion-col>
+
+        <ion-col size=4>
+          <ion-button routerLink="../fundraiser/card-details" routerDirection="forward" class="ion-text-right">Add New Card</ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-card *ngFor="let c of cardDetail | async ">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-row>
+                <ion-col>
+                  <ion-label> {{ c.firstName }} {{ c.lastName }} </ion-label>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col>
+                  <ion-label>Card Number: {{ c.creditCardNumber }}</ion-label>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col>
+                  <ion-label>CVV: {{ c.cvv }} </ion-label>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col>
+                  <ion-label>Expiration: {{ c.expiration }} </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-button expand="block" fill="solid" color="danger">
+              <ion-icon name="trash-outline"></ion-icon>
+              <ion-label class="ion-padding" (click)="deleteCard(c.cardId)">Delete</ion-label>
+            </ion-button>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </ion-grid>
+   </ion-item>
+</ion-list>
+
+<ion-grid>
+  <ion-row>
+    <ion-col class="ion-text-center">
+      <ion-button class="ion-text-center" fill="outline" color="dark" routerLink="./summary" routerDirection="forward" routerDirection="forward">Proceed with donation</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+</ion-content>
