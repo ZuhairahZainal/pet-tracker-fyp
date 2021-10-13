@@ -1,0 +1,26 @@
+//Font of haeder
+ion-title{
+  font-family: "AbeeZee" !important;
+  position: relative;
+  margin-right: 2.1vh;
+
+}
+
+//Size of button
+ion-buttons{
+  ion-icon{
+
+    font-size: 30px;
+  }
+}
+
+//Colour of Tab
+ion-toolbar{
+ --ion-color-primary:#83ddc3;
+}
+
+//Colour of 'Create' button
+ion-button{
+--ion-color-primary:#4fad73;
+font-family: "AbeeZee" !important;
+}

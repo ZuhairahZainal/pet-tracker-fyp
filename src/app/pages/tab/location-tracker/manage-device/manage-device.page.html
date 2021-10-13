@@ -1,10 +1,15 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title class="ion-text-center">
-      Select Device
-    </ion-title>
-    <ion-buttons slot="end"(click)="addDevice()">
-      <ion-button>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/tab/location-tracker">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title class="ion-text-center">Location Tracker</ion-title>
+
+    <ion-buttons slot="end" >
+      <ion-button routerLink="/tab/location-tracker/manage-device/add-device">
       <ion-icon name="add-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -12,56 +17,31 @@
 </ion-header>
 
 <ion-content>
-  <ion-toolbar>
- <ion-list id = "devicelist">
-   <ion-item-sliding>
-    <ion-item lines="none">
-     <ion-label>Device 1</ion-label>
-   </ion-item>
-   <ion-item-options>
-    <ion-item-option color="primary">
-      <ion-icon slot="end" name="pencil-outline"></ion-icon>
-    </ion-item-option>
-     <ion-item-option color="secondary">
-      <ion-icon slot="end" name="trash-outline"></ion-icon>
-    </ion-item-option>
-   </ion-item-options>
-  </ion-item-sliding>
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of device | async">
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-card>
+                <ion-card-subtitle class="ion-padding-top">{{ item.deviceId }}</ion-card-subtitle>
+                <ion-card-title class="ion-padding-top">{{ item.deviceName }}</ion-card-title>
+                <ion-card-subtitle class="ion-padding-top">{{ item.deviceDescription }}</ion-card-subtitle>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
 
-  <ion-item-sliding>
-   <ion-item lines="none">
-    <ion-label>Device 2</ion-label>
-  </ion-item>
-  <ion-item-options class="itemOptions" >
-    <ion-item-option color="primary">
-      <ion-icon slot="end" name="pencil-outline"></ion-icon>
-    </ion-item-option>
-     <ion-item-option color="secondary">
-      <ion-icon slot="end" name="trash-outline"></ion-icon>
-    </ion-item-option>
-   </ion-item-options>
-</ion-item-sliding>
+      <ion-item-options>
+        <ion-item-option color="primary" [routerLink]="['/tab/location-tracker/manage-device/edit-device', item.deviceId]">
+          <ion-icon slot="end" name="pencil-outline"></ion-icon>
+        </ion-item-option>
+         <ion-item-option color="secondary" (click)="deleteDevice(item.deviceId)">
+          <ion-icon slot="end" name="trash-outline"></ion-icon>
+        </ion-item-option>
+       </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 
-<ion-item-sliding>
-  <ion-item lines="none">
-    <ion-label>Device 3</ion-label>
-  </ion-item>
-  <ion-item-options>
-    <ion-item-option color="primary">
-      <ion-icon slot="end" name="pencil-outline"></ion-icon>
-    </ion-item-option>
-     <ion-item-option color="secondary">
-      <ion-icon slot="end" name="trash-outline"></ion-icon>
-    </ion-item-option>
-   </ion-item-options>
-</ion-item-sliding>
-
-
-  <section class="ion-text-center" id="buttons">
-    <ion-button id="cancelButton" class="ion-text-capitalize" size="small" shape="round" color="secondary" >Cancel</ion-button>
-    <ion-button id="connectButton" class="ion-text-capitalize" size="small" shape="round"color="primary" >Connect</ion-button>
-  </section>
-
- </ion-list>
-</ion-toolbar>
 </ion-content>

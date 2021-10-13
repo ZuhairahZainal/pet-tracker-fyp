@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" routerLink="/tab/location-tracker/manage-device">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </ion-buttons>
+    <ion-title>Update Your Device</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="deviceForm" (ngSubmit)="onSubmit()" novalidate>
+    <ion-item>
+      <ion-input placeholder="Enter Your Device Here" autofocus=true formControlName="deviceName"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea placeholder="Extra Detail (Optional)" rows="10" formControlName="deviceDescription"></ion-textarea>
+    </ion-item>
+
+    <ion-button color="primary" class="ion-float-left" type="submit" [disabled] = !deviceForm.valid>Save</ion-button>
+  </form>
+</ion-content>

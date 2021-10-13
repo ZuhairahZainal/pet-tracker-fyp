@@ -2,8 +2,8 @@
   <ion-toolbar>
     <ion-title class="ion-text-center">Location Tracker</ion-title>
 
-    <ion-buttons slot="end"(click)="addDevice()">
-      <ion-button>
+    <ion-buttons slot="end" >
+      <ion-button routerLink="/tab/location-tracker/manage-device">
       <ion-icon name="add-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -12,34 +12,27 @@
 
 <ion-content>
   <ion-list>
-    <ion-item-sliding>
+    <ion-item *ngFor="let item of device | async">
       <ion-grid>
         <ion-row>
-          <ion-col size="3" routerLink="/tab/location-tracker/pet-profile">
+          <ion-col class="ion-padding-top" size="2" routerLink="/tab/location-tracker/pet-profile">
             <ion-avatar>
               <img src="../../../../assets/catprofile.png" alt="">
             </ion-avatar>
           </ion-col>
-          <ion-col routerLink="/tab/location-tracker/pet-profile">
+          <ion-col size="7" routerLink="/tab/location-tracker/pet-profile">
             <ion-card>
-              <ion-card-subtitle class="ion-padding-top">Pet Profile</ion-card-subtitle>
+              <ion-card-subtitle>{{ item.deviceDescription }}</ion-card-subtitle>
+              <ion-card-title>{{ item.deviceName }}</ion-card-title>
+              <ion-card-subtitle>{{ item.deviceId }}</ion-card-subtitle>
             </ion-card>
           </ion-col>
-          <ion-col class="ion-padding-top">
-            <ion-button class="ion-text-center" fill="outline" color="dark" routerLink="/tab/location-tracker/pet-location">Track Location</ion-button>
+          <ion-col size="3" class="ion-padding-top">
+            <ion-button class="ion-text-center" fill="outline" color="dark" routerLink="/tab/location-tracker/pet-location">Track</ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
-
-      <ion-item-options>
-        <ion-item-option color="primary">
-          <ion-icon slot="end" name="pencil-outline" ></ion-icon>
-        </ion-item-option>
-         <ion-item-option color="secondary">
-          <ion-icon slot="end" name="trash-outline"></ion-icon>
-        </ion-item-option>
-       </ion-item-options>
-    </ion-item-sliding>
+    </ion-item>
   </ion-list>
 
 </ion-content>
