@@ -101,7 +101,7 @@
                 <ion-icon name="heart-outline"></ion-icon>
               </ion-button>
 
-              <ion-button>
+              <ion-button [routerLink]="['../timeline/comment', post.postId]">
                 <ion-icon name="chatbox-ellipses-outline"></ion-icon>
               </ion-button>
 
@@ -194,7 +194,7 @@
                 <ion-icon name="heart-outline"></ion-icon>
               </ion-button>
 
-              <ion-button>
+              <ion-button  [routerLink]="['../timeline/comment', post.lostPetId]">
                 <ion-icon name="chatbox-ellipses-outline"></ion-icon>
               </ion-button>
 
@@ -302,7 +302,7 @@
                 <ion-icon name="heart-outline"></ion-icon>
               </ion-button>
 
-              <ion-button>
+              <ion-button [routerLink]="['../timeline/comment', post.donationId]">
                 <ion-icon name="chatbox-ellipses-outline"></ion-icon>
               </ion-button>
 
