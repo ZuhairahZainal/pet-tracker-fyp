@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Chat Buddy</ion-title>
+    <ion-buttons slot="start">
+      <ion-button routerLink="../">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div *ngFor="le chat of chats">
+
+    <!-- Other's chat -->
+
+    <ion-item line="none" *ngIf="chat.uid !== uid">
+      <ion-label class="ion-text-left">
+        <p>{{name}}</p>
+        <h2>
+          <b>
+            {{chat.msg}}
+          </b>
+        </h2>
+      </ion-label>
+    </ion-item>
+
+    <!-- My chat -->
+
+    <ion-item line="none" *ngIf="chat.uid === uid">
+      <ion-label class="ion-text-right">
+        <p>You</p>
+        <h2>
+          <b>
+            {{chat.msg}}
+          </b>
+        </h2>
+      </ion-label>
+    </ion-item>
+
+  </div>
+</ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-item>
+      <ion-input [(ngModel)]="textMsg" placeholder="Type here..." (keyup.enter)="send()"></ion-input>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

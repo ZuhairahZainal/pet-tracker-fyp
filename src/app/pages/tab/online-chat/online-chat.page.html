@@ -1,9 +1,48 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title class="ion-text-center">Online Chat</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Chat Buddy</ion-title>
+    <ion-buttons slot="start">
+      <ion-button routerLink="../">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-list-header>
+    Profile
+  </ion-list-header>
+  <ion-item>
+    <ion-avatar slot="start">
+      <img src="{{dp}}">
+    </ion-avatar>
+    <ion-label>
+      <h2>
+        <b>{{name}}</b>
+      </h2>
+      <p>
+        @{{username}}
+      </p>
+    </ion-label>
+  </ion-item>
+
+<!-- Users List -->
+<ion-list-header>
+  Users
+</ion-list-header>
+<ion-item lines="none" *ngFor="let user of users" (click)="gotoChat(user.uid, user.name)" button>
+  <ion-avatar>
+    <img src="{{user.dp}}">
+  </ion-avatar>
+  <ion-label>
+    <h2>
+      <b>{{user.name}}</b>
+    </h2>
+    <p>
+      @{{user.username}}
+    </p>
+  </ion-label>
+</ion-item>
 
 </ion-content>
