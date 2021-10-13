@@ -48,7 +48,7 @@
   </ion-toolbar>
 
   <ion-list *ngIf="segment === 'newsfeed'">
-    <ion-item *ngFor="let post of newPost | async | filter:filter" >
+    <ion-item *ngFor="let post of newPost | async " >
       <ion-grid>
         <ion-row class=ion-padding-top>
           <ion-col size=3>
@@ -97,8 +97,9 @@
         <ion-row>
           <ion-col size="9">
             <ion-buttons>
-              <ion-button>
-                <ion-icon name="heart-outline"></ion-icon>
+              <ion-button (click)="addFavouritePostToDB(post.time, post.date, post.category, post.postId,
+              post.postTitle, post.postDescription, post.postImage, post.userId, post.userImage, post.userName)">
+                <ion-icon name="bookmark-outline"></ion-icon>
               </ion-button>
 
               <ion-button [routerLink]="['../timeline/comment', post.postId]">
@@ -127,7 +128,7 @@
   </ion-list>
 
   <ion-list *ngIf="segment === 'lostpets'">
-    <ion-item *ngFor="let post of lostpetPost | async | filter:filter" >
+    <ion-item *ngFor="let post of lostpetPost | async " >
       <ion-grid>
         <ion-row class=ion-padding-top>
           <ion-col size=3>
@@ -159,7 +160,7 @@
 
         <ion-row *ngIf="post.reward === 'Reward Given'">
           <ion-card>
-            <ion-card-title>Reward if Found: ${{ post.rewardAmount }}</ion-card-title>
+            <ion-card-title>Reward if Found: {{ post.rewardAmount | currency:'BND' }}</ion-card-title>
           </ion-card>
         </ion-row>
 
@@ -190,8 +191,10 @@
         <ion-row>
           <ion-col size="9">
             <ion-buttons>
-              <ion-button>
-                <ion-icon name="heart-outline"></ion-icon>
+              <ion-button (click)="addFavouriteLostPetPostToDB(post.time, post.date, post.category, post.lostPetId, post.userId,
+              post.userImage, post.userName, post.petName, post.petGender, post.petBreed, post.petColor, post.lastLocation, post.reward,
+              post.rewardAmount, post.description, post.petImage)">
+                <ion-icon name="bookmark-outline"></ion-icon>
               </ion-button>
 
               <ion-button  [routerLink]="['../timeline/comment', post.lostPetId]">
@@ -220,7 +223,7 @@
   </ion-list>
 
   <ion-list *ngIf="segment === 'donations'">
-    <ion-item *ngFor="let post of donationPost | async | filter:filter" >
+    <ion-item *ngFor="let post of donationPost | async " >
       <ion-grid>
         <ion-row class=ion-padding-top>
           <ion-col size=3>
@@ -262,7 +265,7 @@
 
         <ion-row>
           <ion-card>
-            <ion-card-title>Total Donation Required: ${{ post.donationAmount }}</ion-card-title>
+            <ion-card-title>Total Donation Required: {{ post.donationAmount | currency:'BND' }}</ion-card-title>
           </ion-card>
         </ion-row>
 
@@ -298,8 +301,10 @@
         <ion-row>
           <ion-col size="9">
             <ion-buttons>
-              <ion-button>
-                <ion-icon name="heart-outline"></ion-icon>
+              <ion-button (click)="addFavouriteDonationPostToDB(post.time, post.date, post.category, post.donationId, post.userId,
+              post.userImage, post.userName, post.donationTitle, post.donationType, post.donationAmount, post.donationDescription,
+              post.donationImage)">
+                <ion-icon name="bookmark-outline"></ion-icon>
               </ion-button>
 
               <ion-button [routerLink]="['../timeline/comment', post.donationId]">

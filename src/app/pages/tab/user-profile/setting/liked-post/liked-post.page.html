@@ -11,4 +11,277 @@
 </ion-header>
 
 <ion-content>
+  <ion-list>
+    <ion-item *ngFor="let post of favs | async " >
+      <ion-grid>
+        <ion-row class=ion-padding-top  *ngIf="post.category === 'newsFeed'">
+          <ion-col size=3>
+            <ion-avatar>
+              <img *ngIf="post.userImage" [src]="post.userImage">
+              <img *ngIf="!post.userImage" src="../../../../assets/user.jpeg">
+            </ion-avatar>
+          </ion-col>
+
+          <ion-col>
+            <ion-row>
+              <ion-col>
+                <ion-row>
+                 <ion-card-title>{{ post.userName }}</ion-card-title>
+                </ion-row>
+                <ion-row>
+                  <ion-card-subtitle>{{ post.date }}</ion-card-subtitle>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-card>
+            <ion-card-title>{{ post.postTitle }}</ion-card-title>
+          </ion-card>
+        </ion-row>
+
+        <ion-row>
+          <ion-card>
+            <ion-card-subtitle>{{ post.postDescription}}</ion-card-subtitle>
+          </ion-card>
+        </ion-row>
+
+        <ion-row>
+          <ion-card>
+            <img [src]="post.postImage">
+          </ion-card>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="9">
+            <ion-buttons>
+              <ion-button (click)="removePost(post.favId)">
+                <ion-icon color="danger" name="close-circle-outline"></ion-icon>
+              </ion-button>
+
+              <ion-button [routerLink]="['../timeline/comment', post.postId]">
+                <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+              </ion-button>
+
+              <ion-button>
+                <ion-icon name="chatbubbles-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-col>
+          <ion-col size="3">
+            <ion-buttons>
+              <ion-button>
+                <ion-icon name="share-outline"></ion-icon>
+              </ion-button>
+
+              <ion-button (click)="reportPost(post.userId, post.postId)">
+                <ion-icon color="danger" name="alert-circle-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-grid *ngIf="post.category === 'lostPet'">
+        <ion-row class=ion-padding-top >
+          <ion-col size=3>
+            <ion-avatar>
+              <img *ngIf="post.userImage" [src]="post.userImage">
+              <img *ngIf="!post.userImage" src="../../../../assets/user.jpeg">
+            </ion-avatar>
+          </ion-col>
+
+          <ion-col>
+            <ion-row>
+              <ion-col>
+                <ion-row>
+                 <ion-card-title>{{ post.userName }}</ion-card-title>
+                </ion-row>
+                <ion-row>
+                  <ion-card-subtitle>{{ post.date }}</ion-card-subtitle>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-card>
+            <ion-card-subtitle>Last Location: {{ post.lastLocation }}</ion-card-subtitle>
+          </ion-card>
+        </ion-row>
+
+        <ion-row *ngIf="post.reward === 'Reward Given'">
+          <ion-card>
+            <ion-card-title>Reward if Found: {{ post.rewardAmount | currency:'BND' }}</ion-card-title>
+          </ion-card>
+        </ion-row>
+
+        <ion-row>
+          <ion-card>
+            <ion-card-subtitle>Pet Name: {{ post.petName }}</ion-card-subtitle>
+          </ion-card>
+        </ion-row>
+
+        <ion-row>
+          <ion-card>
+            <ion-card-subtitle>Pet Details: {{ post.petBreed }}, {{ post.petGender }}, {{ post.petColor }}</ion-card-subtitle>
+          </ion-card>
+        </ion-row>
+
+        <ion-row>
+          <ion-card>
+            <ion-card-subtitle>{{ post.description}}</ion-card-subtitle>
+          </ion-card>
+        </ion-row>
+
+        <ion-row>
+          <ion-card>
+            <img [src]="post.petImage">
+          </ion-card>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="9">
+            <ion-buttons>
+              <ion-button (click)="removePost(post.favId)">
+                <ion-icon color="danger" name="close-circle-outline"></ion-icon>
+              </ion-button>
+
+              <ion-button  [routerLink]="['/tab/timeline/comment', post.lostPetId]">
+                <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+              </ion-button>
+
+              <ion-button>
+                <ion-icon name="chatbubbles-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-col>
+          <ion-col size="3">
+            <ion-buttons>
+              <ion-button>
+                <ion-icon name="share-outline"></ion-icon>
+              </ion-button>
+
+              <ion-button (click)="reportPost(post.userId, post.lostPetId)">
+                <ion-icon color="danger" name="alert-circle-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+        <ion-grid *ngIf="post.category === 'donation'">
+        <ion-row class=ion-padding-top >
+          <ion-col size=3>
+            <ion-avatar>
+              <img *ngIf="post.userImage" [src]="post.userImage">
+              <img *ngIf="!post.userImage" src="../../../../assets/user.jpeg">
+            </ion-avatar>
+          </ion-col>
+
+          <ion-col>
+            <ion-row>
+              <ion-col>
+                <ion-row>
+                 <ion-card-title>{{ post.userName }}</ion-card-title>
+                </ion-row>
+                <ion-row>
+                  <ion-card-subtitle>{{ post.date }}</ion-card-subtitle>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-card>
+            <ion-card-subtitle>Donation - {{ post.donationType }}</ion-card-subtitle>
+          </ion-card>
+        </ion-row>
+
+        <ion-row>
+          <ion-card>
+            <ion-card-title>{{ post.donationTitle }}</ion-card-title>
+          </ion-card>
+        </ion-row>
+
+        <ion-row>
+          <ion-card>
+            <ion-card-title>Total Donation Required: {{ post.donationAmount | currency:'BND' }}</ion-card-title>
+          </ion-card>
+        </ion-row>
+
+        <ion-row>
+          <ion-card>
+            <ion-card-subtitle>{{ post.donationDescription}}</ion-card-subtitle>
+          </ion-card>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="7">
+            <ion-card>
+              <ion-card-subtitle>Receipt/Proof</ion-card-subtitle>
+            </ion-card>
+          </ion-col>
+          <ion-col size="5">
+            <ion-card>
+              <ion-buttons>
+                <ion-button color="primary" fill="solid" routerLink="../timeline/fundraiser">
+                  <ion-label class="ion-padding">Donate</ion-label>
+                </ion-button>
+              </ion-buttons>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-card>
+            <img [src]="post.donationImage">
+          </ion-card>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="9">
+            <ion-buttons>
+              <ion-button (click)="removePost(post.favId)">
+                <ion-icon color="danger" name="close-circle-outline"></ion-icon>
+              </ion-button>
+
+              <ion-button [routerLink]="['../timeline/comment', post.donationId]">
+                <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+              </ion-button>
+
+              <ion-button>
+                <ion-icon name="chatbubbles-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-col>
+          <ion-col size="3">
+            <ion-buttons>
+              <ion-button>
+                <ion-icon name="share-outline"></ion-icon>
+              </ion-button>
+
+              <ion-button (click)="reportPost(post.userId, post.donationId)">
+                <ion-icon color="danger" name="alert-circle-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+
+    </ion-item>
+  </ion-list>
 </ion-content>
