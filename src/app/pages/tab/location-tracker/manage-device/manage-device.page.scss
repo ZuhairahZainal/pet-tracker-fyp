@@ -1,0 +1,55 @@
+//Font of header
+#font{
+  font-family: "AbeeZee" !important;
+  position: relative;
+  margin-right: 3.1vh;
+  margin-left: 1.2vh;
+}
+
+//Font of device in that list
+ion-list{
+ion-label{
+  font-family: "AbeeZee" !important;
+  font-size: 20px;
+  margin-left: 4.0vh;
+  margin-top: 4.0vh;
+}
+}
+
+//buttons colour (which currently unused)
+#buttons{
+  --ion-color-primary:#9DDFCC;
+  --ion-color-secondary: #D2D2D2;
+  font-size: 13px;
+  margin-top: 250px
+}
+
+//Size of icon
+ion-button{
+  ion-icon{
+    font-size: 30px;
+  }
+}
+
+//colours and size of sliding button
+ion-item-option{
+  ion-icon{
+    font-size: 30px;
+
+  }
+}
+ion-item-option{
+  --ion-color-primary:#9BE384;
+    --ion-color-secondary:#F37061;
+}
+
+//Colour of tab hedaer
+ion-header{
+  background-color: #9BE384;
+}
+
+ion-card{
+  font-family: "AbeeZee" !important;
+  --ion-background-color: transparent;
+  box-shadow: none !important;
+}

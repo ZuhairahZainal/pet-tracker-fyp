@@ -31,6 +31,10 @@ const routes: Routes = [
   {
     path: 'fundraiser',
     loadChildren: () => import('./fundraiser/fundraiser.module').then( m => m.FundraiserPageModule)
+  },
+  {
+    path: 'comment/:id',
+    loadChildren: () => import('./comment/comment.module').then( m => m.CommentPageModule)
   }
 ];
 

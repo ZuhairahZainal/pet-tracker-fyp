@@ -1,0 +1,33 @@
+<!--Section for creating Device-->
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" routerLink="/tab/location-tracker/manage-device">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </ion-buttons>
+    <ion-title>Create a New Device</ion-title>
+    <ion-buttons slot="end" tooltip="Reset form" (click)="onReset()">
+      <ion-icon name="refresh-outline"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="deviceForm" (ngSubmit)="onSubmit()" novalidate>
+
+<!--Your Device Name-->
+<ion-item>
+  <ion-input lines="none" placeholder="Name Your Device Here" autofocus=true
+  formControlName="deviceName"></ion-input>
+</ion-item>
+
+<!--Any Extra details you want to put-->
+<ion-item>
+  <ion-textarea lines="none" placeholder="Extra Details (Optional)" rows="10"
+  formControlName="deviceDescription">
+  </ion-textarea>
+</ion-item>
+
+<!--submit section-->
+<ion-button color="primary" class="ion-text-center ion-text-capitalize" cl type="submit" [disabled] = !deviceForm.valid>Create</ion-button>
+  </form>
+</ion-content>

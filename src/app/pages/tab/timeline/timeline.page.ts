@@ -40,10 +40,9 @@ export class TimelinePage implements OnInit {
   userName: string;
   userEmail: string;
   userImage: string;
+  favPostId: string;
 
-
-  constructor(private afauth: AngularFireAuth,
-              private timelineService: TimelineService,
+  constructor(private timelineService: TimelineService,
               private firestore: AngularFirestore,
               private router: Router,
               private alertCtrl: AlertController) {}
@@ -117,5 +116,112 @@ export class TimelinePage implements OnInit {
       }]
     })
     alert.present();
+  }
+
+  addFavouritePostToDB( time: number,
+                        date: string,
+                        category: string,
+                        postId: string,
+                        postTitle: string,
+                        postDescription: string,
+                        postImage: string,
+                        userId: string,
+                        userImage: string,
+                        userName: string,){
+    this.favPostId = this.firestore.createId();
+
+    this.firestore.collection('users').doc(this.userId).collection('fav-posts').doc(this.favPostId).set({
+      timeAdded: new Date().getTime(),
+      favId: this.favPostId,
+      category: category,
+      postId: postId,
+      postTitle: postTitle,
+      postDescription: postDescription,
+      postImage: postImage,
+      userId: userId,
+      userImage: userImage,
+      userName: userName,
+      time: time,
+      date: date
+    }).then( success => {
+      this.router.navigate(['tab/user-profile/setting/liked-post']);
+    })
+  }
+
+  addFavouriteLostPetPostToDB(time: number,
+                              date: string,
+                              category: string,
+                              lostPetId: string,
+                              userId: string,
+                              userImage: string,
+                              userName: string,
+                              petName: string,
+                              petGender: string,
+                              petBreed: string,
+                              petColor: string,
+                              lastLocation: string,
+                              reward: string,
+                              rewardAmount: number,
+                              description: string,
+                              petImage: string){
+
+    this.favPostId = this.firestore.createId();
+
+    this.firestore.collection('users').doc(this.userId).collection('fav-posts').doc(this.favPostId).set({
+      timeAdded: new Date().getTime(),
+      favId: this.favPostId,
+      category: category,
+      lostPetId: lostPetId,
+      userId: userId,
+      userImage: userImage,
+      userName: userName,
+      time: time,
+      date: date,
+      petName: petName,
+      petGender: petGender,
+      petBreed: petBreed,
+      petColor: petColor,
+      lastLocation: lastLocation,
+      rewardAmount: rewardAmount,
+      description: description,
+      petImage: petImage
+    }).then( success => {
+      this.router.navigate(['tab/user-profile/setting/liked-post']);
+    })
+  }
+
+  addFavouriteDonationPostToDB(time: number,
+                              date: string,
+                              category: string,
+                              donationId: string,
+                              userId: string,
+                              userImage: string,
+                              userName: string,
+                              donationTitle: string,
+                              donationType: string,
+                              donationAmount: number,
+                              donationDescription: string,
+                              donationImage: string){
+
+      this.favPostId = this.firestore.createId();
+
+      this.firestore.collection('users').doc(this.userId).collection('fav-posts').doc(this.favPostId).set({
+        timeAdded: new Date().getTime(),
+        favId: this.favPostId,
+        category: category,
+        donationId: donationId,
+        userId: userId,
+        userImage: userImage,
+        userName: userName,
+        time: time,
+        date: date,
+        donationTitle: donationTitle,
+        donationType: donationType,
+        donationAmount: donationAmount,
+        donationDescription: donationDescription,
+        donationImage: donationImage
+      }).then( success => {
+        this.router.navigate(['tab/user-profile/setting/liked-post']);
+      })
   }
 }

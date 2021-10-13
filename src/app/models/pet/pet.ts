@@ -6,6 +6,11 @@ export interface Device {
   date: string,
   deviceId: string;
   deviceName: string;
+  deviceDescription: string;
   userId: string;
-  userName: string;
+}
+
+export interface updatedDevice{
+  deviceName: string;
+  deviceDescription: string;
 }

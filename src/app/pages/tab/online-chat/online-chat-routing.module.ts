@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: OnlineChatPage
+  },
+  {
+    path: 'convo',
+    loadChildren: () => import('./convo/convo.module').then( m => m.ConvoPageModule)
   }
 ];
 
