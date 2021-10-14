@@ -1,6 +1,9 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-import { Component, OnInit } from '@angular/core';
-import firebase from 'firebase';
+import { ChatService } from 'src/app/services/chat/chat.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {  IonContent } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-convo',
@@ -8,53 +11,22 @@ import firebase from 'firebase';
   styleUrls: ['./convo.page.scss'],
 })
 export class ConvoPage implements OnInit {
+  @ViewChild(IonContent) content: IonContent;
 
-  //other's data
-  name;
-  o_uid;
+  messages: Observable<any[]>;
+  newMsg = '';
 
-  //my uid
-  uid;
-
-  //chats array
-  chats = [];
-  chat;
-  textMsg;
-
-  constructor() {
-    this.name = sessionStorage.getItem('name');
-    this.o_uid = sessionStorage.getItem('uid');
-
-    this.uid = sessionStorage.getItem('uid');
-
-    firebase.firestore().collection('chats').doc(this.uid).collection(this.o_uid).orderBy('time').onSnapshot(snap => {
-      this.chats = [];
-      snap.forEach(child => {
-        this.chats.push(child.data());
-      });
-    });
-  }
-
+  constructor(private chatService: ChatService,
+              private router: Router) { }
 
   ngOnInit() {
-
+    this.messages = this.chatService.getChatMessages();
   }
 
-  send(){
-    //my chats collection
-    firebase.firestore().collection('chats').doc(this.uid).collection(this.o_uid).add({
-      time: Date.now(),
-      uid: this.uid,
-      msg: this.textMsg
-    });
-
-    //other users chats collection
-    firebase.firestore().collection('chats').doc(this.o_uid).collection(this.uid).add({
-      time: Date.now(),
-      uid: this.uid,
-      msg: this.textMsg
-    }).then(() => {
-      this.textMsg='';
+  sendMessage(){
+    this.chatService.addChatMessage(this.newMsg).then(() =>{
+      this.newMsg = '';
+      this.content.scrollToBottom();
     });
   }
 

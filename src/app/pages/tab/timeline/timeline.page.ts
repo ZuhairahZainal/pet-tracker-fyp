@@ -30,6 +30,15 @@ export class TimelinePage implements OnInit {
     ownerId: ''
   }
 
+  friendList = {
+    time: new Date().getTime(),
+    date: new Date().toDateString(),
+    friendId: '',
+    userId: '',
+    userName: '',
+    userImage: '',
+  }
+
   public lostpetPost: Observable<LostPet[]>;
   public donationPost: Observable<Donation[]>;
   public newPost: Observable<Feed[]>;
@@ -223,5 +232,28 @@ export class TimelinePage implements OnInit {
       }).then( success => {
         this.router.navigate(['tab/user-profile/setting/liked-post']);
       })
+  }
+
+  addToFriendList(id, name, image){
+
+    this.friendList.friendId = this.firestore.createId();
+    this.friendList.userId = id;
+    this.friendList.userName = name;
+    this.friendList.userImage = image;
+
+    this.firestore.collection('users').doc(this.userId).collection('friendlist').doc(this.friendList.friendId).set(this.friendList)
+    .then ( async success => {
+      let alert = await this.alertCtrl.create({
+        header: `Add ${name} as friend!`,
+        message: `${name} is added to friend list`,
+        buttons: [{
+        text: 'OK',
+       handler: () => {
+        this.router.navigate(['/tab/online-chat']);
+          }
+       }]
+     });
+      alert.present();
+    })
   }
 }

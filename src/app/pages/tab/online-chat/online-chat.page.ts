@@ -1,7 +1,11 @@
-import { ChatService } from 'src/app/services/chat/chat.service';
+import { FriendlistService } from 'src/app/services/friendlist/friendlist.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import firebase from 'firebase';
-import { NavController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AddFriend, ChatOnline } from 'src/app/models/friendlist/friendlist';
 
 @Component({
   selector: 'app-online-chat',
@@ -10,39 +14,82 @@ import { NavController } from '@ionic/angular';
 })
 export class OnlineChatPage implements OnInit {
 
-  uid;
-  name;
-  username;
-  dp;
-  users = [];
 
-  constructor(public nav: NavController) {
-    this.uid = localStorage.getItem('uid');
+  public addPost: Observable<AddFriend[]>;
+  public chatPost: Observable<ChatOnline[]>;
 
-    firebase.firestore().collection('chatUsers').doc(this.uid).get().then(userData => {
-      this.name = userData.data().name;
-      this.username = userData.data().username;
-      this.dp = userData.data().dp;
-    });
+  public segment = 'friendlist';
+  filter: string;
+  userId: string;
+  userName: string;
+  userEmail: string;
+  userImage: string;
+  buddyPostId: string;
 
-    firebase.firestore().collection('chatUsers').get().then(userData => {
-      userData.forEach(childData =>{
-        if(childData.data().uid !== this.uid){
-          this.users.push(childData.data());
-        }
-      });
-    });
-   }
+  constructor(private friendlistService: FriendlistService,
+              private firestore: AngularFirestore,
+              private router: Router,
+              private alertCtrl: AlertController) {}
 
   ngOnInit() {
+    this.getUserId();
+
+    this.addPost = this.friendlistService.getAddPost(this.userId);
+
+    this.chatPost = this.friendlistService.getChatPost();
 
   }
 
-  gotoChat(uid,name){
-    sessionStorage.setItem('uid',uid);
-    sessionStorage.setItem('name',name);
-
-    this.nav.navigateForward('/convo');
+  segmentChanged(ev: any) {
+    this.segment = ev.detail.value;
   }
 
+  getUserId(){
+    const user = firebase.auth().currentUser;
+
+    this.userId = user.uid;
+  }
+
+  addfriendToDB(category: string,
+                friendId: string,
+                userId: string,
+                userImage: string,
+                userName: string,
+                ){
+
+    this.buddyPostId = this.firestore.createId();
+
+    this.firestore.collection('users').doc(this.userId).collection('buddy-posts').doc(this.buddyPostId).set({
+      buddyId: this.buddyPostId,
+      friendId,
+      category,
+      userId,
+      userImage,
+      userName,
+    }).then( success => {
+      this.router.navigate(['tab/online-chat/friendlist/']);
+    });
+  }
+
+  chatToDB(
+           chatId: string,
+           category: string,
+           userId: string,
+           userImage: string,
+           userName: string,
+           ){
+
+      this.buddyPostId = this.firestore.createId();
+
+      this.firestore.collection('users').doc(this.userId).collection('buddy-posts').doc(this.buddyPostId).set({
+        buddyId: this.buddyPostId,
+        chatId,
+        category,
+        userId,
+        userImage,
+        userName,
+      }).then( success => {
+        this.router.navigate(['tab/online-chat/convo']);
+      });
+  }
 }
