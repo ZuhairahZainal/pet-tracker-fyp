@@ -15,6 +15,10 @@ const routes: Routes = [
   {
     path: 'edit-device/:id',
     loadChildren: () => import('./edit-device/edit-device.module').then( m => m.EditDevicePageModule)
+  },
+  {
+    path: 'qr-code',
+    loadChildren: () => import('./qr-code/qr-code.module').then( m => m.QrCodePageModule)
   }
 ];
 
