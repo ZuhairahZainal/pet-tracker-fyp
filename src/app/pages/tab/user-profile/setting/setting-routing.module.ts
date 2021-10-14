@@ -27,6 +27,10 @@ const routes: Routes = [
   {
     path: 'adopt-request-list',
     loadChildren: () => import('./adopt-request-list/adopt-request-list.module').then( m => m.AdoptRequestListPageModule)
+  },
+  {
+    path: 'donation-lists',
+    loadChildren: () => import('./donation-lists/donation-lists.module').then( m => m.DonationListsPageModule)
   }
 ];
 

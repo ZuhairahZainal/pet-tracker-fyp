@@ -53,6 +53,14 @@
       <p>Invalid date</p>
     </ion-item>
 
+    <ion-item>
+      <ion-label stacked> Amount you want to donate</ion-label>
+      <ion-input formControlName="amount" inputmode="decimal" placeholder="$0.00"></ion-input>
+    </ion-item>
+    <ion-item lines="none" class="error-message" *ngIf="!cardDetailsForm.controls.amount.valid && cardDetailsForm.controls.amount.touched">
+      <p>Invalid Format</p>
+    </ion-item>
+
     <ion-button expand="block" type="submit" [disabled]="!cardDetailsForm.valid"> Add Credit Card </ion-button>
   </form>
 </ion-content>
