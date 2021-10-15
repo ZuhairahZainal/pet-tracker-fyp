@@ -30,6 +30,14 @@ export class TimelinePage implements OnInit {
     ownerId: ''
   }
 
+  addtoFriendNotif={
+    category: 'Add Friend',
+    userImage: '',
+    userName: '',
+    time: new Date().getTime(),
+    date: new Date().toDateString(),
+  }
+
   friendList = {
     time: new Date().getTime(),
     date: new Date().toDateString(),
@@ -257,7 +265,12 @@ export class TimelinePage implements OnInit {
     this.friendList.userName = name;
     this.friendList.userImage = image;
 
-    this.firestore.collection('users').doc(this.friendList.userId).collection('friendlist').doc(this.userId).set(this.friendList1)
+    this.addtoFriendNotif.userName = this.friendList1.userName;
+    this.addtoFriendNotif.userImage = this.friendList1.userImage;
+
+    this.firestore.collection('users').doc(this.friendList.userId).collection('notification').add(this.addtoFriendNotif);
+
+    this.firestore.collection('users').doc(this.friendList.userId).collection('friendlist').doc(this.friendList.friendId).set(this.friendList1);
 
     this.firestore.collection('users').doc(this.userId).collection('friendlist').doc(this.friendList.friendId).set(this.friendList)
     .then ( async success => {
