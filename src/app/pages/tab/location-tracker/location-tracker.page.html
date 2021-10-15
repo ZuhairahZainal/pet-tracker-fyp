@@ -21,7 +21,7 @@
     <ion-item *ngFor="let item of petProfile">
       <ion-grid>
         <ion-row>
-          <ion-col class="ion-padding-top" size="2" routerLink="/tab/location-tracker/pet-profile">
+          <ion-col class="ion-padding-top" size="2" [routerLink]="['/tab/location-tracker/pet-profile', item.petId]">
             <ion-avatar>
               <img [src]="item.petImage">
             </ion-avatar>
