@@ -74,6 +74,7 @@ export class TimelinePage implements OnInit {
               private alertCtrl: AlertController) {}
 
   ngOnInit() {
+    this.alertUser();
     this.getUserId();
 
     this.lostpetPost = this.timelineService.getLostPetPost();
@@ -85,6 +86,25 @@ export class TimelinePage implements OnInit {
 
   segmentChanged(ev: any) {
     this.segment = ev.detail.value;
+  }
+
+  async alertUser(){
+    let alert = await this.alertCtrl.create({
+      header: `Welcome user to Pet Tracker app!`,
+      message: `Please set a profile picture before proceeding your adventure in our application.
+                Go to User Profile -> in Personal Information. Choose your image and it will automatically
+                set as your profile picture.`,
+    buttons: [{
+              text: 'Done',
+              },
+              {
+            text: 'Proceed',
+            handler: () => {
+              this.router.navigate(['/tab/user-profile/personal-info']);
+            },
+          }]
+   });
+    alert.present();
   }
 
   getUserId(){
