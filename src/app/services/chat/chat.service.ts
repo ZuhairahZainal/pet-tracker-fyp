@@ -34,13 +34,14 @@ export class ChatService {
                 });
     }
 
-    addChatMessage(msg, username, image){
+    addChatMessage(msg, username, image, imageUpload: null){
       return this.afs.collection('messages').add({
         msg,
         from: this.currentUser.uid,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         userName: username,
-        userImage: image
+        userImage: image,
+        chatImage: imageUpload,
       });
     }
 

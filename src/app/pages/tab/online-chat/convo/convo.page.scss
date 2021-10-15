@@ -40,3 +40,16 @@
 ion-header{
   font-family: "AbeeZee" !important;
 }
+
+.upload {
+  background:none;
+  font-size: 19px;
+  border:none;
+  cursor: pointer;
+}
+
+ion-card{
+  font-family: "AbeeZee" !important;
+  --ion-background-color: transparent;
+  box-shadow: none !important;
+}
