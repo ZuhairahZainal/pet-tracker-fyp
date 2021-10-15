@@ -1,0 +1,42 @@
+.message-input{
+  width: 100%;
+  border: 1px solid var(--ion-color-medium);
+  border-radius: 6px;
+  background: #fff;
+  resize: none;
+  margin-top: 0px;
+  --padding-start: 8px;
+  font-family: "AbeeZee" !important;
+}
+
+.message{
+  padding: 10px !important;
+  border-radius: 10px !important;
+  margin-bottom: 4px !important;
+  white-space: pre-wrap;
+  font-family: "AbeeZee" !important;
+}
+
+
+.my-message{
+  background: var(--ion-color-tertiary);
+  color: #fff;
+  font-family: "AbeeZee" !important;
+}
+
+.other-message{
+  background: var(--ion-color-secondary);
+  color: #fff;
+  font-family: "AbeeZee" !important;
+}
+
+.time{
+  color: #dfdfdf;
+  float: right;
+  font-size: small;
+  font-family: "AbeeZee" !important;
+}
+
+ion-header{
+  font-family: "AbeeZee" !important;
+}

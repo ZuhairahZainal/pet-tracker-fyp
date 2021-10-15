@@ -5,10 +5,18 @@
 </ion-header>
 
 <ion-content overflow-scroll="true">
+
+  <ion-button class="ion-text-center" fill="outline" expand="block" color="dark" routerLink="../online-chat/convo">
+    <ion-label>GO TO CHAT SECTION</ion-label>
+  </ion-button>
+
   <ion-list>
+    <ion-card>
+      <ion-card-title>My Friends</ion-card-title>
+
     <ion-item *ngFor="let post of addPost | async " >
       <ion-grid>
-        <ion-row class=ion-padding-top routerLink="../online-chat/convo">
+        <ion-row class=ion-padding-top>
           <ion-col size=3>
             <ion-avatar>
               <img *ngIf="post?.userImage" [src]="post?.userImage">
@@ -20,7 +28,9 @@
             <ion-row>
               <ion-col>
                 <ion-row>
-                 <ion-card-title>{{ post?.userName }}</ion-card-title>
+                  <ion-card>
+                    <ion-card-title>{{ post?.userName }}</ion-card-title>
+                  </ion-card>
                 </ion-row>
 
               </ion-col>
@@ -34,5 +44,6 @@
 
       </ion-grid>
     </ion-item>
+  </ion-card>
   </ion-list>
 </ion-content>

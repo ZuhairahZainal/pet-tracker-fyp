@@ -14,9 +14,19 @@
     <ion-row *ngFor="let message of messages | async">
       <ion-col size="9" class="message" [offset]="message.myMsg ? 3 : 0"
       [ngClass]="{ 'my-message': message.myMsg, 'other-message': !message.myMsg }">
+      <ion-row>
+        <ion-col size=3>
+          <ion-avatar class="ion-padding-right">
+            <img [src]="message.userImage">
+          </ion-avatar>
+        </ion-col>
 
-      <b>{{ message.userName }}</b><br>
-      <span>{{ message.msg }}</span>
+        <ion-col size=9  class="ion-padding">
+          <b>{{ message.userName }}</b><br>
+          <span>{{ message.msg }}</span>
+        </ion-col>
+      </ion-row>
+
       <div class="time ion-text-right"><br>{{ message.createdAt?.toMillis() | date:'short' }}</div>
       </ion-col>
     </ion-row>
