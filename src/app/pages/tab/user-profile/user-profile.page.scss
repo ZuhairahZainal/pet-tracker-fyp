@@ -18,6 +18,8 @@ ion-title{
 }
 ion-card{
   font-family: "AbeeZee" !important;
+  --ion-background-color: transparent;
+  box-shadow: none !important;
 }
 
 ion-label{
@@ -28,7 +30,9 @@ ion-searchbar{
   font-family: "AbeeZee" !important;
 }
 
-ion-avatar{
+.image-center{
+  margin:0 auto;
   width: 5.5rem;
   height: 5.5rem;
 }
+

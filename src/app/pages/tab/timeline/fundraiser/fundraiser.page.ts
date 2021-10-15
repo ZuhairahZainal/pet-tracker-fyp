@@ -5,7 +5,7 @@ import { FundraiserService } from 'src/app/services/fundraiser/fundraiser.servic
 import firebase from 'firebase/app';
 import { AlertController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-fundraiser',
@@ -15,9 +15,14 @@ import { Router } from '@angular/router';
 export class FundraiserPage implements OnInit {
 
   public cardDetail: Observable<CardDetail[]>;
+  donationId: string;
+  donationTitle: string;
+  donationType: string;
+  donationDate: string;
 
   constructor(private fundraiserService: FundraiserService,
               private alertCtrl: AlertController,
+              private activatedRoute: ActivatedRoute,
               private firestore: AngularFirestore,
               private router: Router) { }
   userId: string;
@@ -25,7 +30,10 @@ export class FundraiserPage implements OnInit {
   ngOnInit() {
     this.getUserId();
 
+    this.donationId = this.activatedRoute.snapshot.paramMap.get('id');
+
     this.cardDetail = this.fundraiserService.getCardDetail(this.userId);
+
   }
 
   getUserId(){
@@ -52,7 +60,22 @@ export class FundraiserPage implements OnInit {
   }
 
   removeCard(id: string){
-    this.firestore.collection('fundraiser').doc(this.userId).collection('cardDetails').doc(id).delete();
+    this.firestore.collection('users').doc(this.userId).collection('fundraiser').doc(id).delete();
+  }
+
+  async proceed(){
+    let alert = await this.alertCtrl.create({
+      header: 'Thank You!',
+      message: 'Thank You For Your Kindness.',
+      buttons: [{
+      text: 'OK',
+     handler: () => {
+      this.router.navigate(['/tab/timeline']);
+        }
+     }]
+   });
+    alert.present();
   }
 
 }
+

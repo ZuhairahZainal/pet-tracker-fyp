@@ -30,6 +30,32 @@ export class TimelinePage implements OnInit {
     ownerId: ''
   }
 
+  addtoFriendNotif={
+    category: 'Add Friend',
+    userImage: '',
+    userName: '',
+    time: new Date().getTime(),
+    date: new Date().toDateString(),
+  }
+
+  friendList = {
+    time: new Date().getTime(),
+    date: new Date().toDateString(),
+    friendId: '',
+    userId: '',
+    userName: '',
+    userImage: '',
+  }
+
+  friendList1 = {
+    time: new Date().getTime(),
+    date: new Date().toDateString(),
+    friendId: '',
+    userId: '',
+    userName: '',
+    userImage: '',
+  }
+
   public lostpetPost: Observable<LostPet[]>;
   public donationPost: Observable<Donation[]>;
   public newPost: Observable<Feed[]>;
@@ -65,12 +91,19 @@ export class TimelinePage implements OnInit {
     let user = firebase.auth().currentUser;
 
     this.reportDetails.userId = `${user.uid}`;
+    this.friendList1.userId = `${user.uid}`;
+
     this.userId = user.uid;
 
     this.firestore.collection('users').doc(this.userId).valueChanges().subscribe( userDetail => {
       this.reportDetails.userName = userDetail['name'];
       this.reportDetails.userEmail = userDetail['email'];
       this.reportDetails.userImage = userDetail['userImage'];
+
+      this.friendList1.userName = userDetail['name'];
+      this.friendList1.userImage = userDetail['userImage'];
+
+
     })
   }
 
@@ -223,5 +256,35 @@ export class TimelinePage implements OnInit {
       }).then( success => {
         this.router.navigate(['tab/user-profile/setting/liked-post']);
       })
+  }
+
+  addToFriendList(id, name, image){
+
+    this.friendList.friendId = this.firestore.createId();
+    this.friendList.userId = id;
+    this.friendList.userName = name;
+    this.friendList.userImage = image;
+
+    this.addtoFriendNotif.userName = this.friendList1.userName;
+    this.addtoFriendNotif.userImage = this.friendList1.userImage;
+
+    this.firestore.collection('users').doc(this.friendList.userId).collection('notification').add(this.addtoFriendNotif);
+
+    this.firestore.collection('users').doc(this.friendList.userId).collection('friendlist').doc(this.friendList.friendId).set(this.friendList1);
+
+    this.firestore.collection('users').doc(this.userId).collection('friendlist').doc(this.friendList.friendId).set(this.friendList)
+    .then ( async success => {
+      let alert = await this.alertCtrl.create({
+        header: `Add ${name} as friend!`,
+        message: `${name} is added to friend list`,
+        buttons: [{
+        text: 'OK',
+       handler: () => {
+        this.router.navigate(['/tab/online-chat']);
+          }
+       }]
+     });
+      alert.present();
+    })
   }
 }

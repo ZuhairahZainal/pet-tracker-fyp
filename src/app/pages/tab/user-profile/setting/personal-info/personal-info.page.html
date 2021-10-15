@@ -127,7 +127,7 @@
                   </ion-item>
 
                   <ion-item lines=none>
-                    <ion-input type="text" formControlName="name" [placeholder]="userPhone"></ion-input>
+                    <ion-input type="text" formControlName="phone" [placeholder]="userPhone"></ion-input>
                   </ion-item>
                   <ion-item lines="none" class="error-message" *ngIf="!updateUserDetail.controls.phone.valid && updateUserDetail.controls.phone.touched">
                     <p>Phone number is required and must be valid.</p>

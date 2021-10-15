@@ -7,7 +7,8 @@ import firebase from 'firebase/app'
 import { finalize, tap } from 'rxjs/operators';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Pet } from 'src/app/models/pet/pet';
 
 @Component({
   selector: 'app-edit-info',
@@ -16,32 +17,29 @@ import { Router } from '@angular/router';
 })
 export class EditInfoPage implements OnInit {
 
-  updatedPetDetail = {
+  value: any;
+
+  newPetDetails ={
     time: new Date().getTime(),
     date: new Date().toDateString(),
     userImage: '',
     userName: '',
     petName: '',
     petBreed: '',
+    petCategory: '',
+    petCondition: '',
     petGender: '',
-    petHealthCondition: '',
-    petBio: '',
     petBirthdate: '',
     petImage: null,
-  }
+  };
 
   userId: string;
   userName: string;
   userImage: string;
 
-  petId: any;
-  petName: any;
-  petBreed: any;
-  petGender: any;
-  petHealthCondition: any;
-  petBio: any;
-  petBirthdate: any;
-  petImage:any;
+  petId: string;
+
+  public petProfile: Pet;
 
   ngFireUploadTask: AngularFireUploadTask;
 
@@ -66,6 +64,7 @@ export class EditInfoPage implements OnInit {
   constructor(private firestore: AngularFirestore,
               private storage: AngularFireStorage,
               public loadingCtrl: LoadingController,
+              private activatedRoute: ActivatedRoute,
               private router: Router) {
 
       this.isImgUploading = false;
@@ -74,30 +73,48 @@ export class EditInfoPage implements OnInit {
       this.ngFirestoreCollection = firestore.collection<file>('productList');
       this.files = this.ngFirestoreCollection.valueChanges();
 
+      this.getUserId();
+
+      this.petId = this.activatedRoute.snapshot.paramMap.get('id');
+
+      this.firestore.collection('users').doc(this.userId).collection('newPetProfile').doc<Pet>(this.petId).valueChanges().subscribe(
+        newPetProfile =>{
+          this.petProfile = newPetProfile;
+        }
+      );
   }
 
   ngOnInit() {
     this.getUserId();
+
+    this.petId = this.activatedRoute.snapshot.paramMap.get('id');
+
+    this.firestore.collection('users').doc(this.userId).collection('newPetProfile').doc<Pet>(this.petId).valueChanges().subscribe(
+      newPetProfile =>{
+        this.petProfile = newPetProfile;
+      }
+    );
+
     this.updatePetProfile = new FormGroup({
-      petBirthdate: new FormControl(this.updatedPetDetail.petBirthdate,[
+      petBirthdate: new FormControl(this.newPetDetails.petBirthdate,[
         Validators.required
       ]),
-      petBreed: new FormControl(this.updatedPetDetail.petBreed,[
+      petBreed: new FormControl(this.newPetDetails.petBreed,[
         Validators.required,
         Validators.minLength(2),
       ]),
-      petCategory: new FormControl(this.updatedPetDetail.petBio,[
+      petCategory: new FormControl(this.newPetDetails.petCategory,[
         Validators.required,
         Validators.minLength(5)
       ]),
-      petCondition: new FormControl(this.updatedPetDetail.petHealthCondition,[
+      petCondition: new FormControl(this.newPetDetails.petCondition,[
         Validators.required,
         Validators.minLength(2),
       ]),
-      petGender: new FormControl(this.updatedPetDetail.petGender,[
+      petGender: new FormControl(this.newPetDetails.petGender,[
         Validators.required,
       ]),
-      petName: new FormControl(this.updatedPetDetail.petName,[
+      petName: new FormControl(this.newPetDetails.petName,[
         Validators.required,
         Validators.minLength(2),
       ])
@@ -111,10 +128,10 @@ export class EditInfoPage implements OnInit {
 
     this.firestore.collection('users').doc(this.userId).valueChanges().subscribe( userDetails => {
       this.userName = userDetails['name'];
-      this.updatedPetDetail.userName = `${this.userName}`;
+      this.newPetDetails.userName = `${this.userName}`;
 
       this.userImage = userDetails['userImage'];
-      this.updatedPetDetail.userImage = `${this.userImage}`;
+      this.newPetDetails.userImage = `${this.userImage}`;
     })
   }
 
@@ -146,7 +163,7 @@ export class EditInfoPage implements OnInit {
         this.fileUploadedPath = imageRef.getDownloadURL();
 
         this.fileUploadedPath.subscribe(resp=>{
-          // this.newProductList.productImage = resp;
+           this.newPetDetails.petImage = resp;
 
           this.isImgUploading = false;
           this.isImgUploaded = true;
@@ -160,7 +177,33 @@ export class EditInfoPage implements OnInit {
     )
   }
 
-  submitUpdate(){
+  async submitUpdate(): Promise<void>{
+    const loading = await this.loadingCtrl.create();
+    loading.present();
 
+    this.newPetDetails.petName= this.updatePetProfile.get('petName').value;
+    this.newPetDetails.petCategory= this.updatePetProfile.get('petCategory').value;
+    this.newPetDetails.petGender= this.updatePetProfile.get('petGender').value;
+    this.newPetDetails.petBreed=this.updatePetProfile.get('petBreed').value;
+    this.newPetDetails.petBirthdate=this.updatePetProfile.get('petBirthdate').value;
+    this.newPetDetails.petCondition=this.updatePetProfile.get('petCondition').value;
+
+  this.firestore.collection('users').doc(this.userId).collection('newPetProfile').doc(this.petId).update(this.newPetDetails).then(() =>{
+
+    loading.dismiss().then(() => {
+      this.updatePetProfile= null;// Clears all input
+      this.router.navigateByUrl('/tab/location-tracker');// Direct to pet display
+      console.log('Added new pet info!');// Message
+     });
+    },
+    error => {
+     loading.dismiss().then(() => {
+       console.error(error);
+     });
+  });
+}
+
+  resetDetails(){
+    this.updatePetProfile.reset();
   }
 }

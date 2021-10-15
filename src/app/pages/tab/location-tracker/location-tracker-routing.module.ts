@@ -9,7 +9,7 @@ const routes: Routes = [
     component: LocationTrackerPage
   },
   {
-    path: 'pet-profile',
+    path: 'pet-profile/:id',
     loadChildren: () => import('./pet-profile/pet-profile.module').then( m => m.PetProfilePageModule)
   },
   {

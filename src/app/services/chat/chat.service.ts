@@ -34,11 +34,14 @@ export class ChatService {
                 });
     }
 
-    addChatMessage(msg){
+    addChatMessage(msg, username, image, imageUpload: null){
       return this.afs.collection('messages').add({
         msg,
         from: this.currentUser.uid,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        userName: username,
+        userImage: image,
+        chatImage: imageUpload,
       });
     }
 
@@ -61,6 +64,8 @@ export class ChatService {
         })
       );
     }
+
+
 
     getUsers(){
       return this.afs.collection('users').valueChanges({ idField: 'uid' }) as Observable<User[]>;

@@ -12,6 +12,6 @@ export class FundraiserService {
 
   // fetch User Card Details
   getCardDetail(userId: string): Observable<CardDetail[]> {
-    return this.firestore.collection('users').doc(userId).collection<CardDetail>(`cardDetails`).valueChanges();
+    return this.firestore.collection('users').doc(userId).collection<CardDetail>(`fundraiser`).valueChanges();
   }
 }

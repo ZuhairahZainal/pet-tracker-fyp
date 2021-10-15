@@ -18,5 +18,8 @@ export interface CardDetail{
   firstName: string,
   lastName: string,
   userId: string,
+  amount: number,
+  donationId: string,
+  date: string,
 }
 

@@ -87,6 +87,20 @@
                 </ion-card-subtitle>
               </ion-card-content>
             </ion-card>
+
+            <ion-card *ngIf="result.category === 'Add Friend'" routerLink="/tab/online-chat">
+                <ion-card-header>
+                  <ion-card-title color="primary">New Friend in the list!</ion-card-title>
+                  <ion-card-subtitle>
+                    {{result.userName}} and you are now friends! Click here to view.
+                  </ion-card-subtitle>
+                </ion-card-header>
+                <ion-card-content>
+                  <ion-card-subtitle>
+                    {{ result.date }}
+                  </ion-card-subtitle>
+                </ion-card-content>
+              </ion-card>
           </ion-item>
         </ion-list>
       </ion-col>

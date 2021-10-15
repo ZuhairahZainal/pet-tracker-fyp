@@ -1,0 +1,98 @@
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  height:70%;
+}
+
+//Confirmation buttons
+#the-buttons{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+//Font foer each input
+#font{
+  font-family: "AbeeZee" !important;
+  position: relative;
+  margin-right: 4.0vh;
+}
+
+//Font for input
+ion-label{
+  font-family: "AbeeZee" !important;
+
+}
+
+.upload {
+  background:none;
+  font-size: 19px;
+  border:none;
+  cursor: pointer;
+}
+
+//Css for selection inuput
+ion-select{
+  border: solid 1px grey ;
+  border-radius: 1.0vh;
+  width: 5cm;
+
+
+}
+
+//Css for type of input
+ion-input{
+  border: solid 1px grey ;
+  border-radius: 1.0vh;
+  height: 1.2cm;
+  margin-top: 3.0 vh;
+}
+
+//Postion for breed section
+#breed{
+ padding-bottom: 4vh;
+}
+
+
+//Css for date time
+ion-datetime{
+  border: solid 1px grey ;
+  border-radius: 1.0vh;
+  height: 1.2cm;
+
+}
+
+//Confirm & cancel Button
+#the-buttons{
+  --ion-color-primary:#9DDFCC;
+  --ion-color-secondary: #FBE5E0;
+  font-size: 20px;
+}
+
+//Positoning the breed input
+#breed{
+  margin-top: 4.2vh;
+
+}
+
+//Positioning for gender
+#gender{
+  margin-top: 4.2ch;
+}
+
+// //Font for Header
+// ion-header{
+//   margin-bottom: 3.0 vh;
+//   font-family: "AbeeZee" !important;
+
+// }
+
+
+//Size of image avatar
+.image-center{
+  margin:0 auto;
+  width: 10rem;
+  height: 10rem;
+  }

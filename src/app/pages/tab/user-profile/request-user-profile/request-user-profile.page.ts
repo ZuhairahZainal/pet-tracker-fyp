@@ -33,6 +33,9 @@ export class RequestUserProfilePage implements OnInit {
   petRequested: string;
   userDetails;
   adoptionPosts;
+  feedPost;
+  donationPost;
+  lostPetPost;
   petRequestedDetails;
   userBio: any;
   userImage: any;
@@ -40,7 +43,7 @@ export class RequestUserProfilePage implements OnInit {
   public adoptionRequest: AdoptionsRequest;
 
 
-  public segment: string = "allpost";
+  public segment: string = "feed";
 
   constructor(private firestore: AngularFirestore,
               private adoptionService: AdoptionService,
@@ -65,6 +68,21 @@ export class RequestUserProfilePage implements OnInit {
       this.firestore.collection('adoption').doc(this.userRequest).collection('adoptionDetail')
       .valueChanges().subscribe( adoptionPost => {
         this.adoptionPosts = adoptionPost;
+      });
+
+      this.firestore.collection('feed').doc(this.userRequest).collection('donation')
+      .valueChanges().subscribe( donationPost => {
+        this.donationPost = donationPost
+      });
+
+      this.firestore.collection('feed').doc(this.userRequest).collection('lostPet')
+      .valueChanges().subscribe( lostPetPost => {
+        this.lostPetPost = lostPetPost;
+      });
+
+      this.firestore.collection('feed').doc(this.userRequest).collection('newsfeed')
+      .valueChanges().subscribe( feedPosts => {
+        this.feedPost = feedPosts;
       });
 
       this.firestore.collection('adoption').doc(this.userId).collection('adoptionDetail').doc(this.petRequested)

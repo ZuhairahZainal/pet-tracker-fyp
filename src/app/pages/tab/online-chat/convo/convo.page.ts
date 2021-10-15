@@ -1,6 +1,13 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-import { Component, OnInit } from '@angular/core';
+import { ChatService } from 'src/app/services/chat/chat.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {  IonContent } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 import firebase from 'firebase';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { file } from 'src/app/models/file/file';
+import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
+import { finalize, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-convo',
@@ -8,54 +15,112 @@ import firebase from 'firebase';
   styleUrls: ['./convo.page.scss'],
 })
 export class ConvoPage implements OnInit {
+  @ViewChild(IonContent) content: IonContent;
 
-  //other's data
-  name;
-  o_uid;
+  messages: Observable<any[]>;
+  newMsg = '';
+  friendId: string;
+  userImage: string;
+  userName: string;
+  userId: string;
+  imageUpload: any;
 
-  //my uid
-  uid;
+  ngFireUploadTask: AngularFireUploadTask;
 
-  //chats array
-  chats = [];
-  chat;
-  textMsg;
+  progressNum: Observable<number>;
 
-  constructor() {
-    this.name = sessionStorage.getItem('name');
-    this.o_uid = sessionStorage.getItem('uid');
+  progressSnapshot: Observable<any>;
 
-    this.uid = sessionStorage.getItem('uid');
+  fileUploadedPath: Observable<string>;
 
-    firebase.firestore().collection('chats').doc(this.uid).collection(this.o_uid).orderBy('time').onSnapshot(snap => {
-      this.chats = [];
-      snap.forEach(child => {
-        this.chats.push(child.data());
-      });
-    });
-  }
+  files: Observable<file[]>;
 
+  FileName: string;
+  FileSize: number;
+
+  isImgUploading: boolean;
+  isImgUploaded: boolean;
+
+  private ngFirestoreCollection: AngularFirestoreCollection<file>;
+
+  constructor(private chatService: ChatService,
+              private storage: AngularFireStorage,
+              private router: Router,
+              private activatedRoute: ActivatedRoute,
+              private firestore: AngularFirestore) {
+                this.isImgUploading = false;
+                this.isImgUploaded = false;
+
+                this.ngFirestoreCollection = firestore.collection<file>('chatPic');
+                this.files = this.ngFirestoreCollection.valueChanges();
+
+               }
 
   ngOnInit() {
 
+    this.getUserDetails();
+
+    this.friendId = this.activatedRoute.snapshot.paramMap.get('id');
+
+    this.messages = this.chatService.getChatMessages();
   }
 
-  send(){
-    //my chats collection
-    firebase.firestore().collection('chats').doc(this.uid).collection(this.o_uid).add({
-      time: Date.now(),
-      uid: this.uid,
-      msg: this.textMsg
+  sendMessage(){
+    this.chatService.addChatMessage(this.newMsg, this.userName, this.userImage, this.imageUpload).then(() =>{
+      this.newMsg = '';
+      this.content.scrollToBottom();
     });
+  }
 
-    //other users chats collection
-    firebase.firestore().collection('chats').doc(this.o_uid).collection(this.uid).add({
-      time: Date.now(),
-      uid: this.uid,
-      msg: this.textMsg
-    }).then(() => {
-      this.textMsg='';
-    });
+  getUserDetails(){
+    let user = firebase.auth().currentUser;
+    this.userId = `${user.uid}`;
+
+    this.firestore.collection('users').doc(this.userId).valueChanges().subscribe( details => {
+      this.userName = details['name'];
+      this.userImage = details['userImage'];
+    })
+  }
+
+  uploadPicture(event: Event) {
+
+    let file = (event.target as HTMLInputElement).files[0];
+
+    if (file.type.split('/')[0] !== 'image') {
+      console.log('File type is not supported!')
+      return;
+    }
+
+    this.isImgUploading = true;
+    this.isImgUploaded = false;
+
+    this.FileName = file.name;
+
+    const fileStoragePath = `onlinechat/${new Date().getTime()}_${file.name}`;
+
+    const imageRef = this.storage.ref(fileStoragePath);
+
+    this.ngFireUploadTask = this.storage.upload(fileStoragePath, file);
+
+    this.progressNum = this.ngFireUploadTask.percentageChanges();
+    this.progressSnapshot = this.ngFireUploadTask.snapshotChanges().pipe(
+
+      finalize(() => {
+        this.fileUploadedPath = imageRef.getDownloadURL();
+
+        this.fileUploadedPath.subscribe(resp=>{
+          this.imageUpload = resp;
+
+          this.isImgUploading = false;
+          this.isImgUploaded = true;
+        },error => {
+          console.log(error);
+        })
+      }),
+      tap(snap => {
+          this.FileSize = snap.totalBytes;
+      })
+    )
   }
 
 }

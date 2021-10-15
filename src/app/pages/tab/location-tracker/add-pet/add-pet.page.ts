@@ -16,29 +16,34 @@ import { finalize, tap } from 'rxjs/operators';
 })
 export class AddPetPage implements OnInit {
 
-  newPet = {
+  value: any;
+
+  newPetDetails ={
     time: new Date().getTime(),
     date: new Date().toDateString(),
-    petId: '',
-    userId: '',
     userImage: '',
     userName: '',
     petName: '',
     petBreed: '',
+    petCategory: '',
+    petCondition: '',
     petGender: '',
-    petHealthCondition: '',
-    petBio: '',
     petBirthdate: '',
     petImage: null,
-  }
-
-  petId: string;
+    petId:'',
+  };
 
   userId: string;
   userName: string;
   userImage: string;
 
-  addNewPet: FormGroup;
+  petId: any;
+  petName: any;
+  petBreed: any;
+  petGender: any;
+  petHealthCondition: any;
+  petBirthdate: any;
+  petImage:any;
 
   ngFireUploadTask: AngularFireUploadTask;
 
@@ -46,11 +51,9 @@ export class AddPetPage implements OnInit {
 
   progressSnapshot: Observable<any>;
 
-  fileUploadedPath: Observable<string>;
+  fileUploadedPath: Observable<any>;
 
   files: Observable<file[]>;
-
-  private ngFirestoreCollection: AngularFirestoreCollection<file>;
 
   FileName: string;
   FileSize: number;
@@ -58,41 +61,46 @@ export class AddPetPage implements OnInit {
   isImgUploading: boolean;
   isImgUploaded: boolean;
 
+  updatePetProfile: FormGroup;
+
+  private ngFirestoreCollection: AngularFirestoreCollection<file>;
+
   constructor(private firestore: AngularFirestore,
               private storage: AngularFireStorage,
               public loadingCtrl: LoadingController,
               private router: Router) {
 
+      this.isImgUploading = false;
+      this.isImgUploaded = false;
 
-          this.isImgUploading = false;
-          this.isImgUploaded = false;
+      this.ngFirestoreCollection = firestore.collection<file>('productList');
+      this.files = this.ngFirestoreCollection.valueChanges();
 
-          this.ngFirestoreCollection = firestore.collection<file>('pets');
-          this.files = this.ngFirestoreCollection.valueChanges();
+      this.newPetDetails.petId= this.firestore.createId();
   }
 
   ngOnInit() {
     this.getUserId();
-    this.addNewPet = new FormGroup({
-      petBirthdate: new FormControl(this.newPet.petBirthdate,[
+    this.updatePetProfile = new FormGroup({
+      petBirthdate: new FormControl(this.newPetDetails.petBirthdate,[
         Validators.required
       ]),
-      petBreed: new FormControl(this.newPet.petBreed,[
+      petBreed: new FormControl(this.newPetDetails.petBreed,[
         Validators.required,
         Validators.minLength(2),
       ]),
-      petCategory: new FormControl(this.newPet.petBio,[
+      petCategory: new FormControl(this.newPetDetails.petCategory,[
         Validators.required,
         Validators.minLength(5)
       ]),
-      petCondition: new FormControl(this.newPet.petHealthCondition,[
+      petCondition: new FormControl(this.newPetDetails.petCondition,[
         Validators.required,
         Validators.minLength(2),
       ]),
-      petGender: new FormControl(this.newPet.petGender,[
+      petGender: new FormControl(this.newPetDetails.petGender,[
         Validators.required,
       ]),
-      petName: new FormControl(this.newPet.petName,[
+      petName: new FormControl(this.newPetDetails.petName,[
         Validators.required,
         Validators.minLength(2),
       ])
@@ -102,17 +110,17 @@ export class AddPetPage implements OnInit {
   getUserId(){
     const user = firebase.auth().currentUser;
 
-    this.newPet.userId = `${user.uid}`;
     this.userId = user.uid;
 
     this.firestore.collection('users').doc(this.userId).valueChanges().subscribe( userDetails => {
       this.userName = userDetails['name'];
-      this.newPet.userName = `${this.userName}`;
+      this.newPetDetails.userName = `${this.userName}`;
 
       this.userImage = userDetails['userImage'];
-      this.newPet.userImage = `${this.userImage}`;
+      this.newPetDetails.userImage = `${this.userImage}`;
     })
   }
+
 
   uploadPicture(event: Event) {
 
@@ -128,9 +136,7 @@ export class AddPetPage implements OnInit {
 
     this.FileName = file.name;
 
-    this.petId = this.firestore.createId();
-
-    const fileStoragePath = `pets/${this.userId}/${this.petId}/${new Date().getTime()}_${file.name}`;
+    const fileStoragePath = `pets/${this.userId}/${this.newPetDetails.petId}/petImage`;
 
     const imageRef = this.storage.ref(fileStoragePath);
 
@@ -143,7 +149,7 @@ export class AddPetPage implements OnInit {
         this.fileUploadedPath = imageRef.getDownloadURL();
 
         this.fileUploadedPath.subscribe(resp=>{
-          this.newPet.petImage = resp;
+           this.newPetDetails.petImage = resp;
 
           this.isImgUploading = false;
           this.isImgUploaded = true;
@@ -157,31 +163,33 @@ export class AddPetPage implements OnInit {
     )
   }
 
-
-  async submitNewPet(): Promise<void>{
+  async submitUpdate(): Promise<void>{
     const loading = await this.loadingCtrl.create();
     loading.present();
 
-    this.newPet.petId = this.petId;
-    this.newPet.petBirthdate = this.addNewPet.get('petBirthdate').value;
-    this.newPet.petBreed = this.addNewPet.get('petBreed').value;
-    this.newPet.petBio = this.addNewPet.get('petBio').value;
-    this.newPet.petGender = this.addNewPet.get('petGender').value;
-    this.newPet.petName = this.addNewPet.get('petName').value;
-    this.newPet.petHealthCondition = this.addNewPet.get('petHealthCondition').value;
+    this.newPetDetails.petName= this.updatePetProfile.get('petName').value;
+    this.newPetDetails.petCategory= this.updatePetProfile.get('petCategory').value;
+    this.newPetDetails.petGender= this.updatePetProfile.get('petGender').value;
+    this.newPetDetails.petBreed=this.updatePetProfile.get('petBreed').value;
+    this.newPetDetails.petBirthdate=this.updatePetProfile.get('petBirthdate').value;
+    this.newPetDetails.petCondition=this.updatePetProfile.get('petCondition').value;
 
-    this.firestore.collection('pets').doc(this.newPet.userId)
-    .collection('petDetails').doc(this.newPet.petId)
-    .set(this.newPet).then(() => {
-      loading.dismiss().then(() => {
-        this.addNewPet = null;
-        this.router.navigateByUrl('tab/location-tracker');
-        });
-      },
-      error => {
-       loading.dismiss().then(() => {
-         console.error(error);
-       });
-    });
+  this.firestore.collection('users').doc(this.userId).collection('newPetProfile').doc(this.newPetDetails.petId).set(this.newPetDetails).then(() =>{
+
+    loading.dismiss().then(() => {
+      this.updatePetProfile= null;// Clears all input
+      this.router.navigateByUrl('/tab/location-tracker');// Direct to pet display
+      console.log('Added new pet info!');// Message
+     });
+    },
+    error => {
+     loading.dismiss().then(() => {
+       console.error(error);
+     });
+  });
+}
+
+  resetDetails(){
+    this.updatePetProfile.reset();
   }
 }

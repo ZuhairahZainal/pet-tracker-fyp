@@ -11,13 +11,16 @@
 
 <ion-content>
   <ion-grid>
-    <ion-row>
-      <ion-col size="2" class="ion-margin">
+    <ion-row class="ion-no-margin">
+      <ion-col>
           <ion-avatar class="image-center">
             <img name="profile_pic" [src]="userImage"/>
           </ion-avatar>
       </ion-col>
-      <ion-col size="9">
+    </ion-row>
+
+    <ion-row class="ion-no-padding">
+      <ion-col class="image-center">
         <ion-card class="ion-text-center">
           <ion-card-header>
             <ion-card-title>

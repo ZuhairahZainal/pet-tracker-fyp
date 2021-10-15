@@ -29,7 +29,7 @@ const routes: Routes = [
     loadChildren: () => import('./vet/vet.module').then( m => m.VetPageModule)
   },
   {
-    path: 'fundraiser',
+    path: 'fundraiser/:id',
     loadChildren: () => import('./fundraiser/fundraiser.module').then( m => m.FundraiserPageModule)
   },
   {

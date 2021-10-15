@@ -32,6 +32,7 @@ import { SplashScreen} from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Ng2SearchPipeModule  } from 'ng2-search-filter';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { QRCodeModule } from 'angular2-qrcode';
 
 @NgModule({
   declarations: [AppComponent],
@@ -45,6 +46,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
             FormsModule,
             ReactiveFormsModule,
             Ng2SearchPipeModule,
+            QRCodeModule,
             IonicModule.forRoot(),
             AppRoutingModule],
   providers: [AuthService,
