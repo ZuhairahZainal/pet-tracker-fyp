@@ -1,29 +1,14 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title class="ion-text-center">Chat Buddy</ion-title>
+    <ion-title class="ion-text-center">Online Chat</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content overflow-scroll="true">
-  <ion-toolbar>
-    <ion-segment (ionChange)="segmentChanged($event)" value="friendlist" scrollable>
-      <ion-segment-button value="friendlist">
-        <ion-label>
-          Friendlist
-        </ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="onlineChat" routerLink="../online-chat/convo">
-        <ion-label>
-          Online Chat
-        </ion-label>
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
-
-  <ion-list *ngIf="segment === 'friendlist'">
+  <ion-list>
     <ion-item *ngFor="let post of addPost | async " >
       <ion-grid>
-        <ion-row class=ion-padding-top>
+        <ion-row class=ion-padding-top routerLink="../online-chat/convo">
           <ion-col size=3>
             <ion-avatar>
               <img *ngIf="post?.userImage" [src]="post?.userImage">
@@ -47,32 +32,6 @@
           </ion-col>
         </ion-row>
 
-      </ion-grid>
-    </ion-item>
-  </ion-list>
-
-  <ion-list *ngIf="segment === 'onlineChat'">
-    <ion-item *ngFor="let post of chatPost | async " >
-      <ion-grid>
-        <ion-row class=ion-padding-top>
-          <ion-col size=3>
-            <ion-avatar>
-              <img *ngIf="post?.userImage" [src]="post?.userImage">
-              <img *ngIf="!post?.userImage" src="../../../../assets/user.jpeg">
-            </ion-avatar>
-          </ion-col>
-
-          <ion-col>
-            <ion-row>
-              <ion-col>
-                <ion-row>
-                 <ion-card-title>{{ post?.userName }}</ion-card-title>
-                </ion-row>
-
-              </ion-col>
-            </ion-row>
-          </ion-col>
-        </ion-row>
       </ion-grid>
     </ion-item>
   </ion-list>

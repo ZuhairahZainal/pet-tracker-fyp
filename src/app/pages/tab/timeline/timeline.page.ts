@@ -39,6 +39,15 @@ export class TimelinePage implements OnInit {
     userImage: '',
   }
 
+  friendList1 = {
+    time: new Date().getTime(),
+    date: new Date().toDateString(),
+    friendId: '',
+    userId: '',
+    userName: '',
+    userImage: '',
+  }
+
   public lostpetPost: Observable<LostPet[]>;
   public donationPost: Observable<Donation[]>;
   public newPost: Observable<Feed[]>;
@@ -74,12 +83,19 @@ export class TimelinePage implements OnInit {
     let user = firebase.auth().currentUser;
 
     this.reportDetails.userId = `${user.uid}`;
+    this.friendList1.userId = `${user.uid}`;
+
     this.userId = user.uid;
 
     this.firestore.collection('users').doc(this.userId).valueChanges().subscribe( userDetail => {
       this.reportDetails.userName = userDetail['name'];
       this.reportDetails.userEmail = userDetail['email'];
       this.reportDetails.userImage = userDetail['userImage'];
+
+      this.friendList1.userName = userDetail['name'];
+      this.friendList1.userImage = userDetail['userImage'];
+
+
     })
   }
 
@@ -240,6 +256,8 @@ export class TimelinePage implements OnInit {
     this.friendList.userId = id;
     this.friendList.userName = name;
     this.friendList.userImage = image;
+
+    this.firestore.collection('users').doc(this.friendList.userId).collection('friendlist').doc(this.userId).set(this.friendList1)
 
     this.firestore.collection('users').doc(this.userId).collection('friendlist').doc(this.friendList.friendId).set(this.friendList)
     .then ( async success => {
