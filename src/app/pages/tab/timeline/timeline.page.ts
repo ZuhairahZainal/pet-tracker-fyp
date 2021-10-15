@@ -92,14 +92,15 @@ export class TimelinePage implements OnInit {
     let alert = await this.alertCtrl.create({
       header: `Welcome user to Pet Tracker app!`,
       message: `Please set a profile picture before proceeding your adventure in our application.
-                Go to user-profile > personal-information. It will automatically update your profile pic`,
+                Go to User Profile -> in Personal Information. Choose your image and it will automatically
+                set as your profile picture.`,
     buttons: [{
               text: 'Done',
               },
               {
             text: 'Proceed',
             handler: () => {
-              this.router.navigate(['/tab/user-profile']);
+              this.router.navigate(['/tab/user-profile/personal-info']);
             },
           }]
    });
