@@ -9,7 +9,7 @@
     <ion-title class="ion-text-center">Pet Profile </ion-title>
 
     <ion-buttons slot="end">
-      <ion-button routerLink="/tab/location-tracker/pet-profile/edit-info">
+      <ion-button [routerLink]="['/tab/location-tracker/pet-profile/edit-info', petId]">
         <ion-icon name="create-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -22,17 +22,17 @@
       <ion-col size="4">
         <ion-card class="ion-padding-top">
           <ion-avatar>
-            <img src="../../../../../assets/catprofile.png"/>
+            <img [src]="[petProfile?.petImage]"/>
           </ion-avatar>
         </ion-card>
       </ion-col>
 
       <ion-col>
         <ion-card>
-          <ion-card-title>Name</ion-card-title>
-          <ion-card-subtitle class="ion-padding-top">Breed</ion-card-subtitle>
-          <ion-card-subtitle class="ion-padding-top">Greed</ion-card-subtitle>
-          <ion-card-subtitle class="ion-padding-top">Age</ion-card-subtitle>
+          <ion-card-title>{{ petProfile?.petName }}</ion-card-title>
+          <ion-card-subtitle class="ion-padding-top">Breed: {{ petProfile?.petBreed }}</ion-card-subtitle>
+          <ion-card-subtitle class="ion-padding-top">Gender: {{ petProfile?.petGender}}</ion-card-subtitle>
+          <ion-card-subtitle class="ion-padding-top">Condition: : {{ petProfile?.petCondition }}</ion-card-subtitle>
         </ion-card>
       </ion-col>
     </ion-row>
