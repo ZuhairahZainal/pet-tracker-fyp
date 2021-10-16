@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/dot-notation */
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {AngularFirestore, } from '@angular/fire/firestore';
@@ -13,7 +14,7 @@ export class AddReminderPage implements OnInit {
 
   newReminder: FormGroup;
   value: any;
-
+  name: any;
 
   newReminderDetails ={
     time: new Date().getTime(),
@@ -57,14 +58,14 @@ export class AddReminderPage implements OnInit {
  }
 
  getUserId(){
-  let user = firebase.auth().currentUser;
+  const user = firebase.auth().currentUser;
 
   this.newReminderDetails.userId = `${user.uid}`;
   this.userId = user.uid;
 
   this.firebaseData.collection('users').doc(this.userId).valueChanges().subscribe( userDetail => {
     this.newReminderDetails.userName = userDetail['name'];
-  })
+  });
 }
 
 submitIt(): void{
@@ -91,14 +92,13 @@ submitIt(): void{
 // console.log('Error. Please Try Again');
 
 }
-// dDeletes itesm from list
+// Deletes itesm from list
  deleteReminder(){
    return this.firebaseData
    .collection('newReminderDetails')
    .doc('reminderId')
    .delete();
  }
-
 
 
 
