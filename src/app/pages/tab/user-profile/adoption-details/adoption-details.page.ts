@@ -14,19 +14,7 @@ import { AlertController } from '@ionic/angular';
 })
 export class AdoptionDetailsPage implements OnInit {
 
-  // newAdoptionDetail = {
-  //   petAge: '',
-  //   petBreed: '',
-  //   petCategory: '',
-  //   petCondition: '',
-  //   petDescription: '',
-  //   petGender: '',
-  //   petName: '',
-  //   petSpayStatus: '',
-  // }
-
   public adoptionsDetail: AdoptionsDetail;
-  // updateAdoptionForm: FormGroup;
   adoptionId: string;
   userId: string;
   adoptionList;
@@ -45,18 +33,6 @@ export class AdoptionDetailsPage implements OnInit {
     this.adoptionService.ownerAdoptionDetail(this.adoptionId, this.userId).subscribe(adoptionDetail => {
       this.adoptionsDetail = adoptionDetail;
     });
-
-    // this.updateAdoptionForm = new FormGroup({
-    //   petAge: new FormControl(this.newAdoptionDetail.petAge),
-    //   petName: new FormControl(this.newAdoptionDetail.petName),
-    //   petCategory: new FormControl(this.newAdoptionDetail.petCategory),
-    //   petCondition: new FormControl(this.newAdoptionDetail.petCondition),
-    //   petBreed: new FormControl(this.newAdoptionDetail.petAge),
-    //   petSpayStatus: new FormControl(this.newAdoptionDetail.petSpayStatus),
-    //   petGender: new FormControl(this.newAdoptionDetail.petGender),
-    //   petDescription: new FormControl(this.newAdoptionDetail.petDescription),
-
-    // })
 
   }
 
@@ -89,17 +65,4 @@ export class AdoptionDetailsPage implements OnInit {
       this.router.navigate(['tab/user-profile']);
     })
   }
-
-  // updateAdoptionDetail(){
-  //   this.newAdoptionDetail.petName = this.updateAdoptionForm.get('petName').value;
-  //   this.newAdoptionDetail.petAge = this.updateAdoptionForm.get('petAge').value;
-  //   this.newAdoptionDetail.petCategory = this.updateAdoptionForm.get('petCategory').value;
-  //   this.newAdoptionDetail.petDescription = this.updateAdoptionForm.get('petDescription').value;
-  //   this.newAdoptionDetail.petGender = this.updateAdoptionForm.get('petGender').value;
-  //   this.newAdoptionDetail.petSpayStatus = this.updateAdoptionForm.get('petSpayStatus').value;
-  //   this.newAdoptionDetail.petBreed = this.updateAdoptionForm.get('petBreed').value;
-  //   this.newAdoptionDetail.petCondition = this.updateAdoptionForm.get('petConditon').value;
-
-  //   this.adoptionService.updateAdoptionDetail(this.userId, this.adoptionId, this.newAdoptionDetail);
-  // }
 }

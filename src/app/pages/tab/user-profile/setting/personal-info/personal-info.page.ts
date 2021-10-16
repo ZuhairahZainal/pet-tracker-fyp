@@ -103,22 +103,62 @@ export class PersonalInfoPage implements OnInit {
     this.userId = user.uid;
   }
 
-  async updateForm(): Promise<void>{
+  async updatePhone(): Promise<void>{
     const loading = await this.loadingCtrl.create();
     loading.present();
 
-    this.newUserDetail.name = this.updateUserDetail.get('name').value;
-    this.newUserDetail.userBio = this.updateUserDetail.get('userBio').value;
     this.newUserDetail.phone = this.updateUserDetail.get('phone').value;
 
     this.firestore.collection('users').doc(this.userId).update({
-      name: this.newUserDetail.name,
-      userBio: this.newUserDetail.userBio,
       phone: this.newUserDetail.phone
     })
     .then(() => {
       loading.dismiss().then(() => {
         this.router.navigate(['tab/user-profile/setting/personal-info']);
+      });
+      },
+      error => {
+       loading.dismiss().then(() => {
+         console.error(error);
+       });
+    });
+  }
+
+  async updateName(): Promise<void>{
+    const loading = await this.loadingCtrl.create();
+    loading.present();
+
+    this.newUserDetail.name = this.updateUserDetail.get('name').value;
+
+    this.firestore.collection('users').doc(this.userId).update({
+      name: this.newUserDetail.name,
+    })
+    .then(() => {
+      loading.dismiss().then(() => {
+        this.updateUserDetail = null;
+        this.router.navigate(['tab/user-profile']);
+      });
+      },
+      error => {
+       loading.dismiss().then(() => {
+         console.error(error);
+       });
+    });
+  }
+
+  async updateBio(): Promise<void>{
+    const loading = await this.loadingCtrl.create();
+    loading.present();
+
+    this.newUserDetail.userBio = this.updateUserDetail.get('userBio').value;
+
+    this.firestore.collection('users').doc(this.userId).update({
+      userBio: this.newUserDetail.userBio,
+    })
+    .then(() => {
+      loading.dismiss().then(() => {
+        this.updateUserDetail = null;
+        this.router.navigate(['tab/user-profile']);
       });
       },
       error => {
